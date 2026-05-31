@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+  <!-- 部署费用图标：菱形币 -->
+  <rect x="1.5" y="1.5" width="9" height="9" rx="2" fill="none" stroke="#e5c07b" stroke-width="1.2"/>
+  <text x="6" y="8.8" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#e5c07b" font-family="Arial,sans-serif">$</text>
+</svg>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>明日方舟 · 自限挑战规则器 - Demo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d1117; --bg-card: #161b22; --bg-hover: #1c2333;
+  --border: #30363d; --text: #e6edf3; --text-muted: #8b949e;
+  --accent: #58a6ff; --danger: #f85149; --warning: #d29922; --green: #3fb950;
+  --radius: 8px; --radius-lg: 12px;
+  font-family: -apple-system,"Segoe UI","Noto Sans SC",sans-serif;
+}
+body { background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+header { width:100%; max-width:1000px; padding:20px 20px 0; display:flex; align-items:center; justify-content:space-between; }
+header h1 { font-size:18px; font-weight:600; }
+header h1 span { color:var(--accent); }
+nav { display:flex; gap:4px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:3px; }
+nav button { background:none; border:none; color:var(--text-muted); padding:6px 14px; border-radius:6px; cursor:pointer; font-size:13px; transition:all .15s; }
+nav button.active { background:var(--accent); color:#fff; font-weight:500; }
+nav button:hover:not(.active) { color:var(--text); background:var(--bg-hover); }
+main { width:100%; max-width:1000px; padding:20px; }
+.page { display:none; }
+.page.active { display:block; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; margin-bottom:12px; }
+.btn { display:inline-flex; align-items:center; gap:4px; padding:6px 14px; border-radius:var(--radius); border:1px solid var(--border); background:transparent; color:var(--text); font-size:12px; cursor:pointer; transition:all .15s; }
+.btn:hover { background:var(--bg-hover); border-color:var(--text-muted); }
+.btn-primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:500; }
+.btn-primary:hover { opacity:.85; }
+.btn-danger { border-color:var(--danger); color:var(--danger); }
+.btn-danger:hover { background:rgba(248,81,73,.1); }
+.btn-sm { padding:3px 8px; font-size:11px; }
+.tag { display:inline-flex; align-items:center; gap:3px; padding:4px 10px; border:1px solid var(--border); border-radius:var(--radius); font-size:12px; background:var(--bg); cursor:default; }
+.tag-sm { padding:3px 7px; font-size:11px; }
+.tag-bar { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:8px; }
+.tag.active-tag { border-color:var(--accent); background:rgba(88,166,255,.1); }
+.fade-in { animation:fadeIn .25s ease; }
+@keyframes fadeIn { from{opacity:.3} to{opacity:1} }
+.badge { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:4px; font-size:12px; }
+.badge-ok { background:rgba(63,185,80,.15); color:var(--green); border:1px solid rgba(63,185,80,.3); }
+.badge-err { background:rgba(248,81,73,.15); color:var(--danger); border:1px solid rgba(248,81,73,.3); }
+.badge-warn { background:rgba(210,153,34,.15); color:var(--warning); border:1px solid rgba(210,153,34,.3); }
+.setting-section { border:1px solid var(--border); border-radius:var(--radius-lg); padding:14px; margin-bottom:10px; }
+.setting-section h3 { font-size:13px; font-weight:600; margin-bottom:4px; }
+.setting-section .hint { font-size:11px; color:var(--text-muted); margin-bottom:8px; }
+.chapter-row { display:flex; align-items:center; gap:6px; padding:3px 0; font-size:12px; }
+.chapter-row input { accent-color:var(--accent); }
+.squad-grid { display:grid; grid-template-columns:repeat(6,86px); grid-template-rows:repeat(2,auto); gap:6px; margin-bottom:0; }
+.squad-grid .slot { display:flex; flex-direction:column; align-items:center; justify-content:center; width:86px; height:96px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); cursor:pointer; transition:border-color .15s; padding:6px 4px; text-align:center; position:relative; }
+.squad-grid .slot:hover { border-color:var(--accent); }
+.squad-grid .slot .avatar { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:3px; background:var(--bg-hover); }
+.squad-grid .slot .oname { font-size:11px; font-weight:500; line-height:1.2; }
+.squad-grid .slot .osub { font-size:10px; color:var(--text-muted); line-height:1.2; }
+.squad-grid .slot .remove-btn { position:absolute; top:1px; right:1px; font-size:11px; opacity:0; cursor:pointer; border:none; background:rgba(13,17,23,.8); color:var(--danger); width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.squad-grid .slot:hover .remove-btn { opacity:.6; }
+.squad-grid .slot .remove-btn:hover { opacity:1; }
+.slot-violation { border-color:var(--danger)!important; }
+.slot-violation .avatar { background:rgba(248,81,73,.15)!important; }
+.slot-violation .osub { color:var(--danger)!important; }
+.squad-layout { display:flex; gap:14px; align-items:flex-start; }
+.squad-left { flex:1; min-width:0; }
+.squad-right { width:260px; flex-shrink:0; }
+.right-section { border:1px solid var(--border); border-radius:var(--radius-lg); padding:14px; margin-bottom:10px; }
+.right-section h3 { font-size:13px; font-weight:600; margin-bottom:6px; }
+.plan-card { display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius); margin-bottom:6px; }
+.plan-card .plan-icon { font-size:16px; }
+.plan-card .plan-info { flex:1; min-width:0; }
+.plan-card .plan-info .plan-name { font-size:12px; font-weight:500; }
+.plan-card .plan-info .plan-detail { font-size:10px; color:var(--text-muted); }
+.plan-card .plan-actions { display:flex; gap:2px; }
+.plan-card.favorited { border-color:var(--warning); }
+</style>
+</head>
+<body>
+<header>
+  <h1 onclick="toggleDevMode()"><span>AK</span> 挑战规则器 <span style="font-size:11px;font-weight:400;color:var(--text-muted);cursor:pointer;" id="version-label">v3.3</span></h1>
+  <nav id="navbar">
+    <button class="active" data-page="squad">编队</button>
+    <button data-page="settings">设置</button>
+  </nav>
+</header>
+<main>
+  <!-- 编队（左右分栏） -->
+  <div id="page-squad" class="page active fade-in">
+    <div class="squad-layout">
+      <div class="squad-left">
+        <div class="card" style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div style="font-weight:600; font-size:14px;">编队</div>
+            <div style="display:flex; gap:6px;">
+              <span class="badge" id="badge-count">人数 0/12</span>
+              <span class="badge" id="badge-cost">费用 0/80</span>
+            </div>
+          </div>
+          <!-- 已确认的标签 + 关卡 -->
+          <div id="confirmed-banner" style="display:none; margin-bottom:6px; padding:6px 10px; background:rgba(88,166,255,.08); border:1px solid rgba(88,166,255,.2); border-radius:var(--radius); font-size:12px;"></div>
+          <div class="squad-grid" id="squad-grid"></div>
+        </div>
+        <div class="card" id="op-select-card" style="opacity:.4; pointer-events:none;">
+          <div style="font-weight:600; font-size:14px; margin-bottom:6px;">选择干员 <span style="font-size:11px;color:var(--text-muted);font-weight:400;" id="op-hint">（请先在右侧选择标签并确认）</span></div>
+          <div class="tag-bar" id="prof-tabs">
+            <span class="tag tag-sm active-tag" data-prof="先锋">🗡️ 先锋</span>
+            <span class="tag tag-sm" data-prof="近卫">⚔️ 近卫</span>
+            <span class="tag tag-sm" data-prof="重装">🛡️ 重装</span>
+            <span class="tag tag-sm" data-prof="狙击">🎯 狙击</span>
+            <span class="tag tag-sm" data-prof="术师">🔮 术师</span>
+            <span class="tag tag-sm" data-prof="医疗">💚 医疗</span>
+            <span class="tag tag-sm" data-prof="辅助">🌟 辅助</span>
+            <span class="tag tag-sm" data-prof="特种">🎪 特种</span>
+            <span class="tag tag-sm" data-prof="rarity">⭐ 稀有度</span>
+            <span class="tag tag-sm" data-prof="race">👿 种族</span>
+          </div>
+          <input type="text" id="op-search" placeholder="搜索干员名称..." style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;color:var(--text);font-size:12px;margin-bottom:6px;" oninput="filterOps()">
+          <!-- 干员信息预览 -->
+          <div id="op-info-panel" style="display:none; background:var(--bg); border:1px solid var(--accent); border-radius:var(--radius); padding:8px 12px; margin-bottom:6px; font-size:12px;"></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">👆 单击查看详情 · 👆👆 双击加入编队</div>
+          <div id="op-selector" style="display:flex;flex-wrap:wrap;gap:4px;"></div>
+        </div>
+      </div>
+      <div class="squad-right">
+        <div class="right-section">
+          <h3>🏷️ 挑战标签</h3>
+          <div style="display:flex;gap:4px;margin-bottom:6px;">
+            <button class="btn btn-sm btn-primary" id="btn-manual-tag" onclick="setTagMode('manual')">📝 手动选</button>
+            <button class="btn btn-sm" id="btn-random-tag" onclick="setTagMode('random')">🎲 随机抽</button>
+          </div>
+          <div id="tag-container"></div>
+          <button class="btn btn-sm btn-primary" onclick="confirmTags()" style="margin-top:6px;width:100%;">✅ 确认标签</button>
+        </div>
+        <div class="right-section">
+          <h3>🗺️ 关卡</h3>
+          <div class="tag-bar">
+            <span class="tag tag-sm active-tag">普通</span>
+            <span class="tag tag-sm">Boss</span>
+            <span class="tag tag-sm">超难</span>
+            <span class="tag tag-sm">超难Boss</span>
+          </div>
+          <div id="stage-display" style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;margin-bottom:4px;">
+            <div style="font-size:12px;">🟧 4-10 灯火将熄</div>
+            <div style="font-size:10px;color:var(--text-muted);">Boss关 | 标准模式</div>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <button class="btn btn-sm" onclick="rerollStage()">🎲 换一个</button>
+            <button class="btn btn-sm btn-primary" onclick="confirmStage()" style="flex:1;">✅ 确认关卡</button>
+          </div>
+        </div>
+        <div class="right-section">
+          <h3>📋 方案</h3>
+          <div style="display:flex;gap:4px;margin-bottom:8px;">
+            <button class="btn btn-sm btn-primary" onclick="savePlan2()">💾 保存</button>
+            <button class="btn btn-sm">🔗 分享码</button>
+            <button class="btn btn-sm btn-danger" onclick="clearSquad()">清空</button>
+          </div>
+          <div id="right-plan-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 设置 -->
+  <div id="page-settings" class="page fade-in">
+    <div class="card">
+      <h2>设置</h2>
+      <div class="setting-section">
+        <h3>🏷️ 标签黑名单</h3>
+        <div class="hint">被拉黑的标签不会出现在右侧标签列表中。</div>
+        <div class="tag-bar"><span class="tag tag-sm" style="opacity:.5;">稀有种族</span><span class="tag tag-sm" style="border-color:var(--danger);color:var(--danger);">+1 已拉黑</span></div>
+        <button class="btn btn-sm">管理黑名单</button>
+      </div>
+      <div class="setting-section">
+        <h3>🗺️ 关卡黑名单（按章节）</h3>
+        <div class="hint">隐藏章节的关卡不参与随机关卡抽取。</div>
+        <div id="chapter-list" style="display:grid;grid-template-columns:1fr 1fr;gap:3px;"></div>
+        <button class="btn btn-sm" style="margin-top:4px;">全部恢复</button>
+      </div>
+      <div class="setting-section dev-only" style="display:none;">
+        <h3>🔄 数据更新</h3>
+        <div class="hint">上次更新：2026-05-31 | 417名干员</div>
+        <button class="btn btn-primary" style="opacity:.6;font-size:12px;">更新数据（2次API）</button>
+        <span style="font-size:11px;color:var(--text-muted);margin-left:6px;">23小时后可用</span>
+      </div>
+      <div class="setting-section">
+        <h3>📋 方案管理</h3>
+        <div class="hint">管理你的挑战方案。收藏的方案排前面。</div>
+        <div id="plan-list-settings"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function switchPage(p) {
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
+  if (p==='settings') renderPlanList();
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>switchPage(b.dataset.page)));
+
+const allOps = [
+  {name:'芬',cls:'先锋',icon:'🗡️',prof:'先锋',star:2,race:'库兰塔',cost:8,block:2},
+  {name:'香草',cls:'先锋',icon:'🗡️',prof:'先锋',star:2,race:'瑞柏巴',cost:8,block:2},
+  {name:'翎羽',cls:'先锋',icon:'🗡️',prof:'先锋',star:2,race:'黎博利',cost:8,block:2},
+  {name:'清道夫',cls:'先锋',icon:'🗡️',prof:'先锋',star:4,race:'札拉克',cost:10,block:2},
+  {name:'红豆',cls:'先锋',icon:'🗡️',prof:'先锋',star:4,race:'萨卡兹',cost:10,block:2},
+  {name:'德克萨斯',cls:'先锋',icon:'🗡️',prof:'先锋',star:5,race:'鲁珀',cost:11,block:2},
+  {name:'凛冬',cls:'先锋',icon:'🗡️',prof:'先锋',star:5,race:'乌萨斯',cost:11,block:2},
+  {name:'风笛',cls:'先锋',icon:'🗡️',prof:'先锋',star:6,race:'瓦伊凡',cost:12,block:2},
+  {name:'玫兰莎',cls:'近卫',icon:'⚔️',prof:'近卫',star:3,race:'菲林',cost:13,block:2},
+  {name:'缠丸',cls:'近卫',icon:'⚔️',prof:'近卫',star:4,race:'鬼',cost:15,block:2},
+  {name:'霜叶',cls:'近卫',icon:'⚔️',prof:'近卫',star:4,race:'沃尔珀',cost:14,block:2},
+  {name:'艾丝黛尔',cls:'近卫',icon:'⚔️',prof:'近卫',star:4,race:'阿达克利斯',cost:14,block:2},
+  {name:'慕斯',cls:'近卫',icon:'⚔️',prof:'近卫',star:4,race:'菲林',cost:14,block:1},
+  {name:'拉普兰德',cls:'近卫',icon:'⚔️',prof:'近卫',star:5,race:'鲁珀',cost:16,block:2},
+  {name:'银灰',cls:'近卫',icon:'⚔️',prof:'近卫',star:6,race:'菲林',cost:17,block:2},
+  {name:'米格鲁',cls:'重装',icon:'🛡️',prof:'重装',star:3,race:'佩洛',cost:14,block:3},
+  {name:'卡缇',cls:'重装',icon:'🛡️',prof:'重装',star:3,race:'佩洛',cost:14,block:3},
+  {name:'角峰',cls:'重装',icon:'🛡️',prof:'重装',star:4,race:'丰蹄',cost:16,block:3},
+  {name:'蛇屠箱',cls:'重装',icon:'🛡️',prof:'重装',star:4,race:'匹特拉姆',cost:16,block:3},
+  {name:'古米',cls:'重装',icon:'🛡️',prof:'重装',star:4,race:'乌萨斯',cost:15,block:3},
+  {name:'星熊',cls:'重装',icon:'🛡️',prof:'重装',star:6,race:'鬼',cost:19,block:3},
+  {name:'克洛丝',cls:'狙击',icon:'🎯',prof:'狙击',star:3,race:'卡特斯',cost:9,block:1},
+  {name:'杰西卡',cls:'狙击',icon:'🎯',prof:'狙击',star:4,race:'菲林',cost:11,block:1},
+  {name:'流星',cls:'狙击',icon:'🎯',prof:'狙击',star:4,race:'鲁珀',cost:11,block:1},
+  {name:'白雪',cls:'狙击',icon:'🎯',prof:'狙击',star:4,race:'阿纳缇',cost:11,block:1},
+  {name:'能天使',cls:'狙击',icon:'🎯',prof:'狙击',star:6,race:'萨科塔',cost:12,block:1},
+  {name:'蓝毒',cls:'狙击',icon:'🎯',prof:'狙击',star:5,race:'安努拉',cost:11,block:1},
+  {name:'白金',cls:'狙击',icon:'🎯',prof:'狙击',star:5,race:'库兰塔',cost:12,block:1},
+  {name:'炎熔',cls:'术师',icon:'🔮',prof:'术师',star:3,race:'萨卡兹',cost:16,block:1},
+  {name:'12F',cls:'术师',icon:'🔮',prof:'术师',star:1,race:'萨弗拉',cost:6,block:1},
+  {name:'天火',cls:'术师',icon:'🔮',prof:'术师',star:5,race:'菲林',cost:19,block:1},
+  {name:'阿米娅',cls:'术师',icon:'🔮',prof:'术师',star:5,race:'卡特斯/奇美拉',cost:18,block:1},
+  {name:'伊芙利特',cls:'术师',icon:'🔮',prof:'术师',star:6,race:'萨卡兹',cost:21,block:1},
+  {name:'艾雅法拉',cls:'术师',icon:'🔮',prof:'术师',star:6,race:'卡普里尼',cost:20,block:1},
+  {name:'芙蓉',cls:'医疗',icon:'💚',prof:'医疗',star:3,race:'萨卡兹',cost:13,block:1},
+  {name:'安赛尔',cls:'医疗',icon:'💚',prof:'医疗',star:3,race:'卡特斯',cost:13,block:1},
+  {name:'末药',cls:'医疗',icon:'💚',prof:'医疗',star:4,race:'沃尔珀',cost:14,block:1},
+  {name:'嘉维尔',cls:'医疗',icon:'💚',prof:'医疗',star:4,race:'阿达克利斯',cost:14,block:1},
+  {name:'赫默',cls:'医疗',icon:'💚',prof:'医疗',star:5,race:'黎博利',cost:16,block:1},
+  {name:'华法琳',cls:'医疗',icon:'💚',prof:'医疗',star:5,race:'萨卡兹',cost:16,block:1},
+  {name:'闪灵',cls:'医疗',icon:'💚',prof:'医疗',star:6,race:'萨卡兹',cost:18,block:1},
+  {name:'梓兰',cls:'辅助',icon:'🌟',prof:'辅助',star:3,race:'埃拉菲亚',cost:9,block:1},
+  {name:'地灵',cls:'辅助',icon:'🌟',prof:'辅助',star:4,race:'札拉克',cost:11,block:1},
+  {name:'梅尔',cls:'辅助',icon:'🌟',prof:'辅助',star:5,race:'阿戈尔',cost:14,block:1},
+  {name:'初雪',cls:'辅助',icon:'🌟',prof:'辅助',star:5,race:'埃拉菲亚',cost:12,block:1},
+  {name:'真理',cls:'辅助',icon:'🌟',prof:'辅助',star:5,race:'乌萨斯',cost:13,block:1},
+  {name:'安洁莉娜',cls:'辅助',icon:'🌟',prof:'辅助',star:6,race:'沃尔珀',cost:14,block:1},
+  {name:'砾',cls:'特种',icon:'🎪',prof:'特种',star:4,race:'塞拉托',cost:8,block:2},
+  {name:'暗索',cls:'特种',icon:'🎪',prof:'特种',star:4,race:'札拉克',cost:10,block:2},
+  {name:'阿消',cls:'特种',icon:'🎪',prof:'特种',star:4,race:'札拉克',cost:10,block:2},
+  {name:'红',cls:'特种',icon:'🎪',prof:'特种',star:5,race:'沃尔珀',cost:9,block:2},
+  {name:'狮蝎',cls:'特种',icon:'🎪',prof:'特种',star:5,race:'曼提柯',cost:13,block:0},
+  {name:'食铁兽',cls:'特种',icon:'🎪',prof:'特种',star:5,race:'乌萨斯',cost:11,block:2},
+];
+
+let squad = [];
+let currentProf='先锋',currentRarity=0,currentRace='',profSearch='';
+let confirmedTags=[],confirmedStage='',editingEnabled=false;
+const stages=[
+  {name:'1-7 霜冻',type:'普通',icon:'⬜'},
+  {name:'2-10 病入膏肓',type:'Boss',icon:'🟧'},
+  {name:'3-8 黄昏',type:'Boss',icon:'🟧'},
+  {name:'4-10 灯火将熄',type:'Boss',icon:'🟧'},
+  {name:'5-10 长夜终尽',type:'Boss',icon:'🟧'},
+  {name:'6-16 黑键',type:'Boss',icon:'🟧'},
+  {name:'7-18 爱国者之死',type:'超难Boss',icon:'🟪'},
+  {name:'H5-4',type:'超难',icon:'🟥'},
+  {name:'H7-4',type:'超难Boss',icon:'🟪'},
+  {name:'R8-8 坏家伙',type:'Boss',icon:'🟧'},
+];
+let currentStageIdx=3;
+
+// 方案数据
+let plans = [
+  {id:1,name:'4人少人挑战',tags:['编队≤4','★≤3'],stage:'4-10',fav:true,squad:['阿米娅','玫兰莎','米格鲁'],time:'2026-05-30'},
+  {id:2,name:'无医疗通关',tags:['无医疗','总费≤80'],stage:'5-10',fav:false,squad:['德克萨斯','芬'],time:'2026-05-29'},
+];
+
+function renderSquad() {
+  const g=document.getElementById('squad-grid');
+  g.innerHTML=squad.slice(0,12).map((op,i)=>{
+    const col=Math.floor(i/2)+1, row=(i%2)+1;
+    const v=op.valid?'':' slot-violation';
+    return `<div class="slot${v}" style="grid-column:${col};grid-row:${row};"><button class="remove-btn" onclick="removeOp(${i})">✕</button><div class="avatar" style="background:${op.valid?'var(--bg-hover)':'rgba(248,81,73,.15)'}">${op.icon}</div><div class="oname">${op.name}</div><div class="osub">${op.valid?`💰${op.cost} 🛡️${op.block}`:'超限!'}</div></div>`;
+  }).join('');
+  document.getElementById('badge-count').textContent=`人数 ${squad.length}/12`;
+  document.getElementById('badge-count').className=`badge ${squad.length>12?'badge-err':squad.length>8?'badge-warn':'badge-ok'}`;
+  const c=squad.length*18;
+  document.getElementById('badge-cost').textContent=`费用 ${c}/80`;
+  document.getElementById('badge-cost').className=`badge ${c>80?'badge-err':'badge-ok'}`;
+}
+
+function addOpToSquad(op) {
+  if(squad.length>=12||squad.some(s=>s.name===op.name)) return;
+  squad.push({...op,valid:Math.random()>.25});
+  renderSquad(); renderOpsFixed();
+}
+
+function removeOp(i) { squad.splice(i,1); renderSquad(); renderOpsFixed(); }
+function clearSquad() { squad=[]; renderSquad(); renderOpsFixed(); }
+
+function showOpInfo(op){
+  const panel=document.getElementById('op-info-panel');
+  if(!op){panel.style.display='none';return;}
+  panel.style.display='block';
+  panel.innerHTML=`<div style="display:flex;align-items:center;gap:10px;">
+    <span style="font-size:24px;">${op.icon}</span>
+    <div style="flex:1;">
+      <div style="font-weight:500;font-size:13px;">${op.name}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:2px;">
+        <span class="badge badge-info" style="font-size:10px;background:rgba(88,166,255,.1);color:var(--accent);border:1px solid rgba(88,166,255,.2);">${op.prof}</span>
+        <span class="badge badge-warn" style="font-size:10px;">${'★'.repeat(op.star)}</span>
+        <span class="badge badge-ok" style="font-size:10px;">${op.race}</span>
+        <span class="badge" style="font-size:10px;background:rgba(210,153,34,.1);color:var(--warning);border:1px solid rgba(210,153,34,.2);">💰${op.cost}</span>
+        <span class="badge" style="font-size:10px;background:rgba(63,185,80,.1);color:var(--green);border:1px solid rgba(63,185,80,.2);">🛡️${op.block}</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);text-align:right;">
+      <div>双击加入编队</div>
+    </div>
+  </div>`;
+}
+
+function renderOpsFixed() {
+  const c=document.getElementById('op-selector');
+  if(currentProf==='race'){
+    if(!currentRace){
+      const r=[...new Set(allOps.map(o=>o.race))].sort();
+      c.innerHTML=r.map(r=>`<button class="btn btn-sm" onclick="currentRace='${r}';renderOpsFixed()">${r}</button>`).join('');
+      return;
+    }
+    const f=allOps.filter(o=>o.race===currentRace&&!squad.some(s=>s.name===o.name)&&(!profSearch||o.name.includes(profSearch)));
+    c.innerHTML=(f.length?f.map(o=>`<button class="btn btn-sm op-btn" data-op='${JSON.stringify(o).replace(/'/g,"\\'").replace(/"/g,'&quot;')}'>${o.icon} ${o.name}</button>`).join(''):'<span style="font-size:12px;color:var(--text-muted);">无匹配</span>')+`<div style="margin-top:6px;"><button class="btn btn-sm" onclick="currentRace='';renderOpsFixed()">← 返回</button></div>`;
+    attachOpEvents();
+    return;
+  }
+  if(currentProf==='rarity'){
+    if(!currentRarity){c.innerHTML=[1,2,3,4,5,6].map(s=>`<button class="btn" onclick="currentRarity=${s};renderOpsFixed()">${'★'.repeat(s)}</button>`).join('');return;}
+    const f=allOps.filter(o=>o.star===currentRarity&&!squad.some(s=>s.name===o.name)&&(!profSearch||o.name.includes(profSearch)));
+    c.innerHTML=(f.length?f.map(o=>`<button class="btn btn-sm op-btn" data-op='${JSON.stringify(o).replace(/'/g,"\\'").replace(/"/g,'&quot;')}'>${o.icon} ${o.name}</button>`).join(''):'<span style="font-size:12px;color:var(--text-muted);">无匹配</span>')+`<div style="margin-top:6px;"><button class="btn btn-sm" onclick="currentRarity=0;renderOpsFixed()">← 返回</button></div>`;
+    attachOpEvents();
+    return;
+  }
+  const f=allOps.filter(o=>o.prof===currentProf&&!squad.some(s=>s.name===o.name)&&(!profSearch||o.name.includes(profSearch)));
+  c.innerHTML=f.length?f.map(o=>`<button class="btn btn-sm op-btn" data-op='${JSON.stringify(o).replace(/'/g,"\\'").replace(/"/g,'&quot;')}'>${o.icon} ${o.name}</button>`).join(''):'<span style="font-size:12px;color:var(--text-muted);">无匹配</span>';
+  attachOpEvents();
+}
+
+function attachOpEvents(){
+  document.querySelectorAll('.op-btn').forEach(btn=>{
+    btn.addEventListener('click',function(e){
+      const op=JSON.parse(this.dataset.op);
+      showOpInfo(op);
+    });
+    btn.addEventListener('dblclick',function(e){
+      const op=JSON.parse(this.dataset.op);
+      showOpInfo(null);
+      addOpToSquad(op);
+    });
+  });
+}
+
+function filterOps(){profSearch=document.getElementById('op-search').value.trim();currentRarity=0;currentRace='';renderOpsFixed();}
+
+document.getElementById('prof-tabs').addEventListener('click',function(e){
+  const t=e.target.closest('.tag');if(!t)return;
+  document.querySelectorAll('#prof-tabs .tag').forEach(x=>x.classList.remove('active-tag'));
+  t.classList.add('active-tag');currentProf=t.dataset.prof;currentRarity=0;currentRace='';renderOpsFixed();
+});
+
+// 确认标签 + 关卡
+function confirmTags(){
+  if(tagMode==='manual'){
+    if(selectedTags.length===0){alert('请至少选一个标签');return;}
+    confirmedTags=[...selectedTags];
+  }else{
+    // 随机模式下从当前显示的标签中读取
+    const tags=document.querySelectorAll('#tag-container .active-tag');
+    if(tags.length===0){alert('请先抽标签');return;}
+    confirmedTags=[...tags].map(t=>t.textContent);
+  }
+  enableEditing();
+}
+
+function rerollStage(){
+  const pool=[...stages];
+  let idx=Math.floor(Math.random()*pool.length);
+  currentStageIdx=idx;
+  renderStage();
+}
+
+function renderStage(){
+  const s=stages[currentStageIdx];
+  document.getElementById('stage-display').innerHTML=`<div style="font-size:12px;">${s.icon} ${s.name}</div><div style="font-size:10px;color:var(--text-muted);">${s.type}关 | 标准模式</div>`;
+}
+
+function confirmStage(){
+  confirmedStage=stages[currentStageIdx].name;
+  enableEditing();
+}
+
+function enableEditing(){
+  if(confirmedTags.length>0||confirmedStage){
+    const banner=document.getElementById('confirmed-banner');
+    banner.style.display='block';
+    const parts=[];
+    if(confirmedTags.length) parts.push('🏷️ '+confirmedTags.join(' · '));
+    if(confirmedStage) parts.push('🗺️ '+confirmedStage);
+    banner.innerHTML=parts.join(' | ');
+    // 启用干员选择
+    document.getElementById('op-select-card').style.opacity='1';
+    document.getElementById('op-select-card').style.pointerEvents='auto';
+    document.getElementById('op-hint').textContent='';
+    squad=[];renderSquad();renderOpsFixed();
+  }
+}
+let tagMode = 'manual';
+const allTagNames=['编队≤4','★≤3','总费≤80','无医疗','仅近战','仅远程','同国家','萨卡兹之力','菲林成群','稀有种族','挂机','阻挡2','阻挡3','华莱士流'];
+let selectedTags=[];
+
+function setTagMode(mode){
+  tagMode=mode;
+  document.getElementById('btn-manual-tag').className=mode==='manual'?'btn btn-sm btn-primary':'btn btn-sm';
+  document.getElementById('btn-random-tag').className=mode==='random'?'btn btn-sm btn-primary':'btn btn-sm';
+  renderTags();
+}
+
+function renderTags(){
+  const c=document.getElementById('tag-container');
+  if(tagMode==='manual'){
+    c.innerHTML=allTagNames.map(t=>`<label style="display:inline-flex;align-items:center;gap:3px;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;margin:2px;cursor:pointer;background:${selectedTags.includes(t)?'rgba(88,166,255,.1)':'transparent'};${selectedTags.includes(t)?'border-color:var(--accent)':''}" onclick="toggleTagSelect('${t}')">
+      <input type="checkbox" ${selectedTags.includes(t)?'checked':''} style="accent-color:var(--accent);margin:0;" onchange="event.stopPropagation()">
+      ${t}
+    </label>`).join('');
+  }else{
+    const n=2+Math.floor(Math.random()*3);
+    const drawn=[];
+    const pool=[...allTagNames];
+    while(drawn.length<n&&pool.length>0){
+      const i=Math.floor(Math.random()*pool.length);
+      drawn.push(pool.splice(i,1)[0]);
+    }
+    c.innerHTML=`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">${drawn.map(t=>`<span class="tag tag-sm active-tag">${t}</span>`).join('')}</div><button class="btn btn-sm" onclick="renderTags()">🔄 重新抽</button>`;
+  }
+}
+
+function toggleTagSelect(t){
+  const i=selectedTags.indexOf(t);
+  if(i>-1)selectedTags.splice(i,1);else selectedTags.push(t);
+  renderTags();
+}
+
+// 方案
+function savePlan2(){
+  const names=squad.map(s=>s.name);
+  plans.unshift({id:Date.now(),name:names.slice(0,3).join('+')||'空编队',tags:['编队≤4'],stage:'4-10',fav:false,squad:names,time:new Date().toISOString().slice(0,10)});
+  renderPlanList();
+}
+function toggleFav(id){const p=plans.find(x=>x.id===id);if(p)p.fav=!p.fav;renderPlanList();}
+function delPlan(id){plans=plans.filter(x=>x.id!==id);renderPlanList();}
+
+function renderPlanList(){
+  const el=document.getElementById('right-plan-list');
+  const sorted=[...plans].sort((a,b)=>{if(a.fav&&!b.fav)return -1;if(!a.fav&&b.fav)return 1;return 0;});
+  el.innerHTML=sorted.length?sorted.map(p=>`
+    <div class="plan-card${p.fav?' favorited':''}">
+      <div class="plan-icon">${p.fav?'⭐':'📋'}</div>
+      <div class="plan-info"><div class="plan-name">${p.name}</div><div class="plan-detail">${p.time}</div></div>
+      <div class="plan-actions">
+        <button class="btn-icon" onclick="toggleFav(${p.id})" style="font-size:12px;border:none;background:none;cursor:pointer;opacity:.5;">${p.fav?'🌟':'☆'}</button>
+        <button class="btn-icon" onclick="delPlan(${p.id})" style="font-size:12px;border:none;background:none;cursor:pointer;color:var(--danger);opacity:.5;">🗑️</button>
+      </div>
+    </div>
+  `).join(''):'<div style="font-size:12px;color:var(--text-muted);">暂无方案</div>';
+
+  // 同步到设置页
+  const sel=document.getElementById('plan-list-settings');
+  if(sel)sel.innerHTML=el.innerHTML;
+}
+
+// 设置页：章节
+document.getElementById('chapter-list').innerHTML=[
+  {name:'第一章',range:'1-1~1-12',ch:true},{name:'第二章',range:'2-1~2-10',ch:false},
+  {name:'第三章',range:'3-1~3-8',ch:false},{name:'第四章',range:'4-1~4-10',ch:false},
+  {name:'第五章',range:'5-1~5-11',ch:true},{name:'第六章',range:'6-1~6-17',ch:true},
+].map(ch=>`<label class="chapter-row"><input type="checkbox" ${ch.ch?'checked':''}> ${ch.name} (${ch.range})</label>`).join('');
+
+// 开发者模式
+let devClickCount = 0;
+let isDevMode = false;
+
+function toggleDevMode() {
+  devClickCount++;
+  if (devClickCount >= 3) {
+    isDevMode = !isDevMode;
+    document.querySelectorAll('.dev-only').forEach(el => el.style.display = isDevMode ? 'block' : 'none');
+    document.getElementById('version-label').textContent = isDevMode ? 'v3.3-dev' : 'v3.3';
+    devClickCount = 0;
+  }
+}
+
+renderSquad();renderOpsFixed();renderPlanList();renderTags();renderStage();
+</script>
+</body>
+</html>

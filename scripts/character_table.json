@@ -1,0 +1,232 @@
+{
+  "char_285_medic2": {
+    "name": "Lancet-2",
+    "description": "恢复友方单位生命，且不受<@ba.kw>部署数量</>限制，但再部署时间极长",
+    "sortIndex": 551,
+    "spTargetType": "NONE",
+    "spTargetId": null,
+    "canUseGeneralPotentialItem": false,
+    "canUseActivityPotentialItem": false,
+    "potentialItemId": "p_char_285_medic2",
+    "activityPotentialItemId": null,
+    "classicPotentialItemId": null,
+    "nationId": "rhodes",
+    "groupId": null,
+    "teamId": null,
+    "mainPower": {
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null
+    },
+    "subPower": null,
+    "displayNumber": "RCX2",
+    "appellation": "Lancet-2",
+    "position": "RANGED",
+    "tagList": [
+      "支援机械",
+      "治疗"
+    ],
+    "itemUsage": "罗德岛医疗机器人Lancet-2，被工程师可露希尔派遣来执行战地医疗任务。",
+    "itemDesc": "她知道自己是一台机器人。",
+    "itemObtainApproach": "招募寻访",
+    "isNotObtainable": false,
+    "isSpChar": false,
+    "maxPotentialLevel": 5,
+    "rarity": "TIER_1",
+    "profession": "MEDIC",
+    "subProfessionId": "physician",
+    "trait": null,
+    "phases": [
+      {
+        "characterPrefabKey": "char_285_medic2",
+        "rangeId": "3-1",
+        "maxLevel": 30,
+        "attributesKeyFrames": [
+          {
+            "level": 1,
+            "data": {
+              "maxHp": 261,
+              "atk": 42,
+              "def": 16,
+              "magicResistance": 0.0,
+              "cost": 3,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 2.85,
+              "respawnTime": 200,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false
+            }
+          },
+          {
+            "level": 30,
+            "data": {
+              "maxHp": 435,
+              "atk": 70,
+              "def": 27,
+              "magicResistance": 0.0,
+              "cost": 3,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 2.85,
+              "respawnTime": 200,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false
+            }
+          }
+        ],
+        "evolveCost": null
+      }
+    ],
+    "skills": [],
+    "displayTokenDict": null,
+    "talents": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "救援喷雾·I",
+            "description": "部署后立即恢复全场友方单位200点生命",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 200.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 1,
+            "prefabKey": "1",
+            "name": "救援喷雾·II",
+            "description": "部署后立即恢复全场友方单位260点生命",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 260.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 2,
+            "prefabKey": "1",
+            "name": "救援喷雾·III",
+            "description": "部署后立即恢复全场友方单位320点生命",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 320.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 3,
+            "prefabKey": "1",
+            "name": "救援喷雾·IV",
+            "description": "部署后立即恢复全场友方单位380点生命",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 380.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "救援喷雾·V",
+            "description": "部署后立即恢复全场友方单位440点生命",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 440.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 5,
+            "prefabKey": "1",
+            "name": "救援喷雾·VI",
+            "description": "部署后立即恢复全场友方单位500点生命",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 500.0,
+                "valueStr": null
+              }
+          

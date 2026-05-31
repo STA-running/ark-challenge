@@ -1,0 +1,378 @@
+@import "tailwindcss";
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ========== 明日方舟风格主题 ========== */
+:root {
+  /* 主色调 — 鹰角风格深黑 */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-card: rgba(14, 14, 20, 0.9);
+  --bg-card-hover: rgba(20, 20, 28, 0.92);
+  --bg-input: #0a0a0f;
+
+  /* 罗德岛青绿强调色 */
+  --accent: #2dd4bf;
+  --accent-dim: #0d9488;
+  --accent-bg: rgba(45, 212, 191, 0.1);
+  --accent-border: rgba(45, 212, 191, 0.3);
+
+  /* 军事工业风边框 */
+  --border: rgba(48, 54, 80, 0.6);
+  --border-light: rgba(48, 54, 80, 0.3);
+  --border-accent: rgba(45, 212, 191, 0.5);
+
+  /* 文本 */
+  --text-primary: #e8edf5;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --text-accent: #2dd4bf;
+
+  /* 职业颜色（更亮） */
+  --color-vanguard: #f97583;
+  --color-guard: #e5c07b;
+  --color-defender: #56b6c2;
+  --color-sniper: #98c379;
+  --color-caster: #c678dd;
+  --color-medic: #61afef;
+  --color-supporter: #d19a66;
+  --color-special: #be5046;
+
+  /* 稀有度颜色 */
+  --rarity-1: #8b949e;
+  --rarity-2: #58a6ff;
+  --rarity-3: #d2a8ff;
+  --rarity-4: #f0883e;
+  --rarity-5: #ffd700;
+  --rarity-6: #ff6b6b;
+
+  /* 关卡类型颜色 */
+  --stage-normal: #8b949e;
+  --stage-boss: #e5c07b;
+  --stage-hard: #c678dd;
+  --stage-hardboss: #e06c75;
+
+  /* 字体 */
+  --font-body: -apple-system, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+
+  /* 间距 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+/* ========== 明日方舟风格多层背景系统 ========== */
+/* 设计语言来源：ak.hypergryph.com + hypergryph.com
+   核心要素：赛博-末世工业美学、深色基底 + 微网格 + 青绿辉光 + 噪点 + 军事HUD几何装饰
+   透明度门槛：在 rgba(10,10,15) 底上至少 0.08 才肉眼可见，辉光类 0.10~0.18 为宜 */
+
+html {
+  background: #131518;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+
+  /* background-attachment: fixed — 辉光/网格固定在视口上，不随滚动移动，
+     营造「监视器屏幕」的沉浸感：光晕是屏幕本身发出的，不是页面内容的一部分 */
+  background-attachment: fixed;
+
+  /* CSS background-image 堆叠：先写的在最上面（离用户最近）
+       顶层 ── 扫描线（CRT 监视器横纹）
+             ── 左上青绿辉光（罗德岛品牌色，主光源）
+             ── 右上青绿回响（与左上辉光对称点缀）
+             ── 右下蓝紫辉光
+             ── 左下暖橙辉光（状态指示灯暖色调）
+             ── 中右青绿辉光（第三处青绿色灯）
+             ── 顶部中紫辉光（上方氛围补光）
+             ── 轻暗角（边缘轻微压暗）
+             ── 中央屏幕辉光（终端监视器均匀发光）
+       底层 ── 40px 战术网格 + background-color
+  */
+  background-color: #131518;
+  background-image:
+    /* ── CRT 扫描线 ── */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.028) 3px,
+      rgba(255, 255, 255, 0.028) 4px
+    ),
+    /* ── 左上青绿辉光（主光源）── */
+    radial-gradient(
+      ellipse 90% 65% at 25% 15%,
+      rgba(45, 212, 191, 0.25) 0%,
+      rgba(13, 148, 136, 0.10) 30%,
+      transparent 65%
+    ),
+    /* ── 右上青绿回响（对称点缀）── */
+    radial-gradient(
+      ellipse 55% 45% at 82% 10%,
+      rgba(45, 212, 191, 0.12) 0%,
+      transparent 55%
+    ),
+    /* ── 右下蓝紫辉光 ── */
+    radial-gradient(
+      ellipse 68% 68% at 80% 90%,
+      rgba(96, 165, 250, 0.14) 0%,
+      rgba(198, 120, 221, 0.07) 40%,
+      transparent 75%
+    ),
+    /* ── 左下暖橙辉光（状态指示灯暖光）── */
+    radial-gradient(
+      ellipse 50% 50% at 18% 85%,
+      rgba(240, 150, 60, 0.10) 0%,
+      transparent 55%
+    ),
+    /* ── 中右青绿辉光（第三处冷光点缀）── */
+    radial-gradient(
+      ellipse 50% 65% at 92% 50%,
+      rgba(45, 212, 191, 0.09) 0%,
+      transparent 60%
+    ),
+    /* ── 顶部中紫辉光（上方氛围补光）── */
+    radial-gradient(
+      ellipse 70% 40% at 50% 0%,
+      rgba(198, 120, 221, 0.08) 0%,
+      transparent 55%
+    ),
+    /* ── 轻暗角 ── */
+    radial-gradient(
+      ellipse at center,
+      transparent 35%,
+      rgba(0, 0, 0, 0.35) 100%
+    ),
+    /* ── 中央屏幕辉光 ── */
+    radial-gradient(
+      ellipse 90% 75% at 50% 45%,
+      rgba(20, 28, 35, 0.85) 0%,
+      transparent 80%
+    ),
+    /* ── 40px 战术网格 ── */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(48, 54, 80, 0.16) 39px,
+      rgba(48, 54, 80, 0.16) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(48, 54, 80, 0.16) 39px,
+      rgba(48, 54, 80, 0.16) 40px
+    );
+}
+
+/* ── 噪点纹理叠加层 ──
+   使用 SVG feTurbulence 滤镜生成胶片颗粒感
+   位于最顶层（z-index: 9998），为整个页面铺一层模拟纹理 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── 装饰性几何元素 ──
+   鹰角风格的军事HUD角标 + 菱形源石晶体图案
+   固定定位在页面背景层，不随滚动移动 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    /* 左上 HUD 角标 ─ 水平线 */
+    linear-gradient(90deg, rgba(45, 212, 191, 0.12), rgba(45, 212, 191, 0.12)) no-repeat 36px 55px / 60px 1px,
+    /* 左上 HUD 角标 ─ 垂直线 */
+    linear-gradient(180deg, rgba(45, 212, 191, 0.12), rgba(45, 212, 191, 0.12)) no-repeat 36px 55px / 1px 60px,
+    /* 右上 HUD 角标 ─ 水平线 */
+    linear-gradient(90deg, rgba(45, 212, 191, 0.12), rgba(45, 212, 191, 0.12)) no-repeat calc(100% - 96px) 55px / 60px 1px,
+    /* 右上 HUD 角标 ─ 垂直线 */
+    linear-gradient(180deg, rgba(45, 212, 191, 0.12), rgba(45, 212, 191, 0.12)) no-repeat calc(100% - 36px) 55px / 1px 60px,
+    /* 大型菱形源石晶体 - 左上 */
+    linear-gradient(135deg, transparent calc(50% - 0.5px), rgba(45, 212, 191, 0.06) calc(50%), transparent calc(50% + 0.5px)) no-repeat -200px 120px / 500px 500px,
+    linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(45, 212, 191, 0.06) calc(50%), transparent calc(50% + 0.5px)) no-repeat -200px 120px / 500px 500px,
+    /* 小型菱形 - 右下 */
+    linear-gradient(135deg, transparent calc(50% - 0.5px), rgba(96, 165, 250, 0.04) calc(50%), transparent calc(50% + 0.5px)) no-repeat calc(100% + 20px) -200px / 400px 400px,
+    linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(96, 165, 250, 0.04) calc(50%), transparent calc(50% + 0.5px)) no-repeat calc(100% + 20px) -200px / 400px 400px;
+}
+
+/* ========== 全局滚动条 ========== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(48, 54, 80, 0.6); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(48, 54, 80, 0.9); }
+
+/* ========== 卡片 ========== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.08), 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ========== 右侧面板分区 ========== */
+.right-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.right-section h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-accent);
+  letter-spacing: 0.5px;
+}
+
+/* ========== 设置分区 ========== */
+.setting-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.setting-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-accent);
+}
+
+/* ========== 按钮基础 ========== */
+button {
+  font-family: var(--font-body);
+  transition: all 0.15s ease;
+}
+button:hover {
+  filter: brightness(1.15);
+}
+button:active {
+  transform: scale(0.97);
+}
+
+/* ========== 输入框 ========== */
+input[type="text"] {
+  font-family: var(--font-body);
+  transition: border-color 0.2s;
+}
+input[type="text"]:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--accent-border) !important;
+}
+
+/* ========== 标签 ========== */
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.tag-badge-active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-accent);
+}
+
+/* ========== 确认按钮 ========== */
+.btn-primary {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0d9488, #2dd4bf);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.25);
+}
+.btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.35);
+}
+
+/* ========== 次要按钮 ========== */
+.btn-secondary {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--text-accent);
+}
+
+/* ========== 绿色操作按钮 ========== */
+.btn-success {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #059669, #10b981);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ========== 危险按钮 ========== */
+.btn-danger {
+  background: transparent;
+  border: none;
+  color: var(--color-vanguard);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ========== 分隔线 ========== */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 8px 0;
+}
+
+/* ========== 工具类 ========== */
+.text-accent { color: var(--text-accent); }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.font-mono { font-family: var(--font-mono); }

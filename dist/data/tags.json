@@ -1,0 +1,362 @@
+[
+  {
+    "id": "few_ops",
+    "name": "编队≤4",
+    "icon": "🏃",
+    "category": "squad",
+    "detail": "本挑战限制编队人数上限为4人，考验干员单兵作战能力。",
+    "hardConstraints": { "maxSquadSize": 4 },
+    "softConstraints": {}
+  },
+  {
+    "id": "squad_6",
+    "name": "编队≤6",
+    "icon": "⛓️",
+    "category": "squad",
+    "detail": "本挑战限制编队人数上限为6人，编队规模适度受限。",
+    "hardConstraints": { "maxSquadSize": 6 },
+    "softConstraints": {}
+  },
+  {
+    "id": "squad_8",
+    "name": "编队≤8",
+    "icon": "🛡️",
+    "category": "squad",
+    "detail": "本挑战限制编队人数上限为8人，轻度限制编队自由。",
+    "hardConstraints": { "maxSquadSize": 8 },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_healer",
+    "name": "无医疗",
+    "icon": "💚",
+    "category": "squad",
+    "detail": "本挑战禁止编入医疗职业干员，需依靠其他方式维持战线。",
+    "hardConstraints": { "bannedProfessions": ["医疗"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_pioneer",
+    "name": "无先锋",
+    "icon": "🗡️",
+    "category": "squad",
+    "detail": "本挑战禁止编入先锋职业干员，开局费用将更加紧张。",
+    "hardConstraints": { "bannedProfessions": ["先锋"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "same_class_limit",
+    "name": "同职≤2",
+    "icon": "👥",
+    "category": "squad",
+    "detail": "本挑战编队中同一职业的干员不能超过2人。",
+    "hardConstraints": { "maxSameProfession": 2 },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_guard",
+    "name": "无近卫",
+    "icon": "⚔️",
+    "category": "squad",
+    "detail": "本挑战禁止编入近卫职业干员，近战输出受限。",
+    "hardConstraints": { "bannedProfessions": ["近卫"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_defender",
+    "name": "无重装",
+    "icon": "🛡️",
+    "category": "squad",
+    "detail": "本挑战禁止编入重装职业干员，防线将更加脆弱。",
+    "hardConstraints": { "bannedProfessions": ["重装"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_sniper",
+    "name": "无狙击",
+    "icon": "🎯",
+    "category": "squad",
+    "detail": "本挑战禁止编入狙击职业干员，远程物理输出受限。",
+    "hardConstraints": { "bannedProfessions": ["狙击"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_caster",
+    "name": "无术师",
+    "icon": "🔮",
+    "category": "squad",
+    "detail": "本挑战禁止编入术师职业干员，法术输出受限。",
+    "hardConstraints": { "bannedProfessions": ["术师"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_supporter",
+    "name": "无辅助",
+    "icon": "🌟",
+    "category": "squad",
+    "detail": "本挑战禁止编入辅助职业干员，无法享受辅助增益。",
+    "hardConstraints": { "bannedProfessions": ["辅助"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_specialist",
+    "name": "无特种",
+    "icon": "🎪",
+    "category": "squad",
+    "detail": "本挑战禁止编入特种职业干员，特殊机制无法使用。",
+    "hardConstraints": { "bannedProfessions": ["特种"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "low_rarity",
+    "name": "限1★~3★",
+    "icon": "⭐",
+    "category": "rarity",
+    "detail": "本挑战限制干员最大星级不超过3星，即仅允许编入1★~3★干员，★★★★及以上不可使用。",
+    "hardConstraints": { "maxRarity": 3 },
+    "softConstraints": {}
+  },
+  {
+    "id": "budget_rarity",
+    "name": "限1★~4★",
+    "icon": "📦",
+    "category": "rarity",
+    "detail": "本挑战限制干员最大星级不超过4星，即仅允许编入1★~4★干员，★★★★★及以上不可使用。",
+    "hardConstraints": { "maxRarity": 4 },
+    "softConstraints": {}
+  },
+  {
+    "id": "six_star_limit",
+    "name": "6星至多1",
+    "icon": "🌟",
+    "category": "rarity",
+    "detail": "本挑战限制编队中6星干员至多1人，即最多只能带1个★★★★★★干员。",
+    "hardConstraints": { "maxSixStarCount": 1 },
+    "softConstraints": {}
+  },
+  {
+    "id": "six_star_limit_2",
+    "name": "6星至多2",
+    "icon": "🌟",
+    "category": "rarity",
+    "detail": "本挑战限制编队中6星干员至多2人，即最多能带2个★★★★★★干员。",
+    "hardConstraints": { "maxSixStarCount": 2 },
+    "softConstraints": {}
+  },
+  {
+    "id": "no_six_star",
+    "name": "限1★~5★",
+    "icon": "🚫",
+    "category": "rarity",
+    "detail": "本挑战禁止编入任何6星干员，即干员最大星级不超过5星，仅允许1★~5★。",
+    "hardConstraints": { "maxRarity": 5 },
+    "softConstraints": {}
+  },
+  {
+    "id": "total_cost_low",
+    "name": "总费≤80",
+    "icon": "💰",
+    "category": "cost",
+    "detail": "本挑战编队所有干员的部署费用之和不超过80。",
+    "hardConstraints": { "maxTotalCost": 80 },
+    "softConstraints": {}
+  },
+  {
+    "id": "total_cost_extreme",
+    "name": "总费≤60",
+    "icon": "💸",
+    "category": "cost",
+    "detail": "本挑战编队所有干员的部署费用之和不超过60。",
+    "hardConstraints": { "maxTotalCost": 60 },
+    "softConstraints": {}
+  },
+  {
+    "id": "total_cost_100",
+    "name": "总费≤100",
+    "icon": "💰",
+    "category": "cost",
+    "detail": "本挑战编队所有干员的部署费用之和不超过100。",
+    "hardConstraints": { "maxTotalCost": 100 },
+    "softConstraints": {}
+  },
+  {
+    "id": "total_cost_120",
+    "name": "总费≤120",
+    "icon": "💰",
+    "category": "cost",
+    "detail": "本挑战编队所有干员的部署费用之和不超过120。",
+    "hardConstraints": { "maxTotalCost": 120 },
+    "softConstraints": {}
+  },
+  {
+    "id": "single_cost_limit",
+    "name": "单费≤20",
+    "icon": "🎯",
+    "category": "cost",
+    "detail": "本挑战编队中单个干员的部署费用不超过20。",
+    "hardConstraints": { "maxSingleCost": 20 },
+    "softConstraints": {}
+  },
+  {
+    "id": "single_cost_25",
+    "name": "单费≤25",
+    "icon": "🎯",
+    "category": "cost",
+    "detail": "本挑战编队中单个干员的部署费用不超过25。",
+    "hardConstraints": { "maxSingleCost": 25 },
+    "softConstraints": {}
+  },
+  {
+    "id": "single_cost_30",
+    "name": "单费≤30",
+    "icon": "🎯",
+    "category": "cost",
+    "detail": "本挑战编队中单个干员的部署费用不超过30。",
+    "hardConstraints": { "maxSingleCost": 30 },
+    "softConstraints": {}
+  },
+  {
+    "id": "melee_only",
+    "name": "仅近战位",
+    "icon": "⚔️",
+    "category": "position",
+    "detail": "本挑战仅允许编入近战位干员。",
+    "hardConstraints": { "positionRestriction": ["近战位"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "ranged_only",
+    "name": "仅远程位",
+    "icon": "🏹",
+    "category": "position",
+    "detail": "本挑战仅允许编入远程位干员。",
+    "hardConstraints": { "positionRestriction": ["远程位"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "afk_only",
+    "name": "挂机",
+    "icon": "😴",
+    "category": "operation",
+    "detail": "本挑战要求全程不手动开启技能，可选择自动释放或被动技能干员，部署后不进行技能操作。",
+    "hardConstraints": {},
+    "softConstraints": { "afkOnly": true }
+  },
+  {
+    "id": "no_retreat",
+    "name": "不撤退",
+    "icon": "🚪",
+    "category": "operation",
+    "detail": "本挑战要求所有干员部署后不得手动撤退。",
+    "hardConstraints": {},
+    "softConstraints": { "noRetreat": true }
+  },
+  {
+    "id": "no_redeploy",
+    "name": "不重部署",
+    "icon": "🔄",
+    "category": "operation",
+    "detail": "本挑战要求每个干员只能部署一次，不可再部署。",
+    "hardConstraints": {},
+    "softConstraints": { "noRedeploy": true }
+  },
+  {
+    "id": "zero_leak",
+    "name": "最终防线",
+    "icon": "🛡️",
+    "category": "special",
+    "detail": "本挑战要求关卡中不得有敌人进入目标点，即0漏怪通关。",
+    "hardConstraints": {},
+    "softConstraints": { "zeroLeak": true }
+  },
+  {
+    "id": "wallace",
+    "name": "步数≤10",
+    "icon": "🎪",
+    "category": "special",
+    "detail": "本挑战限制全场部署次数、手动开启技能次数和撤退总步数不超过10步。",
+    "hardConstraints": {},
+    "softConstraints": { "maxSteps": 10 }
+  },
+  {
+    "id": "sarkaz_power",
+    "name": "萨卡兹之愿",
+    "icon": "🔥",
+    "category": "race",
+    "detail": "本挑战仅允许编入萨卡兹种族的干员。",
+    "hardConstraints": { "allowedRaces": ["萨卡兹"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "feline_swarm",
+    "name": "菲林",
+    "icon": "🐱",
+    "category": "race",
+    "detail": "本挑战仅允许编入菲林种族的干员。",
+    "hardConstraints": { "allowedRaces": ["菲林"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "liberi_flight",
+    "name": "黎博利",
+    "icon": "🐦",
+    "category": "race",
+    "detail": "本挑战仅允许编入黎博利种族的干员。",
+    "hardConstraints": { "allowedRaces": ["黎博利"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "ban_top_race",
+    "name": "禁常见种族",
+    "icon": "🚫",
+    "category": "race",
+    "detail": "本挑战禁止编入菲林、黎博利、萨卡兹种族的干员。",
+    "hardConstraints": { "bannedRaces": ["菲林", "黎博利", "萨卡兹"] },
+    "softConstraints": {}
+  },
+  {
+    "id": "block_zero",
+    "name": "零阻挡",
+    "icon": "🕊️",
+    "category": "block",
+    "detail": "本挑战编队中所有干员的阻挡数必须为0。",
+    "hardConstraints": { "blockTier": 0, "blockTierMode": "exact" },
+    "softConstraints": {}
+  },
+  {
+    "id": "block_one",
+    "name": "一阻挡",
+    "icon": "🗡️",
+    "category": "block",
+    "detail": "本挑战编队中所有干员的阻挡数必须为1。",
+    "hardConstraints": { "blockTier": 1, "blockTierMode": "exact" },
+    "softConstraints": {}
+  },
+  {
+    "id": "block_two",
+    "name": "二阻挡",
+    "icon": "🛡️",
+    "category": "block",
+    "detail": "本挑战编队中所有干员的阻挡数必须为2。",
+    "hardConstraints": { "blockTier": 2, "blockTierMode": "exact" },
+    "softConstraints": {}
+  },
+  {
+    "id": "block_three_plus",
+    "name": "三阻挡及以上",
+    "icon": "🏰",
+    "category": "block",
+    "detail": "本挑战编队中所有干员的阻挡数必须为3及以上。",
+    "hardConstraints": { "blockTier": 3, "blockTierMode": "exact" },
+    "softConstraints": {}
+  },
+  {
+    "id": "never_forget",
+    "name": "不忘初心",
+    "icon": "💝",
+    "category": "other",
+    "detail": "选择博士每位职业第一个抽取到的干员（在助理切换页面按获取时间排序查看），用初心阵容迎接挑战。",
+    "hardConstraints": {},
+    "softConstraints": {}
+  }
+]

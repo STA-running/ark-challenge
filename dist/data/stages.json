@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "main_01-07",
+    "name": "1-7",
+    "fullName": "1-7 暴君",
+    "chapter": "第一章",
+    "type": "normal",
+    "detail": "源石技艺",
+    "recommendedLevel": "Lv.1",
+    "mapImage": "/images/maps/main_01-07.png"
+  },
+  {
+    "id": "main_02-05",
+    "name": "2-5",
+    "fullName": "2-5 虚空裂口",
+    "chapter": "第二章",
+    "type": "normal",
+    "detail": "突袭战术",
+    "recommendedLevel": "Lv.1",
+    "mapImage": "/images/maps/main_02-05.png"
+  },
+  {
+    "id": "main_02-10",
+    "name": "2-10",
+    "fullName": "2-10 霜叶",
+    "chapter": "第二章",
+    "type": "boss",
+    "detail": "遭遇霜叶",
+    "recommendedLevel": "精英1 Lv.1",
+    "mapImage": "/images/maps/main_02-10.png"
+  },
+  {
+    "id": "main_03-08",
+    "name": "3-8",
+    "fullName": "3-8 分裂",
+    "chapter": "第三章",
+    "type": "boss",
+    "detail": "碎骨登场",
+    "recommendedLevel": "精英1 Lv.30",
+    "mapImage": "/images/maps/main_03-08.png"
+  },
+  {
+    "id": "main_04-04",
+    "name": "4-4",
+    "fullName": "4-4 不要回头",
+    "chapter": "第四章",
+    "type": "normal",
+    "detail": "分歧路口",
+    "recommendedLevel": "精英1 Lv.60",
+    "mapImage": "/images/maps/main_04-04.png"
+  },
+  {
+    "id": "main_04-10",
+    "name": "4-10",
+    "fullName": "4-10 灯火将熄",
+    "chapter": "第四章",
+    "type": "boss",
+    "detail": "遭遇霜星",
+    "recommendedLevel": "精英1 Lv.70",
+    "mapImage": "/images/maps/main_04-10.png"
+  },
+  {
+    "id": "main_05-07",
+    "name": "5-7",
+    "fullName": "5-7 生死与共",
+    "chapter": "第五章",
+    "type": "normal",
+    "detail": "龙门市区",
+    "recommendedLevel": "精英1 Lv.70",
+    "mapImage": "/images/maps/main_05-07.png"
+  },
+  {
+    "id": "main_05-10",
+    "name": "5-10",
+    "fullName": "5-10 长夜终尽",
+    "chapter": "第五章",
+    "type": "boss",
+    "detail": "浮士德Boss战",
+    "recommendedLevel": "精英2 Lv.1",
+    "mapImage": "/images/maps/main_05-10.png"
+  },
+  {
+    "id": "main_06-05",
+    "name": "6-5",
+    "fullName": "6-5 解决谁？",
+    "chapter": "第六章",
+    "type": "normal",
+    "detail": "雪原遭遇战",
+    "recommendedLevel": "精英2 Lv.10",
+    "mapImage": "/images/maps/main_06-05.png"
+  },
+  {
+    "id": "main_06-11",
+    "name": "6-11",
+    "fullName": "6-11 \"这种事\"",
+    "chapter": "第六章",
+    "type": "normal",
+    "detail": "雪原混战",
+    "recommendedLevel": "精英2 Lv.15",
+    "mapImage": "/images/maps/main_06-11.png"
+  },
+  {
+    "id": "main_06-16",
+    "name": "6-16",
+    "fullName": "6-16 黑兔子,白兔子",
+    "chapter": "第六章",
+    "type": "boss",
+    "detail": "霜星决战",
+    "recommendedLevel": "精英2 Lv.20",
+    "mapImage": "/images/maps/main_06-14.png"
+  },
+  {
+    "id": "main_07-09",
+    "name": "7-9",
+    "fullName": "7-9 沉默者之怒-2",
+    "chapter": "第七章",
+    "type": "normal",
+    "detail": "乌萨斯战线",
+    "recommendedLevel": "精英2 Lv.30",
+    "mapImage": "/images/maps/main_07-09.png"
+  },
+  {
+    "id": "main_07-12",
+    "name": "7-12",
+    "fullName": "7-12 浸染-2",
+    "chapter": "第七章",
+    "type": "normal",
+    "detail": "乌萨斯腹地",
+    "recommendedLevel": "精英2 Lv.35",
+    "mapImage": "/images/maps/main_07-12.png"
+  },
+  {
+    "id": "main_07-16",
+    "name": "7-16",
+    "fullName": "7-16 无匹",
+    "chapter": "第七章",
+    "type": "normal",
+    "detail": "乌萨斯核心",
+    "recommendedLevel": "精英2 Lv.35",
+    "mapImage": "/images/maps/main_07-16.png"
+  },
+  {
+    "id": "main_07-18",
+    "name": "7-18",
+    "fullName": "7-18 爱国者之死",
+    "chapter": "第七章",
+    "type": "boss",
+    "detail": "爱国者Boss战",
+    "recommendedLevel": "精英2 Lv.40",
+    "mapImage": "/images/maps/main_07-16.png"
+  },
+  {
+    "id": "main_08-08",
+    "name": "M8-8",
+    "fullName": "M8-8 苏醒，浮出梦乡",
+    "chapter": "第八章",
+    "type": "boss",
+    "detail": "梅菲斯特Boss战",
+    "recommendedLevel": "精英2 Lv.45",
+    "mapImage": "/images/maps/main_08-08.png"
+  },
+  {
+    "id": "main_08-08_r8",
+    "name": "R8-8",
+    "fullName": "R8-8 人心，向背无常",
+    "chapter": "第八章",
+    "type": "normal",
+    "detail": "切尔诺伯格核心",
+    "recommendedLevel": "精英2 Lv.45",
+    "mapImage": "/images/maps/main_08-08.png"
+  },
+  {
+    "id": "main_08-13",
+    "name": "R8-11",
+    "fullName": "R8-11 落雪，浸黑国土",
+    "chapter": "第八章",
+    "type": "normal",
+    "detail": "塔露拉逼近",
+    "recommendedLevel": "精英2 Lv.50",
+    "mapImage": "/images/maps/main_08-13.png"
+  },
+  {
+    "id": "main_08-16",
+    "name": "JT8-2",
+    "fullName": "JT8-2 瞩目，便是日暮",
+    "chapter": "第八章",
+    "type": "boss",
+    "detail": "塔露拉一阶段",
+    "recommendedLevel": "精英2 Lv.55",
+    "mapImage": "/images/maps/main_08-16.png"
+  },
+  {
+    "id": "main_08-17",
+    "name": "JT8-3",
+    "fullName": "JT8-3 昂首，足践烈焰",
+    "chapter": "第八章",
+    "type": "boss",
+    "detail": "塔露拉最终战",
+    "recommendedLevel": "精英2 Lv.60",
+    "mapImage": "/images/maps/main_08-17.png"
+  },
+  {
+    "id": "main_09-14",
+    "name": "9-14",
+    "fullName": "9-14 风中旌旗",
+    "chapter": "第九章",
+    "type": "normal",
+    "detail": "维多利亚战线",
+    "recommendedLevel": "精英2 Lv.25",
+    "mapImage": "/images/maps/main_09-14.png"
+  },
+  {
+    "id": "main_09-18",
+    "name": "9-18",
+    "fullName": "9-18 \"破晓\"",
+    "chapter": "第九章",
+    "type": "normal",
+    "detail": "维多利亚核心",
+    "recommendedLevel": "精英2 Lv.35",
+    "mapImage": "/images/maps/main_09-16.png"
+  },
+  {
+    "id": "main_09-19",
+    "name": "9-19",
+    "fullName": "9-19 长夜枪火",
+    "chapter": "第九章",
+    "type": "boss",
+    "detail": "曼德拉Boss战",
+    "recommendedLevel": "精英2 Lv.40",
+    "mapImage": "/images/maps/main_09-17.png"
+  },
+  {
+    "id": "main_10-07",
+    "name": "10-7",
+    "fullName": "10-7 痛觉相连",
+    "chapter": "第十章",
+    "type": "normal",
+    "detail": "伦蒂尼姆街道",
+    "recommendedLevel": "精英2 Lv.50",
+    "mapImage": "/images/maps/main_10-07.png"
+  },
+  {
+    "id": "main_10-11",
+    "name": "10-11",
+    "fullName": "10-11 千疮百孔",
+    "chapter": "第十章",
+    "type": "normal",
+    "detail": "伦蒂尼姆废墟",
+    "recommendedLevel": "精英2 Lv.55",
+    "mapImage": "/images/maps/main_10-11.png"
+  },
+  {
+    "id": "main_10-15",
+    "name": "10-15",
+    "fullName": "10-15 逃离炮火",
+    "chapter": "第十章",
+    "type": "normal",
+    "detail": "伦蒂尼姆巷战",
+    "recommendedLevel": "精英2 Lv.55",
+    "mapImage": "/images/maps/main_10-15.png"
+  },
+  {
+    "id": "main_10-17",
+    "name": "10-17",
+    "fullName": "10-17 坚城高墙",
+    "chapter": "第十章",
+    "type": "boss",
+    "detail": "深池领袖Boss战",
+    "recommendedLevel": "精英2 Lv.60",
+    "mapImage": "/images/maps/main_10-15.png"
+  },
+  {
+    "id": "main_11-03",
+    "name": "11-3",
+    "fullName": "11-3 蒸汽升腾",
+    "chapter": "第十一章",
+    "type": "normal",
+    "detail": "伦蒂尼姆地下",
+    "recommendedLevel": "精英2 Lv.60",
+    "mapImage": "/images/maps/main_11-03.png"
+  },
+  {
+    "id": "main_11-08",
+    "name": "11-8",
+    "fullName": "11-8 停滞",
+    "chapter": "第十一章",
+    "type": "normal",
+    "detail": "蒸汽管道",
+    "recommendedLevel": "精英2 Lv.60",
+    "mapImage": "/images/maps/main_11-08.png"
+  },
+  {
+    "id": "main_11-12",
+    "name": "11-12",
+    "fullName": "11-12 汹涌而来",
+    "chapter": "第十一章",
+    "type": "normal",
+    "detail": "伦蒂尼姆核心",
+    "recommendedLevel": "精英2 Lv.65",
+    "mapImage": "/images/maps/main_11-12.png"
+  },
+  {
+    "id": "main_11-15",
+    "name": "11-15",
+    "fullName": "11-15 土地震颤",
+    "chapter": "第十一章",
+    "type": "normal",
+    "detail": "蒸汽骑士前哨",
+    "recommendedLevel": "精英2 Lv.65",
+    "mapImage": "/images/maps/main_11-15.png"
+  },
+  {
+    "id": "main_11-20",
+    "name": "11-20",
+    "fullName": "11-20 最后的蒸汽骑士",
+    "chapter": "第十一章",
+    "type": "boss",
+    "detail": "蒸汽骑士Boss战",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/main_11-18.png"
+  },
+  {
+    "id": "main_12-07",
+    "name": "12-7",
+    "fullName": "12-7 平议生死",
+    "chapter": "第十二章",
+    "type": "normal",
+    "detail": "伦蒂尼姆街头",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/main_12-07.png"
+  },
+  {
+    "id": "main_12-13",
+    "name": "12-13",
+    "fullName": "12-13 逆光阴影",
+    "chapter": "第十二章",
+    "type": "normal",
+    "detail": "伦蒂尼姆夜幕",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/main_12-13.png"
+  },
+  {
+    "id": "main_12-19",
+    "name": "12-19",
+    "fullName": "12-19 飞跃，烟火",
+    "chapter": "第十二章",
+    "type": "normal",
+    "detail": "伦蒂尼姆决战前夜",
+    "recommendedLevel": "精英2 Lv.75",
+    "mapImage": "/images/maps/main_12-17.png"
+  },
+  {
+    "id": "main_12-20",
+    "name": "12-20",
+    "fullName": "12-20 诚挚邀请",
+    "chapter": "第十二章",
+    "type": "boss",
+    "detail": "深池领袖Boss战",
+    "recommendedLevel": "精英2 Lv.75",
+    "mapImage": "/images/maps/main_12-18.png"
+  },
+  {
+    "id": "main_13-05",
+    "name": "13-5",
+    "fullName": "13-5 苦厄盘杠",
+    "chapter": "第十三章",
+    "type": "normal",
+    "detail": "萨卡兹前线",
+    "recommendedLevel": "精英2 Lv.75",
+    "mapImage": "/images/maps/main_13-05.png"
+  },
+  {
+    "id": "main_13-11",
+    "name": "13-11",
+    "fullName": "13-11 小镇翳云",
+    "chapter": "第十三章",
+    "type": "normal",
+    "detail": "萨卡兹腹地",
+    "recommendedLevel": "精英2 Lv.80",
+    "mapImage": "/images/maps/main_13-11.png"
+  },
+  {
+    "id": "main_13-15",
+    "name": "13-15",
+    "fullName": "13-15 短暂齐聚",
+    "chapter": "第十三章",
+    "type": "normal",
+    "detail": "萨卡兹核心区",
+    "recommendedLevel": "精英2 Lv.80",
+    "mapImage": "/images/maps/main_13-15.png"
+  },
+  {
+    "id": "main_13-18",
+    "name": "13-18",
+    "fullName": "13-18 挺起胸膝",
+    "chapter": "第十三章",
+    "type": "normal",
+    "detail": "萨卡兹王庭外围",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/main_13-18.png"
+  },
+  {
+    "id": "main_13-21",
+    "name": "13-21",
+    "fullName": "13-21 殷红君主",
+    "chapter": "第十三章",
+    "type": "boss",
+    "detail": "血魔大君Boss战",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/main_13-19.png"
+  },
+  {
+    "id": "main_14-09",
+    "name": "14-9",
+    "fullName": "14-9 应对饱和打击",
+    "chapter": "第十四章",
+    "type": "normal",
+    "detail": "空中打击",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/main_14-09.png"
+  },
+  {
+    "id": "main_14-17",
+    "name": "14-17",
+    "fullName": "14-17 核心舱攻防战",
+    "chapter": "第十四章",
+    "type": "normal",
+    "detail": "核心舱室",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_14-17.png"
+  },
+  {
+    "id": "main_14-18",
+    "name": "14-18",
+    "fullName": "14-18 在炽燃间咆哮",
+    "chapter": "第十四章",
+    "type": "boss",
+    "detail": "曼弗雷德Boss战",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_14-18.png"
+  },
+  {
+    "id": "main_14-20",
+    "name": "14-20",
+    "fullName": "14-20 列王行迹",
+    "chapter": "第十四章",
+    "type": "normal",
+    "detail": "源石核心",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_14-20.png"
+  },
+  {
+    "id": "main_14-21",
+    "name": "14-21",
+    "fullName": "14-21 万千愿景",
+    "chapter": "第十四章",
+    "type": "boss",
+    "detail": "特雷西斯Boss战",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_14-19.png"
+  },
+  {
+    "id": "main_15-10",
+    "name": "15-10",
+    "fullName": "15-10 隔离净空",
+    "chapter": "第十五章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_15-10.png"
+  },
+  {
+    "id": "main_15-14",
+    "name": "15-14",
+    "fullName": "15-14 在尘或血中",
+    "chapter": "第十五章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_15-14.png"
+  },
+  {
+    "id": "main_15-20",
+    "name": "15-20",
+    "fullName": "15-20 得以重回",
+    "chapter": "第十五章",
+    "type": "boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_15-18.png"
+  },
+  {
+    "id": "main_16-07",
+    "name": "16-7",
+    "fullName": "16-7 最后欢愉",
+    "chapter": "第十六章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_16-07.png"
+  },
+  {
+    "id": "main_16-12",
+    "name": "16-12",
+    "fullName": "16-12 深埋地底",
+    "chapter": "第十六章",
+    "type": "boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_16-12.png"
+  },
+  {
+    "id": "main_16-16",
+    "name": "16-16",
+    "fullName": "16-16 示我以真",
+    "chapter": "第十六章",
+    "type": "boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_16-16.png"
+  },
+  {
+    "id": "main_17-12",
+    "name": "17-12",
+    "fullName": "17-12 初次握手",
+    "chapter": "第十七章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_17-12.png"
+  },
+  {
+    "id": "main_17-13",
+    "name": "17-13",
+    "fullName": "17-13 并非独行",
+    "chapter": "第十七章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_17-13.png"
+  },
+  {
+    "id": "main_17-15",
+    "name": "17-15",
+    "fullName": "17-15 人的价值",
+    "chapter": "第十七章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_17-15.png"
+  },
+  {
+    "id": "main_17-17",
+    "name": "17-17",
+    "fullName": "17-17 不曾怀疑",
+    "chapter": "第十七章",
+    "type": "normal",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_17-17.png"
+  },
+  {
+    "id": "main_17-18",
+    "name": "17-18",
+    "fullName": "17-18 灵魂悄然",
+    "chapter": "第十七章",
+    "type": "boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/main_17-17.png"
+  },
+  {
+    "id": "h_05-01",
+    "name": "H5-1",
+    "fullName": "H5-1 炼狱行动-1",
+    "chapter": "第五章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.10",
+    "mapImage": "/images/maps/hard_05-01.png"
+  },
+  {
+    "id": "h_05-02",
+    "name": "H5-2",
+    "fullName": "H5-2 炼狱行动-2",
+    "chapter": "第五章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.10",
+    "mapImage": "/images/maps/hard_05-02.png"
+  },
+  {
+    "id": "h_05-03",
+    "name": "H5-3",
+    "fullName": "H5-3 炼狱行动-3",
+    "chapter": "第五章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.10",
+    "mapImage": "/images/maps/hard_05-03.png"
+  },
+  {
+    "id": "h_05-04",
+    "name": "H5-4",
+    "fullName": "H5-4 炼狱行动-4",
+    "chapter": "第五章 H",
+    "type": "hard_boss",
+    "detail": "高难浮士德战",
+    "recommendedLevel": "精英2 Lv.20",
+    "mapImage": "/images/maps/hard_05-04.png"
+  },
+  {
+    "id": "h_06-01",
+    "name": "H6-1",
+    "fullName": "H6-1 冰狱行动-1",
+    "chapter": "第六章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.20",
+    "mapImage": "/images/maps/hard_06-01.png"
+  },
+  {
+    "id": "h_06-02",
+    "name": "H6-2",
+    "fullName": "H6-2 冰狱行动-2",
+    "chapter": "第六章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.20",
+    "mapImage": "/images/maps/hard_06-02.png"
+  },
+  {
+    "id": "h_06-03",
+    "name": "H6-3",
+    "fullName": "H6-3 冰狱行动-3",
+    "chapter": "第六章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.20",
+    "mapImage": "/images/maps/hard_06-03.png"
+  },
+  {
+    "id": "h_06-04",
+    "name": "H6-4",
+    "fullName": "H6-4 冰狱行动-4",
+    "chapter": "第六章 H",
+    "type": "hard_boss",
+    "detail": "高难霜星战",
+    "recommendedLevel": "精英2 Lv.25",
+    "mapImage": "/images/maps/hard_06-04.png"
+  },
+  {
+    "id": "h_07-01",
+    "name": "H7-1",
+    "fullName": "H7-1 星火行动-1",
+    "chapter": "第七章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.40",
+    "mapImage": "/images/maps/hard_07-01.png"
+  },
+  {
+    "id": "h_07-02",
+    "name": "H7-2",
+    "fullName": "H7-2 星火行动-2",
+    "chapter": "第七章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.40",
+    "mapImage": "/images/maps/hard_07-02.png"
+  },
+  {
+    "id": "h_07-03",
+    "name": "H7-3",
+    "fullName": "H7-3 星火行动-3",
+    "chapter": "第七章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.40",
+    "mapImage": "/images/maps/hard_07-03.png"
+  },
+  {
+    "id": "h_07-04",
+    "name": "H7-4",
+    "fullName": "H7-4 星火行动-4",
+    "chapter": "第七章 H",
+    "type": "hard_boss",
+    "detail": "高难爱国者战",
+    "recommendedLevel": "精英2 Lv.50",
+    "mapImage": "/images/maps/hard_07-04.png"
+  },
+  {
+    "id": "h_08-01",
+    "name": "H8-1",
+    "fullName": "H8-1 狂夜行动-1",
+    "chapter": "第八章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.50",
+    "mapImage": "/images/maps/hard_08-01.png"
+  },
+  {
+    "id": "h_08-02",
+    "name": "H8-2",
+    "fullName": "H8-2 狂夜行动-2",
+    "chapter": "第八章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.50",
+    "mapImage": "/images/maps/hard_08-02.png"
+  },
+  {
+    "id": "h_08-03",
+    "name": "H8-3",
+    "fullName": "H8-3 狂夜行动-3",
+    "chapter": "第八章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.50",
+    "mapImage": "/images/maps/hard_08-03.png"
+  },
+  {
+    "id": "h_08-04",
+    "name": "H8-4",
+    "fullName": "H8-4 狂夜行动-4",
+    "chapter": "第八章 H",
+    "type": "hard_boss",
+    "detail": "高难塔露拉战",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/hard_08-04.png"
+  },
+  {
+    "id": "h_09-01",
+    "name": "H9-1",
+    "fullName": "H9-1 暴风行动-1",
+    "chapter": "第九章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.30",
+    "mapImage": "/images/maps/hard_09-01.png"
+  },
+  {
+    "id": "h_09-02",
+    "name": "H9-2",
+    "fullName": "H9-2 暴风行动-2",
+    "chapter": "第九章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.30",
+    "mapImage": "/images/maps/hard_09-02.png"
+  },
+  {
+    "id": "h_09-03",
+    "name": "H9-3",
+    "fullName": "H9-3 暴风行动-3",
+    "chapter": "第九章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.30",
+    "mapImage": "/images/maps/hard_09-03.png"
+  },
+  {
+    "id": "h_09-04",
+    "name": "H9-4",
+    "fullName": "H9-4 急雨行动-1",
+    "chapter": "第九章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.35",
+    "mapImage": "/images/maps/hard_09-04.png"
+  },
+  {
+    "id": "h_09-05",
+    "name": "H9-5",
+    "fullName": "H9-5 急雨行动-2",
+    "chapter": "第九章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.35",
+    "mapImage": "/images/maps/hard_09-05.png"
+  },
+  {
+    "id": "h_09-06",
+    "name": "H9-6",
+    "fullName": "H9-6 急雨行动-3",
+    "chapter": "第九章 H",
+    "type": "hard_boss",
+    "detail": "高难曼德拉战",
+    "recommendedLevel": "精英2 Lv.45",
+    "mapImage": "/images/maps/hard_09-06.png"
+  },
+  {
+    "id": "h_10-01",
+    "name": "H10-1",
+    "fullName": "H10-1 日晕行动-1",
+    "chapter": "第十章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.55",
+    "mapImage": "/images/maps/hard_10-01.png"
+  },
+  {
+    "id": "h_10-02",
+    "name": "H10-2",
+    "fullName": "H10-2 日晕行动-2",
+    "chapter": "第十章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.55",
+    "mapImage": "/images/maps/hard_10-02.png"
+  },
+  {
+    "id": "h_10-03",
+    "name": "H10-3",
+    "fullName": "H10-3 日晕行动-3",
+    "chapter": "第十章 H",
+    "type": "hard_boss",
+    "detail": "高难深池领袖战",
+    "recommendedLevel": "精英2 Lv.65",
+    "mapImage": "/images/maps/hard_10-03.png"
+  },
+  {
+    "id": "h_11-01",
+    "name": "H11-1",
+    "fullName": "H11-1 尘霾行动-1",
+    "chapter": "第十一章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.65",
+    "mapImage": "/images/maps/hard_11-01.png"
+  },
+  {
+    "id": "h_11-02",
+    "name": "H11-2",
+    "fullName": "H11-2 尘霾行动-2",
+    "chapter": "第十一章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.65",
+    "mapImage": "/images/maps/hard_11-02.png"
+  },
+  {
+    "id": "h_11-03",
+    "name": "H11-3",
+    "fullName": "H11-3 尘霾行动-3",
+    "chapter": "第十一章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.65",
+    "mapImage": "/images/maps/hard_11-03.png"
+  },
+  {
+    "id": "h_11-04",
+    "name": "H11-4",
+    "fullName": "H11-4 尘霾行动-4",
+    "chapter": "第十一章 H",
+    "type": "hard_boss",
+    "detail": "高难蒸汽骑士战",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/hard_11-04.png"
+  },
+  {
+    "id": "h_12-01",
+    "name": "H12-1",
+    "fullName": "H12-1 惊霆行动-1",
+    "chapter": "第十二章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/hard_12-01.png"
+  },
+  {
+    "id": "h_12-02",
+    "name": "H12-2",
+    "fullName": "H12-2 惊霆行动-2",
+    "chapter": "第十二章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/hard_12-02.png"
+  },
+  {
+    "id": "h_12-03",
+    "name": "H12-3",
+    "fullName": "H12-3 惊霆行动-3",
+    "chapter": "第十二章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.70",
+    "mapImage": "/images/maps/hard_12-03.png"
+  },
+  {
+    "id": "h_12-04",
+    "name": "H12-4",
+    "fullName": "H12-4 惊霆行动-4",
+    "chapter": "第十二章 H",
+    "type": "hard_boss",
+    "detail": "高难深池领袖战",
+    "recommendedLevel": "精英2 Lv.75",
+    "mapImage": "/images/maps/hard_12-04.png"
+  },
+  {
+    "id": "h_13-01",
+    "name": "H13-1",
+    "fullName": "H13-1 湍流行动-1",
+    "chapter": "第十三章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.80",
+    "mapImage": "/images/maps/hard_13-01.png"
+  },
+  {
+    "id": "h_13-02",
+    "name": "H13-2",
+    "fullName": "H13-2 湍流行动-2",
+    "chapter": "第十三章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.80",
+    "mapImage": "/images/maps/hard_13-02.png"
+  },
+  {
+    "id": "h_13-03",
+    "name": "H13-3",
+    "fullName": "H13-3 湍流行动-3",
+    "chapter": "第十三章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.80",
+    "mapImage": "/images/maps/hard_13-03.png"
+  },
+  {
+    "id": "h_13-04",
+    "name": "H13-4",
+    "fullName": "H13-4 湍流行动-4",
+    "chapter": "第十三章 H",
+    "type": "hard_boss",
+    "detail": "高难血魔大君战",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/hard_13-04.png"
+  },
+  {
+    "id": "h_14-01",
+    "name": "H14-1",
+    "fullName": "H14-1 灯塔行动-1",
+    "chapter": "第十四章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/hard_14-01.png"
+  },
+  {
+    "id": "h_14-02",
+    "name": "H14-2",
+    "fullName": "H14-2 灯塔行动-2",
+    "chapter": "第十四章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/hard_14-02.png"
+  },
+  {
+    "id": "h_14-03",
+    "name": "H14-3",
+    "fullName": "H14-3 灯塔行动-3",
+    "chapter": "第十四章 H",
+    "type": "hard",
+    "detail": "高难关卡",
+    "recommendedLevel": "精英2 Lv.85",
+    "mapImage": "/images/maps/hard_14-03.png"
+  },
+  {
+    "id": "h_14-04",
+    "name": "H14-4",
+    "fullName": "H14-4 灯塔行动-4",
+    "chapter": "第十四章 H",
+    "type": "hard_boss",
+    "detail": "高难特雷西斯战",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_14-04.png"
+  },
+  {
+    "id": "h_15-01",
+    "name": "H15-1",
+    "fullName": "H15-1 机密预案-1",
+    "chapter": "第十五章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_15-01.png"
+  },
+  {
+    "id": "h_15-02",
+    "name": "H15-2",
+    "fullName": "H15-2 机密预案-2",
+    "chapter": "第十五章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_15-02.png"
+  },
+  {
+    "id": "h_15-03",
+    "name": "H15-3",
+    "fullName": "H15-3 机密预案-3",
+    "chapter": "第十五章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_15-03.png"
+  },
+  {
+    "id": "h_15-04",
+    "name": "H15-4",
+    "fullName": "H15-4 机密预案-4",
+    "chapter": "第十五章 H",
+    "type": "hard_boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_15-04.png"
+  },
+  {
+    "id": "h_16-01",
+    "name": "H16-1",
+    "fullName": "H16-1 异常预案-1",
+    "chapter": "第十六章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_16-01.png"
+  },
+  {
+    "id": "h_16-02",
+    "name": "H16-2",
+    "fullName": "H16-2 异常预案-2",
+    "chapter": "第十六章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_16-02.png"
+  },
+  {
+    "id": "h_16-03",
+    "name": "H16-3",
+    "fullName": "H16-3 异常预案-3",
+    "chapter": "第十六章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_16-03.png"
+  },
+  {
+    "id": "h_16-04",
+    "name": "H16-4",
+    "fullName": "H16-4 异常预案-4",
+    "chapter": "第十六章 H",
+    "type": "hard_boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_16-04.png"
+  },
+  {
+    "id": "h_17-01",
+    "name": "H17-1",
+    "fullName": "H17-1 急变预案-1",
+    "chapter": "第十七章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_17-01.png"
+  },
+  {
+    "id": "h_17-02",
+    "name": "H17-2",
+    "fullName": "H17-2 急变预案-2",
+    "chapter": "第十七章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/hard_17-02.png"
+  },
+  {
+    "id": "h_17-03",
+    "name": "H17-3",
+    "fullName": "H17-3 急变预案-3",
+    "chapter": "第十七章 H",
+    "type": "hard",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/h_17-03.png"
+  },
+  {
+    "id": "h_17-04",
+    "name": "H17-4",
+    "fullName": "H17-4 急变预案-4",
+    "chapter": "第十七章 H",
+    "type": "hard_boss",
+    "detail": "",
+    "recommendedLevel": "精英2 Lv.90",
+    "mapImage": "/images/maps/h_17-04.png"
+  }
+]

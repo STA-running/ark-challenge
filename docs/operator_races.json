@@ -1,0 +1,1723 @@
+{
+  "total": 409,
+  "no_race_count": 8,
+  "race_count": 44,
+  "race_stats": {
+    "菲林": 51,
+    "黎博利": 42,
+    "萨卡兹": 29,
+    "未公开": 24,
+    "沃尔珀": 18,
+    "鲁珀": 18,
+    "库兰塔": 17,
+    "佩洛": 17,
+    "阿戈尔": 17,
+    "札拉克": 14,
+    "乌萨斯": 14,
+    "萨科塔": 13,
+    "卡普里尼": 13,
+    "未知": 13,
+    "卡特斯": 12,
+    "丰蹄": 11,
+    "斐迪亚": 10,
+    "埃拉菲亚": 9,
+    "瓦伊凡": 8,
+    "鬼": 7,
+    "萨弗拉": 7,
+    "杜林": 5,
+    "阿纳缇": 4,
+    "阿达克利斯": 4,
+    "龙": 4,
+    "卡特斯/奇美拉": 3,
+    "瑞柏巴": 3,
+    "德拉克": 3,
+    "阿斯兰": 2,
+    "麒麟": 2,
+    "精灵": 2,
+    "依特拉": 1,
+    "匹特拉姆": 1,
+    "安努拉": 1,
+    "因经纪公司要求不公开": 1,
+    "曼提柯": 1,
+    "不明": 1,
+    "未知（疑似黎博利）": 1,
+    "皮洛萨": 1,
+    "塞拉托": 1,
+    "阿纳萨": 1,
+    "矮人（自称）": 1,
+    "半身人（自称）": 1,
+    "长身人（自称）": 1
+  },
+  "operators": {
+    "char_502_nblade": {
+      "cn": "夜刀",
+      "race": "鬼"
+    },
+    "char_500_noirc": {
+      "cn": "黑角",
+      "race": "鬼"
+    },
+    "char_503_rang": {
+      "cn": "巡林者",
+      "race": "萨弗拉"
+    },
+    "char_501_durin": {
+      "cn": "杜林",
+      "race": "杜林"
+    },
+    "char_009_12fce": {
+      "cn": "12F",
+      "race": "萨弗拉"
+    },
+    "char_123_fang": {
+      "cn": "芬",
+      "race": "库兰塔"
+    },
+    "char_240_wyvern": {
+      "cn": "香草",
+      "race": "瓦伊凡"
+    },
+    "char_192_falco": {
+      "cn": "翎羽",
+      "race": "黎博利"
+    },
+    "char_208_melan": {
+      "cn": "玫兰莎",
+      "race": "菲林"
+    },
+    "char_209_ardign": {
+      "cn": "卡缇",
+      "race": "佩洛"
+    },
+    "char_122_beagle": {
+      "cn": "米格鲁",
+      "race": "佩洛"
+    },
+    "char_124_kroos": {
+      "cn": "克洛丝",
+      "race": "卡特斯"
+    },
+    "char_211_adnach": {
+      "cn": "安德切尔",
+      "race": "萨科塔"
+    },
+    "char_121_lava": {
+      "cn": "炎熔",
+      "race": "萨卡兹"
+    },
+    "char_120_hibisc": {
+      "cn": "芙蓉",
+      "race": "萨卡兹"
+    },
+    "char_212_ansel": {
+      "cn": "安赛尔",
+      "race": "卡特斯"
+    },
+    "char_210_stward": {
+      "cn": "史都华德",
+      "race": "沃尔珀"
+    },
+    "char_278_orchid": {
+      "cn": "梓兰",
+      "race": "黎博利"
+    },
+    "char_141_nights": {
+      "cn": "夜烟",
+      "race": "菲林"
+    },
+    "char_109_fmout": {
+      "cn": "远山",
+      "race": "埃拉菲亚"
+    },
+    "char_235_jesica": {
+      "cn": "杰西卡",
+      "race": "菲林"
+    },
+    "char_126_shotst": {
+      "cn": "流星",
+      "race": "库兰塔"
+    },
+    "char_118_yuki": {
+      "cn": "白雪",
+      "race": "阿纳缇"
+    },
+    "char_198_blackd": {
+      "cn": "讯使",
+      "race": "依特拉"
+    },
+    "char_149_scave": {
+      "cn": "清道夫",
+      "race": "札拉克"
+    },
+    "char_290_vigna": {
+      "cn": "红豆",
+      "race": "萨卡兹"
+    },
+    "char_130_doberm": {
+      "cn": "杜宾",
+      "race": "佩洛"
+    },
+    "char_289_gyuki": {
+      "cn": "缠丸",
+      "race": "鬼"
+    },
+    "char_193_frostl": {
+      "cn": "霜叶",
+      "race": "沃尔珀"
+    },
+    "char_127_estell": {
+      "cn": "艾丝黛尔",
+      "race": "阿达克利斯"
+    },
+    "char_185_frncat": {
+      "cn": "慕斯",
+      "race": "菲林"
+    },
+    "char_237_gravel": {
+      "cn": "砾",
+      "race": "札拉克"
+    },
+    "char_236_rope": {
+      "cn": "暗索",
+      "race": "卡特斯"
+    },
+    "char_117_myrrh": {
+      "cn": "末药",
+      "race": "沃尔珀"
+    },
+    "char_187_ccheal": {
+      "cn": "嘉维尔",
+      "race": "阿达克利斯"
+    },
+    "char_181_flower": {
+      "cn": "调香师",
+      "race": "沃尔珀"
+    },
+    "char_199_yak": {
+      "cn": "角峰",
+      "race": "丰蹄"
+    },
+    "char_150_snakek": {
+      "cn": "蛇屠箱",
+      "race": "匹特拉姆"
+    },
+    "char_196_sunbr": {
+      "cn": "古米",
+      "race": "乌萨斯"
+    },
+    "char_110_deepcl": {
+      "cn": "深海色",
+      "race": "未公开"
+    },
+    "char_183_skgoat": {
+      "cn": "地灵",
+      "race": "卡普里尼"
+    },
+    "char_277_sqrrel": {
+      "cn": "阿消",
+      "race": "札拉克"
+    },
+    "char_128_plosis": {
+      "cn": "白面鸮",
+      "race": "黎博利"
+    },
+    "char_115_headbr": {
+      "cn": "凛冬",
+      "race": "乌萨斯"
+    },
+    "char_102_texas": {
+      "cn": "德克萨斯",
+      "race": "鲁珀"
+    },
+    "char_106_franka": {
+      "cn": "芙兰卡",
+      "race": "沃尔珀"
+    },
+    "char_155_tiger": {
+      "cn": "因陀罗",
+      "race": "菲林"
+    },
+    "char_140_whitew": {
+      "cn": "拉普兰德",
+      "race": "鲁珀"
+    },
+    "char_143_ghost": {
+      "cn": "幽灵鲨",
+      "race": "未公开"
+    },
+    "char_129_bluep": {
+      "cn": "蓝毒",
+      "race": "安努拉"
+    },
+    "char_204_platnm": {
+      "cn": "白金",
+      "race": "库兰塔"
+    },
+    "char_219_meteo": {
+      "cn": "陨星",
+      "race": "萨卡兹"
+    },
+    "char_002_amiya": {
+      "cn": "阿米娅",
+      "race": "卡特斯/奇美拉"
+    },
+    "char_166_skfire": {
+      "cn": "天火",
+      "race": "菲林"
+    },
+    "char_242_otter": {
+      "cn": "梅尔",
+      "race": "阿纳缇"
+    },
+    "char_108_silent": {
+      "cn": "赫默",
+      "race": "黎博利"
+    },
+    "char_171_bldsk": {
+      "cn": "华法琳",
+      "race": "萨卡兹"
+    },
+    "char_148_nearl": {
+      "cn": "临光",
+      "race": "库兰塔"
+    },
+    "char_144_red": {
+      "cn": "红",
+      "race": "鲁珀"
+    },
+    "char_107_liskam": {
+      "cn": "雷蛇",
+      "race": "瓦伊凡"
+    },
+    "char_201_moeshd": {
+      "cn": "可颂",
+      "race": "丰蹄"
+    },
+    "char_163_hpsts": {
+      "cn": "火神",
+      "race": "丰蹄"
+    },
+    "char_145_prove": {
+      "cn": "普罗旺斯",
+      "race": "鲁珀"
+    },
+    "char_158_milu": {
+      "cn": "守林人",
+      "race": "埃拉菲亚"
+    },
+    "char_173_slchan": {
+      "cn": "崖心",
+      "race": "菲林"
+    },
+    "char_174_slbell": {
+      "cn": "初雪",
+      "race": "菲林"
+    },
+    "char_195_glassb": {
+      "cn": "真理",
+      "race": "乌萨斯"
+    },
+    "char_101_sora": {
+      "cn": "空",
+      "race": "因经纪公司要求不公开"
+    },
+    "char_215_mantic": {
+      "cn": "狮蝎",
+      "race": "曼提柯"
+    },
+    "char_241_panda": {
+      "cn": "食铁兽",
+      "race": "乌萨斯"
+    },
+    "char_103_angel": {
+      "cn": "能天使",
+      "race": "萨科塔"
+    },
+    "char_112_siege": {
+      "cn": "推进之王",
+      "race": "阿斯兰"
+    },
+    "char_134_ifrit": {
+      "cn": "伊芙利特",
+      "race": "萨卡兹"
+    },
+    "char_180_amgoat": {
+      "cn": "艾雅法拉",
+      "race": "卡普里尼"
+    },
+    "char_291_aglina": {
+      "cn": "安洁莉娜",
+      "race": "沃尔珀"
+    },
+    "char_147_shining": {
+      "cn": "闪灵",
+      "race": "萨卡兹"
+    },
+    "char_179_cgbird": {
+      "cn": "夜莺",
+      "race": "萨卡兹"
+    },
+    "char_136_hsguma": {
+      "cn": "星熊",
+      "race": "鬼"
+    },
+    "char_202_demkni": {
+      "cn": "塞雷娅",
+      "race": "瓦伊凡"
+    },
+    "char_172_svrash": {
+      "cn": "银灰",
+      "race": "菲林"
+    },
+    "char_230_savage": {
+      "cn": "暴行",
+      "race": "卡特斯"
+    },
+    "char_282_catap": {
+      "cn": "空爆",
+      "race": "库兰塔"
+    },
+    "char_283_midn": {
+      "cn": "月见夜",
+      "race": "萨卡兹"
+    },
+    "char_137_brownb": {
+      "cn": "猎蜂",
+      "race": "乌萨斯"
+    },
+    "char_164_nightm": {
+      "cn": "夜魔",
+      "race": "菲林"
+    },
+    "char_220_grani": {
+      "cn": "格拉尼",
+      "race": "库兰塔"
+    },
+    "char_263_skadi": {
+      "cn": "斯卡蒂",
+      "race": "未公开"
+    },
+    "char_281_popka": {
+      "cn": "泡普卡",
+      "race": "卡特斯"
+    },
+    "char_284_spot": {
+      "cn": "斑点",
+      "race": "瑞柏巴"
+    },
+    "char_253_greyy": {
+      "cn": "格雷伊",
+      "race": "佩洛"
+    },
+    "char_308_swire": {
+      "cn": "诗怀雅",
+      "race": "菲林"
+    },
+    "char_010_chen": {
+      "cn": "陈",
+      "race": "龙"
+    },
+    "char_298_susuro": {
+      "cn": "苏苏洛",
+      "race": "沃尔珀"
+    },
+    "char_348_ceylon": {
+      "cn": "锡兰",
+      "race": "黎博利"
+    },
+    "char_326_glacus": {
+      "cn": "格劳克斯",
+      "race": "未公开"
+    },
+    "char_340_shwaz": {
+      "cn": "黑",
+      "race": "菲林"
+    },
+    "char_151_myrtle": {
+      "cn": "桃金娘",
+      "race": "杜林"
+    },
+    "char_274_astesi": {
+      "cn": "星极",
+      "race": "黎博利"
+    },
+    "char_188_helage": {
+      "cn": "赫拉格",
+      "race": "黎博利"
+    },
+    "char_260_durnar": {
+      "cn": "坚雷",
+      "race": "沃尔珀"
+    },
+    "char_190_clour": {
+      "cn": "红云",
+      "race": "沃尔珀"
+    },
+    "char_131_flameb": {
+      "cn": "炎客",
+      "race": "萨卡兹"
+    },
+    "char_279_excu": {
+      "cn": "送葬人",
+      "race": "萨科塔"
+    },
+    "char_248_mgllan": {
+      "cn": "麦哲伦",
+      "race": "黎博利"
+    },
+    "char_355_ethan": {
+      "cn": "伊桑",
+      "race": "萨弗拉"
+    },
+    "char_275_breeze": {
+      "cn": "微风",
+      "race": "沃尔珀"
+    },
+    "char_133_mm": {
+      "cn": "梅",
+      "race": "黎博利"
+    },
+    "char_325_bison": {
+      "cn": "拜松",
+      "race": "丰蹄"
+    },
+    "char_243_waaifu": {
+      "cn": "槐琥",
+      "race": "菲林"
+    },
+    "char_213_mostma": {
+      "cn": "莫斯提马",
+      "race": "未公开"
+    },
+    "char_261_sddrag": {
+      "cn": "苇草",
+      "race": "德拉克"
+    },
+    "char_356_broca": {
+      "cn": "布洛卡",
+      "race": "菲林"
+    },
+    "char_302_glaze": {
+      "cn": "安比尔",
+      "race": "萨科塔"
+    },
+    "char_367_swllow": {
+      "cn": "灰喉",
+      "race": "黎博利"
+    },
+    "char_017_huang": {
+      "cn": "煌",
+      "race": "菲林"
+    },
+    "char_383_snsant": {
+      "cn": "雪雉",
+      "race": "黎博利"
+    },
+    "char_226_hmau": {
+      "cn": "吽",
+      "race": "佩洛"
+    },
+    "char_225_haak": {
+      "cn": "阿",
+      "race": "菲林"
+    },
+    "char_2014_nian": {
+      "cn": "年",
+      "race": "未公开"
+    },
+    "char_306_leizi": {
+      "cn": "惊蛰",
+      "race": "麒麟"
+    },
+    "char_2013_cerber": {
+      "cn": "刻俄柏",
+      "race": "佩洛"
+    },
+    "char_385_finlpp": {
+      "cn": "清流",
+      "race": "阿戈尔"
+    },
+    "char_337_utage": {
+      "cn": "宴",
+      "race": "不明"
+    },
+    "char_252_bibeak": {
+      "cn": "柏喙",
+      "race": "黎博利"
+    },
+    "char_379_sesa": {
+      "cn": "慑砂",
+      "race": "瓦伊凡"
+    },
+    "char_222_bpipe": {
+      "cn": "风笛",
+      "race": "瓦伊凡"
+    },
+    "char_159_peacok": {
+      "cn": "断罪者",
+      "race": "未知（疑似黎博利）"
+    },
+    "char_301_cutter": {
+      "cn": "刻刀",
+      "race": "沃尔珀"
+    },
+    "char_333_sidero": {
+      "cn": "铸铁",
+      "race": "丰蹄"
+    },
+    "char_254_vodfox": {
+      "cn": "巫恋",
+      "race": "沃尔珀"
+    },
+    "char_250_phatom": {
+      "cn": "傀影",
+      "race": "菲林"
+    },
+    "char_401_elysm": {
+      "cn": "极境",
+      "race": "黎博利"
+    },
+    "char_400_weedy": {
+      "cn": "温蒂",
+      "race": "阿戈尔"
+    },
+    "char_113_cqbw": {
+      "cn": "W",
+      "race": "萨卡兹"
+    },
+    "char_378_asbest": {
+      "cn": "石棉",
+      "race": "萨弗拉"
+    },
+    "char_343_tknogi": {
+      "cn": "月禾",
+      "race": "埃拉菲亚"
+    },
+    "char_258_podego": {
+      "cn": "波登可",
+      "race": "佩洛"
+    },
+    "char_405_absin": {
+      "cn": "苦艾",
+      "race": "乌萨斯"
+    },
+    "char_373_lionhd": {
+      "cn": "莱恩哈特",
+      "race": "卡特斯"
+    },
+    "char_197_poca": {
+      "cn": "早露",
+      "race": "乌萨斯"
+    },
+    "char_328_cammou": {
+      "cn": "卡达",
+      "race": "札拉克"
+    },
+    "char_345_folnic": {
+      "cn": "亚叶",
+      "race": "菲林"
+    },
+    "char_294_ayer": {
+      "cn": "断崖",
+      "race": "卡特斯"
+    },
+    "char_358_lisa": {
+      "cn": "铃兰",
+      "race": "沃尔珀"
+    },
+    "char_336_folivo": {
+      "cn": "稀音",
+      "race": "皮洛萨"
+    },
+    "char_344_beewax": {
+      "cn": "蜜蜡",
+      "race": "卡普里尼"
+    },
+    "char_349_chiave": {
+      "cn": "贾维",
+      "race": "沃尔珀"
+    },
+    "char_272_strong": {
+      "cn": "孑",
+      "race": "乌萨斯"
+    },
+    "char_218_cuttle": {
+      "cn": "安哲拉",
+      "race": "阿戈尔"
+    },
+    "char_293_thorns": {
+      "cn": "棘刺",
+      "race": "阿戈尔"
+    },
+    "char_366_acdrop": {
+      "cn": "酸糖",
+      "race": "黎博利"
+    },
+    "char_411_tomimi": {
+      "cn": "特米米",
+      "race": "阿达克利斯"
+    },
+    "char_415_flint": {
+      "cn": "燧石",
+      "race": "黎博利"
+    },
+    "char_416_zumama": {
+      "cn": "森蚺",
+      "race": "斐迪亚"
+    },
+    "char_271_spikes": {
+      "cn": "芳汀",
+      "race": "萨科塔"
+    },
+    "char_388_mint": {
+      "cn": "薄绿",
+      "race": "菲林"
+    },
+    "char_365_aprl": {
+      "cn": "四月",
+      "race": "卡特斯"
+    },
+    "char_350_surtr": {
+      "cn": "史尔特尔",
+      "race": "萨卡兹"
+    },
+    "char_381_bubble": {
+      "cn": "泡泡",
+      "race": "塞拉托"
+    },
+    "char_265_sophia": {
+      "cn": "鞭刃",
+      "race": "库兰塔"
+    },
+    "char_346_aosta": {
+      "cn": "奥斯塔",
+      "race": "鲁珀"
+    },
+    "char_423_blemsh": {
+      "cn": "瑕光",
+      "race": "库兰塔"
+    },
+    "char_347_jaksel": {
+      "cn": "杰克",
+      "race": "佩洛"
+    },
+    "char_436_whispr": {
+      "cn": "絮雨",
+      "race": "阿戈尔"
+    },
+    "char_311_mudrok": {
+      "cn": "泥岩",
+      "race": "萨卡兹"
+    },
+    "char_391_rosmon": {
+      "cn": "迷迭香",
+      "race": "菲林"
+    },
+    "char_1001_amiya2": {
+      "cn": "阿米娅(近卫)",
+      "race": "卡特斯/奇美拉"
+    },
+    "char_440_pinecn": {
+      "cn": "松果",
+      "race": "黎博利"
+    },
+    "char_451_robin": {
+      "cn": "罗宾",
+      "race": "阿纳缇"
+    },
+    "char_214_kafka": {
+      "cn": "卡夫卡",
+      "race": "黎博利"
+    },
+    "char_264_f12yin": {
+      "cn": "山",
+      "race": "菲林"
+    },
+    "char_452_bstalk": {
+      "cn": "豆苗",
+      "race": "瑞柏巴"
+    },
+    "char_338_iris": {
+      "cn": "爱丽丝",
+      "race": "菲林"
+    },
+    "char_332_archet": {
+      "cn": "空弦",
+      "race": "黎博利"
+    },
+    "char_402_tuye": {
+      "cn": "图耶",
+      "race": "丰蹄"
+    },
+    "char_1011_lava2": {
+      "cn": "炎狱炎熔",
+      "race": "萨卡兹"
+    },
+    "char_455_nothin": {
+      "cn": "乌有",
+      "race": "黎博利"
+    },
+    "char_362_saga": {
+      "cn": "嵯峨",
+      "race": "佩洛"
+    },
+    "char_2015_dusk": {
+      "cn": "夕",
+      "race": "未公开"
+    },
+    "char_459_tachak": {
+      "cn": "战车",
+      "race": "未知"
+    },
+    "char_457_blitz": {
+      "cn": "闪击",
+      "race": "未知"
+    },
+    "char_458_rfrost": {
+      "cn": "霜华",
+      "race": "未知"
+    },
+    "char_456_ash": {
+      "cn": "灰烬",
+      "race": "未知"
+    },
+    "char_304_zebra": {
+      "cn": "暴雨",
+      "race": "库兰塔"
+    },
+    "char_363_toddi": {
+      "cn": "熔泉",
+      "race": "瓦伊凡"
+    },
+    "char_472_pasngr": {
+      "cn": "异客",
+      "race": "黎博利"
+    },
+    "char_475_akafyu": {
+      "cn": "赤冬",
+      "race": "阿戈尔"
+    },
+    "char_474_glady": {
+      "cn": "歌蕾蒂娅",
+      "race": "未公开"
+    },
+    "char_003_kalts": {
+      "cn": "凯尔希",
+      "race": "菲林"
+    },
+    "char_1012_skadi2": {
+      "cn": "浊心斯卡蒂",
+      "race": "未公开"
+    },
+    "char_469_indigo": {
+      "cn": "深靛",
+      "race": "斐迪亚"
+    },
+    "char_369_bena": {
+      "cn": "贝娜",
+      "race": "卡普里尼"
+    },
+    "char_478_kirara": {
+      "cn": "绮良",
+      "race": "阿戈尔"
+    },
+    "char_426_billro": {
+      "cn": "卡涅利安",
+      "race": "卡普里尼"
+    },
+    "char_485_pallas": {
+      "cn": "帕拉斯",
+      "race": "丰蹄"
+    },
+    "char_486_takila": {
+      "cn": "龙舌兰",
+      "race": "佩洛"
+    },
+    "char_421_crow": {
+      "cn": "羽毛笔",
+      "race": "黎博利"
+    },
+    "char_437_mizuki": {
+      "cn": "水月",
+      "race": "阿戈尔"
+    },
+    "char_1013_chen2": {
+      "cn": "假日威龙陈",
+      "race": "龙"
+    },
+    "char_484_robrta": {
+      "cn": "罗比菈塔",
+      "race": "阿纳缇"
+    },
+    "char_473_mberry": {
+      "cn": "桑葚",
+      "race": "黎博利"
+    },
+    "char_479_sleach": {
+      "cn": "琴柳",
+      "race": "瓦伊凡"
+    },
+    "char_431_ashlok": {
+      "cn": "灰毫",
+      "race": "札拉克"
+    },
+    "char_430_fartth": {
+      "cn": "远牙",
+      "race": "黎博利"
+    },
+    "char_4004_pudd": {
+      "cn": "布丁",
+      "race": "阿戈尔"
+    },
+    "char_449_glider": {
+      "cn": "蜜莓",
+      "race": "札拉克"
+    },
+    "char_496_wildmn": {
+      "cn": "野鬃",
+      "race": "库兰塔"
+    },
+    "char_489_serum": {
+      "cn": "蚀清",
+      "race": "斐迪亚"
+    },
+    "char_420_flamtl": {
+      "cn": "焰尾",
+      "race": "札拉克"
+    },
+    "char_1014_nearl2": {
+      "cn": "耀骑士临光",
+      "race": "库兰塔"
+    },
+    "char_4013_kjera": {
+      "cn": "耶拉",
+      "race": "未公开"
+    },
+    "char_422_aurora": {
+      "cn": "极光",
+      "race": "乌萨斯"
+    },
+    "char_206_gnosis": {
+      "cn": "灵知",
+      "race": "黎博利"
+    },
+    "char_4025_aprot2": {
+      "cn": "暮落",
+      "race": "斐迪亚"
+    },
+    "char_4019_ncdeer": {
+      "cn": "九色鹿",
+      "race": "埃拉菲亚"
+    },
+    "char_1021_kroos2": {
+      "cn": "寒芒克洛丝",
+      "race": "卡特斯"
+    },
+    "char_476_blkngt": {
+      "cn": "夜半",
+      "race": "萨弗拉"
+    },
+    "char_322_lmlee": {
+      "cn": "老鲤",
+      "race": "龙"
+    },
+    "char_2023_ling": {
+      "cn": "令",
+      "race": "未公开"
+    },
+    "char_492_quercu": {
+      "cn": "夏栎",
+      "race": "菲林"
+    },
+    "char_377_gdglow": {
+      "cn": "澄闪",
+      "race": "菲林"
+    },
+    "char_4036_forcer": {
+      "cn": "见行者",
+      "race": "萨科塔"
+    },
+    "char_4016_kazema": {
+      "cn": "风丸",
+      "race": "菲林"
+    },
+    "char_300_phenxi": {
+      "cn": "菲亚梅塔",
+      "race": "黎博利"
+    },
+    "char_4041_chnut": {
+      "cn": "褐果",
+      "race": "杜林"
+    },
+    "char_4045_heidi": {
+      "cn": "海蒂",
+      "race": "菲林"
+    },
+    "char_4040_rockr": {
+      "cn": "洛洛",
+      "race": "菲林"
+    },
+    "char_4039_horn": {
+      "cn": "号角",
+      "race": "鲁珀"
+    },
+    "char_433_windft": {
+      "cn": "掠风",
+      "race": "佩洛"
+    },
+    "char_4042_lumen": {
+      "cn": "流明",
+      "race": "阿戈尔"
+    },
+    "char_4009_irene": {
+      "cn": "艾丽妮",
+      "race": "黎博利"
+    },
+    "char_1023_ghost2": {
+      "cn": "归溟幽灵鲨",
+      "race": "阿戈尔"
+    },
+    "char_4043_erato": {
+      "cn": "埃拉托",
+      "race": "黎博利"
+    },
+    "char_4047_pianst": {
+      "cn": "车尔尼",
+      "race": "埃拉菲亚"
+    },
+    "char_1024_hbisc2": {
+      "cn": "濯尘芙蓉",
+      "race": "萨卡兹"
+    },
+    "char_4046_ebnhlz": {
+      "cn": "黑键",
+      "race": "卡普里尼"
+    },
+    "char_135_halo": {
+      "cn": "星源",
+      "race": "黎博利"
+    },
+    "char_1027_greyy2": {
+      "cn": "承曦格雷伊",
+      "race": "佩洛"
+    },
+    "char_4048_doroth": {
+      "cn": "多萝西",
+      "race": "札拉克"
+    },
+    "char_4054_malist": {
+      "cn": "至简",
+      "race": "杜林"
+    },
+    "char_497_ctable": {
+      "cn": "晓歌",
+      "race": "黎博利"
+    },
+    "char_4055_bgsnow": {
+      "cn": "鸿雪",
+      "race": "鲁珀"
+    },
+    "char_1026_gvial2": {
+      "cn": "百炼嘉维尔",
+      "race": "阿达克利斯"
+    },
+    "char_4032_provs": {
+      "cn": "但书",
+      "race": "库兰塔"
+    },
+    "char_4064_mlynar": {
+      "cn": "玛恩纳",
+      "race": "库兰塔"
+    },
+    "char_4067_lolxh": {
+      "cn": "罗小黑",
+      "race": "菲林"
+    },
+    "char_4066_highmo": {
+      "cn": "海沫",
+      "race": "阿戈尔"
+    },
+    "char_4062_totter": {
+      "cn": "铅踝",
+      "race": "黎博利"
+    },
+    "char_157_dagda": {
+      "cn": "达格达",
+      "race": "菲林"
+    },
+    "char_4071_peper": {
+      "cn": "明椒",
+      "race": "萨卡兹"
+    },
+    "char_4072_ironmn": {
+      "cn": "白铁",
+      "race": "菲林"
+    },
+    "char_4063_quartz": {
+      "cn": "石英",
+      "race": "鲁珀"
+    },
+    "char_466_qanik": {
+      "cn": "雪绒",
+      "race": "沃尔珀"
+    },
+    "char_4014_lunacu": {
+      "cn": "子月",
+      "race": "鲁珀"
+    },
+    "char_427_vigil": {
+      "cn": "伺夜",
+      "race": "鲁珀"
+    },
+    "char_4065_judge": {
+      "cn": "斥罪",
+      "race": "鲁珀"
+    },
+    "char_1028_texas2": {
+      "cn": "缄默德克萨斯",
+      "race": "鲁珀"
+    },
+    "char_4017_puzzle": {
+      "cn": "谜图",
+      "race": "瓦伊凡"
+    },
+    "char_297_hamoni": {
+      "cn": "和弦",
+      "race": "菲林"
+    },
+    "char_1020_reed2": {
+      "cn": "焰影苇草",
+      "race": "德拉克"
+    },
+    "char_4078_bdhkgt": {
+      "cn": "截云",
+      "race": "阿纳萨"
+    },
+    "char_493_firwhl": {
+      "cn": "火哨",
+      "race": "黎博利"
+    },
+    "char_4080_lin": {
+      "cn": "林",
+      "race": "札拉克"
+    },
+    "char_2024_chyue": {
+      "cn": "重岳",
+      "race": "未公开"
+    },
+    "char_4083_chimes": {
+      "cn": "铎铃",
+      "race": "丰蹄"
+    },
+    "char_4082_qiubai": {
+      "cn": "仇白",
+      "race": "埃拉菲亚"
+    },
+    "char_4077_palico": {
+      "cn": "泰拉大陆调查团",
+      "race": "未公开"
+    },
+    "char_1030_noirc2": {
+      "cn": "火龙S黑角",
+      "race": "鬼"
+    },
+    "char_1029_yato2": {
+      "cn": "麒麟R夜刀",
+      "race": "鬼"
+    },
+    "char_4091_ulika": {
+      "cn": "U-Official",
+      "race": "札拉克"
+    },
+    "char_491_humus": {
+      "cn": "休谟斯",
+      "race": "丰蹄"
+    },
+    "char_154_morgan": {
+      "cn": "摩根",
+      "race": "菲林"
+    },
+    "char_464_cement": {
+      "cn": "洋灰",
+      "race": "札拉克"
+    },
+    "char_4087_ines": {
+      "cn": "伊内丝",
+      "race": "未公开"
+    },
+    "char_4006_melnte": {
+      "cn": "玫拉",
+      "race": "斐迪亚"
+    },
+    "char_1031_slent2": {
+      "cn": "淬羽赫默",
+      "race": "黎博利"
+    },
+    "char_4027_heyak": {
+      "cn": "霍尔海雅",
+      "race": "未公开"
+    },
+    "char_249_mlyss": {
+      "cn": "缪尔赛思",
+      "race": "精灵"
+    },
+    "char_498_inside": {
+      "cn": "隐现",
+      "race": "萨科塔"
+    },
+    "char_4015_spuria": {
+      "cn": "空构",
+      "race": "萨科塔"
+    },
+    "char_1032_excu2": {
+      "cn": "圣约送葬人",
+      "race": "萨科塔"
+    },
+    "char_341_sntlla": {
+      "cn": "寒檀",
+      "race": "菲林"
+    },
+    "char_2012_typhon": {
+      "cn": "提丰",
+      "race": "萨卡兹"
+    },
+    "char_4102_threye": {
+      "cn": "凛视",
+      "race": "萨卡兹"
+    },
+    "char_4106_bryota": {
+      "cn": "苍苔",
+      "race": "黎博利"
+    },
+    "char_488_buildr": {
+      "cn": "青枳",
+      "race": "黎博利"
+    },
+    "char_1033_swire2": {
+      "cn": "琳琅诗怀雅",
+      "race": "菲林"
+    },
+    "char_1016_agoat2": {
+      "cn": "纯烬艾雅法拉",
+      "race": "卡普里尼"
+    },
+    "char_4104_coldst": {
+      "cn": "冰酿",
+      "race": "埃拉菲亚"
+    },
+    "char_4105_almond": {
+      "cn": "杏仁",
+      "race": "佩洛"
+    },
+    "char_1034_jesca2": {
+      "cn": "涤火杰西卡",
+      "race": "菲林"
+    },
+    "char_4107_vrdant": {
+      "cn": "维荻",
+      "race": "斐迪亚"
+    },
+    "char_4110_delphn": {
+      "cn": "戴菲恩",
+      "race": "菲林"
+    },
+    "char_494_vendla": {
+      "cn": "刺玫",
+      "race": "菲林"
+    },
+    "char_4088_hodrer": {
+      "cn": "赫德雷",
+      "race": "萨卡兹"
+    },
+    "char_4100_caper": {
+      "cn": "跃跃",
+      "race": "卡特斯"
+    },
+    "char_499_kaitou": {
+      "cn": "折光",
+      "race": "卡普里尼"
+    },
+    "char_4109_baslin": {
+      "cn": "深律",
+      "race": "鲁珀"
+    },
+    "char_4011_lessng": {
+      "cn": "止颂",
+      "race": "卡普里尼"
+    },
+    "char_4098_vvana": {
+      "cn": "薇薇安娜",
+      "race": "埃拉菲亚"
+    },
+    "char_245_cello": {
+      "cn": "塑心",
+      "race": "萨科塔"
+    },
+    "char_4114_harold": {
+      "cn": "哈洛德",
+      "race": "菲林"
+    },
+    "char_194_leto": {
+      "cn": "烈夏",
+      "race": "乌萨斯"
+    },
+    "char_4116_blkkgt": {
+      "cn": "锏",
+      "race": "卡普里尼"
+    },
+    "char_4081_warmy": {
+      "cn": "温米",
+      "race": "卡特斯"
+    },
+    "char_4117_ray": {
+      "cn": "莱伊",
+      "race": "卡特斯"
+    },
+    "char_4119_wanqin": {
+      "cn": "万顷",
+      "race": "丰蹄"
+    },
+    "char_4122_grabds": {
+      "cn": "小满",
+      "race": "黎博利"
+    },
+    "char_4121_zuole": {
+      "cn": "左乐",
+      "race": "斐迪亚"
+    },
+    "char_2025_shu": {
+      "cn": "黍",
+      "race": "未公开"
+    },
+    "char_4023_rfalcn": {
+      "cn": "红隼",
+      "race": "黎博利"
+    },
+    "char_4126_fuze": {
+      "cn": "导火索",
+      "race": "未知"
+    },
+    "char_4124_iana": {
+      "cn": "双月",
+      "race": "未知"
+    },
+    "char_4125_rdoc": {
+      "cn": "医生",
+      "race": "未知"
+    },
+    "char_4123_ela": {
+      "cn": "艾拉",
+      "race": "未知"
+    },
+    "char_4130_luton": {
+      "cn": "露托",
+      "race": "札拉克"
+    },
+    "char_4131_odda": {
+      "cn": "奥达",
+      "race": "萨卡兹"
+    },
+    "char_446_aroma": {
+      "cn": "阿罗玛",
+      "race": "鲁珀"
+    },
+    "char_4132_ascln": {
+      "cn": "阿斯卡纶",
+      "race": "萨卡兹"
+    },
+    "char_1036_fang2": {
+      "cn": "历阵锐枪芬",
+      "race": "库兰塔"
+    },
+    "char_4134_cetsyr": {
+      "cn": "魔王",
+      "race": "未公开"
+    },
+    "char_4133_logos": {
+      "cn": "逻各斯",
+      "race": "萨卡兹"
+    },
+    "char_1035_wisdel": {
+      "cn": "维什戴尔",
+      "race": "萨卡兹"
+    },
+    "char_1037_amiya3": {
+      "cn": "阿米娅(医疗)",
+      "race": "卡特斯/奇美拉"
+    },
+    "char_4137_udflow": {
+      "cn": "深巡",
+      "race": "阿戈尔"
+    },
+    "char_4079_haini": {
+      "cn": "海霓",
+      "race": "阿戈尔"
+    },
+    "char_4145_ulpia": {
+      "cn": "乌尔比安",
+      "race": "阿戈尔"
+    },
+    "char_4147_mitm": {
+      "cn": "渡桥",
+      "race": "萨卡兹"
+    },
+    "char_4146_nymph": {
+      "cn": "妮芙",
+      "race": "萨卡兹"
+    },
+    "char_4151_tinman": {
+      "cn": "锡人",
+      "race": "未公开"
+    },
+    "char_4139_papyrs": {
+      "cn": "莎草",
+      "race": "菲林"
+    },
+    "char_4140_lasher": {
+      "cn": "衡沙",
+      "race": "黎博利"
+    },
+    "char_4138_narant": {
+      "cn": "娜仁图亚",
+      "race": "库兰塔"
+    },
+    "char_4058_pepe": {
+      "cn": "佩佩",
+      "race": "菲林"
+    },
+    "char_4143_sensi": {
+      "cn": "森西",
+      "race": "矮人（自称）"
+    },
+    "char_4144_chilc": {
+      "cn": "齐尔查克",
+      "race": "半身人（自称）"
+    },
+    "char_4142_laios": {
+      "cn": "莱欧斯",
+      "race": "长身人（自称）"
+    },
+    "char_4141_marcil": {
+      "cn": "玛露西尔",
+      "race": "精灵"
+    },
+    "char_4162_cathy": {
+      "cn": "凯瑟琳",
+      "race": "菲林"
+    },
+    "char_487_bobb": {
+      "cn": "波卜",
+      "race": "佩洛"
+    },
+    "char_1019_siege2": {
+      "cn": "维娜·维多利亚",
+      "race": "阿斯兰"
+    },
+    "char_4165_ctrail": {
+      "cn": "云迹",
+      "race": "札拉克"
+    },
+    "char_4148_philae": {
+      "cn": "菲莱",
+      "race": "萨卡兹"
+    },
+    "char_4155_talr": {
+      "cn": "裁度",
+      "race": "鲁珀"
+    },
+    "char_1502_crosly": {
+      "cn": "弑君者",
+      "race": "瑞柏巴"
+    },
+    "char_4026_vulpis": {
+      "cn": "忍冬",
+      "race": "沃尔珀"
+    },
+    "char_1038_whitw2": {
+      "cn": "荒芜拉普兰德",
+      "race": "鲁珀"
+    },
+    "char_4163_rosesa": {
+      "cn": "瑰盐",
+      "race": "斐迪亚"
+    },
+    "char_4164_tecno": {
+      "cn": "特克诺",
+      "race": "杜林"
+    },
+    "char_1039_thorn2": {
+      "cn": "引星棘刺",
+      "race": "阿戈尔"
+    },
+    "char_4172_xingzh": {
+      "cn": "行箸",
+      "race": "菲林"
+    },
+    "char_4052_surfer": {
+      "cn": "寻澜",
+      "race": "札拉克"
+    },
+    "char_1040_blaze2": {
+      "cn": "烛煌",
+      "race": "菲林"
+    },
+    "char_2026_yu": {
+      "cn": "余",
+      "race": "未公开"
+    },
+    "char_4173_nowell": {
+      "cn": "诺威尔",
+      "race": "沃尔珀"
+    },
+    "char_4010_etlchi": {
+      "cn": "隐德来希",
+      "race": "萨卡兹"
+    },
+    "char_4177_brigid": {
+      "cn": "水灯心",
+      "race": "佩洛"
+    },
+    "char_4171_wulfen": {
+      "cn": "钼铅",
+      "race": "斐迪亚"
+    },
+    "char_450_necras": {
+      "cn": "死芒",
+      "race": "德拉克"
+    },
+    "char_445_wscoot": {
+      "cn": "骋风",
+      "race": "菲林"
+    },
+    "char_4178_alanna": {
+      "cn": "阿兰娜",
+      "race": "萨弗拉"
+    },
+    "char_4179_monstr": {
+      "cn": "Mon3tr",
+      "race": "未公开"
+    },
+    "char_4187_graceb": {
+      "cn": "聆音",
+      "race": "未公开"
+    },
+    "char_4194_rmixer": {
+      "cn": "信仰搅拌机",
+      "race": "萨科塔"
+    },
+    "char_4193_lemuen": {
+      "cn": "蕾缪安",
+      "race": "萨科塔"
+    },
+    "char_1041_angel2": {
+      "cn": "新约能天使",
+      "race": "萨科塔"
+    },
+    "char_4198_christ": {
+      "cn": "Miss.Christine",
+      "race": "未公开"
+    },
+    "char_4191_tippi": {
+      "cn": "蒂比",
+      "race": "黎博利"
+    },
+    "char_1042_phatm2": {
+      "cn": "酒神",
+      "race": "菲林"
+    },
+    "char_4196_reckpr": {
+      "cn": "录武官",
+      "race": "佩洛"
+    },
+    "char_1043_leizi2": {
+      "cn": "司霆惊蛰",
+      "race": "麒麟"
+    },
+    "char_4195_radian": {
+      "cn": "电弧",
+      "race": "黎博利"
+    },
+    "char_4199_makiri": {
+      "cn": "松桐",
+      "race": "鲁珀"
+    },
+    "char_4203_kichi": {
+      "cn": "吉星",
+      "race": "佩洛"
+    },
+    "char_4202_haruka": {
+      "cn": "遥",
+      "race": "阿戈尔"
+    },
+    "char_1044_hsgma2": {
+      "cn": "斩业星熊",
+      "race": "鬼"
+    },
+    "char_4185_amoris": {
+      "cn": "祐天寺若麦",
+      "race": "未知"
+    },
+    "char_4186_tmoris": {
+      "cn": "八幡海铃",
+      "race": "未知"
+    },
+    "char_4183_mortis": {
+      "cn": "若叶睦",
+      "race": "未知"
+    },
+    "char_4184_dolris": {
+      "cn": "三角初华",
+      "race": "未知"
+    },
+    "char_4182_oblvns": {
+      "cn": "丰川祥子",
+      "race": "未知"
+    },
+    "char_4208_wintim": {
+      "cn": "冬时",
+      "race": "黎博利"
+    },
+    "char_4207_branch": {
+      "cn": "折桠",
+      "race": "乌萨斯"
+    },
+    "char_4204_mantra": {
+      "cn": "真言",
+      "race": "斐迪亚"
+    },
+    "char_4051_akkord": {
+      "cn": "协律",
+      "race": "卡普里尼"
+    },
+    "char_394_hadiya": {
+      "cn": "哈蒂娅",
+      "race": "卡普里尼"
+    },
+    "char_4211_snhunt": {
+      "cn": "雪猎",
+      "race": "乌萨斯"
+    },
+    "char_1047_halo2": {
+      "cn": "溯光星源",
+      "race": "黎博利"
+    },
+    "char_1046_sbell2": {
+      "cn": "圣聆初雪",
+      "race": "菲林"
+    },
+    "char_1045_svash2": {
+      "cn": "凛御银灰",
+      "race": "菲林"
+    },
+    "char_4213_skybx": {
+      "cn": "天空盒",
+      "race": "萨弗拉"
+    },
+    "char_4214_cairn": {
+      "cn": "响石",
+      "race": "菲林"
+    },
+    "char_4212_nasti": {
+      "cn": "娜斯提",
+      "race": "萨卡兹"
+    },
+    "char_4166_varkis": {
+      "cn": "摆渡人",
+      "race": "丰蹄"
+    },
+    "char_1022_flwr2": {
+      "cn": "撷英调香师",
+      "race": "沃尔珀"
+    },
+    "char_4056_titi": {
+      "cn": "缇缇",
+      "race": "菲林"
+    },
+    "char_4221_ju": {
+      "cn": "矩",
+      "race": "未公开"
+    },
+    "char_4222_taraxa": {
+      "cn": "风絮",
+      "race": "库兰塔"
+    },
+    "char_1050_chen3": {
+      "cn": "赤刃明霄陈",
+      "race": "龙"
+    },
+    "char_2027_wang": {
+      "cn": "望",
+      "race": "未公开"
+    },
+    "char_4031_liesel": {
+      "cn": "复奏",
+      "race": "卡普里尼"
+    },
+    "char_4037_demetr": {
+      "cn": "贝洛内",
+      "race": "鲁珀"
+    },
+    "char_4223_botany": {
+      "cn": "伯塔尼",
+      "race": "埃拉菲亚"
+    },
+    "char_4224_turdus": {
+      "cn": "乌啾",
+      "race": "黎博利"
+    },
+    "char_1051_headb2": {
+      "cn": "怒潮凛冬",
+      "race": "乌萨斯"
+    },
+    "char_4225_tanya": {
+      "cn": "裂响",
+      "race": "乌萨斯"
+    },
+    "char_4226_veen": {
+      "cn": "维伊",
+      "race": "库兰塔"
+    },
+    "char_4228_closur": {
+      "cn": "可露希尔",
+      "race": "萨卡兹"
+    },
+    "char_1052_kalts2": {
+      "cn": "凯尔希·思衡托",
+      "race": "菲林"
+    }
+  },
+  "no_race": [
+    {
+      "charId": "char_285_medic2",
+      "cn": "Lancet-2"
+    },
+    {
+      "charId": "char_286_cast3",
+      "cn": "Castle-3"
+    },
+    {
+      "charId": "char_376_therex",
+      "cn": "THRM-EX"
+    },
+    {
+      "charId": "char_4000_jnight",
+      "cn": "正义骑士号"
+    },
+    {
+      "charId": "char_4093_frston",
+      "cn": "Friston-3"
+    },
+    {
+      "charId": "char_4136_phonor",
+      "cn": "PhonoR-0"
+    },
+    {
+      "charId": "char_4188_confes",
+      "cn": "CONFESS-47"
+    },
+    {
+      "charId": "char_4227_gallus",
+      "cn": "GALLUS²"
+    }
+  ]
+}
