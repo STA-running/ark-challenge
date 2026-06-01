@@ -376,3 +376,10 @@ input[type="text"]:focus {
 .text-muted { color: var(--text-muted); }
 .text-secondary { color: var(--text-secondary); }
 .font-mono { font-family: var(--font-mono); }
+
+/* ========== 手机模式适配 ========== */
+/* 隐藏顶部编队/设置导航（手机端用底部 Tab），保留 Logo + 标题 + 创作人 */
+body.mobile-mode header { padding: 14px 16px 8px !important; gap: 12px !important; }
+body.mobile-mode header nav { display: none !important; }
+body.mobile-mode header + div { display: none !important; }  /* 分隔线 */
+body.mobile-mode main { padding: 0 !important; max-width: none !important; }

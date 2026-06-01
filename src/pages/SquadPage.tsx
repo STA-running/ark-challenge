@@ -4,6 +4,7 @@ import { loadTags, drawRandomTags, rerollSingleTag, mergeTagsToConstraints, filt
 import { validateSquad } from '../engine/validator';
 import { encode, decode } from '../engine/shareCode';
 import type { ChallengeTag, StageData, OperatorData } from '../types';
+import MobileView from './MobileSquadPage';
 
 // 职业列表
 const PROFESSIONS = ['先锋', '近卫', '重装', '狙击', '术师', '医疗', '辅助', '特种'];
@@ -73,6 +74,12 @@ const POSITIONS = ['全部', '近战位', '远程位'];
 
 export default function SquadPage() {
   const store = useAppStore();
+
+  // 自动检测屏幕宽度
+  const isMobileBrowser = window.innerWidth < 768;
+
+  // 桌面端附加手机预览
+  const [forceMobile, setForceMobile] = useState(false);
 
   // 数据加载
   const [allTags, setAllTags] = useState<ChallengeTag[]>([]);
@@ -159,12 +166,18 @@ export default function SquadPage() {
   }, []);
 
   const handleRandomDraw = useCallback(() => {
-    const drawn = drawRandomTags(allTags, randomCount);
+    let blacklist: string[] = [];
+    try { const raw = localStorage.getItem('ark_challenge_tag_blacklist'); if (raw) blacklist = JSON.parse(raw); } catch {}
+    const pool = allTags.filter((t) => !blacklist.includes(t.id));
+    const drawn = drawRandomTags(pool, randomCount);
     setRandomTags(drawn);
   }, [allTags, randomCount]);
 
   const handleRerollTag = useCallback((index: number) => {
-    setRandomTags((prev) => rerollSingleTag(prev, index, allTags));
+    let blacklist: string[] = [];
+    try { const raw = localStorage.getItem('ark_challenge_tag_blacklist'); if (raw) blacklist = JSON.parse(raw); } catch {}
+    const pool = allTags.filter((t) => !blacklist.includes(t.id));
+    setRandomTags((prev) => rerollSingleTag(prev, index, pool));
   }, [allTags]);
 
   const handleConfirmTags = useCallback(() => {
@@ -192,6 +205,8 @@ export default function SquadPage() {
       store.setHardConstraints(hard);
       store.setSoftConstraints(soft);
     }
+    // 标签清空时 hardConstraints 不重置也没关系 —
+    // filteredOps 通过 confirmedTags 变化触发重算，tagsConfirmed=false 会让所有干员恢复可选
   }, [confirmedTagObjects]);
 
   // === 关卡功能 ===
@@ -268,7 +283,7 @@ export default function SquadPage() {
       _valid: tagsConfirmed ? validOpNames.has(o.name) : true,
       _reason: tagsConfirmed ? getDisabledReason(o, store.hardConstraints) : '',
     }));
-  }, [allOps, store.operators, store.hardConstraints, professionFilter, rarityFilter, raceFilter, positionFilter, majorRaces, minorRaces]);
+  }, [allOps, store.operators, store.hardConstraints, store.confirmedTags, professionFilter, rarityFilter, raceFilter, positionFilter, majorRaces, minorRaces]);
 
   // 生成分享码
   const handleGenerateShareCode = useCallback(() => {
@@ -298,6 +313,11 @@ export default function SquadPage() {
     setPlanName('');
     setShowSaveDialog(false);
   }, [store, planName]);
+
+  // 手机模式 → 渲染移动端视图
+  if (isMobileBrowser || forceMobile) {
+    return <MobileView onSwitchToDesktop={() => setForceMobile(false)} />;
+  }
 
   return (
     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
@@ -809,7 +829,10 @@ export default function SquadPage() {
           {store.tagMode === 'manual' ? (
             <div>
               {(['squad', 'rarity', 'cost', 'position', 'operation', 'special', 'faction', 'race', 'block', 'other'] as const).map((cat) => {
-                const catTags = allTags.filter((t) => t.category === cat);
+                // 读取标签黑名单
+                let blacklist: string[] = [];
+                try { const raw = localStorage.getItem('ark_challenge_tag_blacklist'); if (raw) blacklist = JSON.parse(raw); } catch {}
+                const catTags = allTags.filter((t) => t.category === cat && !blacklist.includes(t.id));
                 if (catTags.length === 0) return null;
                 return (
                   <div key={cat} style={{ marginBottom: 8 }}>
@@ -1147,6 +1170,16 @@ export default function SquadPage() {
           )}
         </div>
       </div>
+
+      {/* 桌面模式右下角：切换到手机预览 */}
+      <button onClick={() => setForceMobile(true)} style={{
+        position: 'fixed', bottom: 20, right: 20, zIndex: 999,
+        padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 500,
+        background: 'rgba(13,17,23,0.9)', border: '1px solid rgba(45,212,191,0.3)',
+        color: '#2dd4bf', cursor: 'pointer', backdropFilter: 'blur(8px)',
+      }}>
+        📱 手机预览
+      </button>
     </div>
   );
 }

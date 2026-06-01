@@ -19,10 +19,11 @@ function App() {
     }}>
       {/* Header — 罗德岛风格顶栏 */}
       <header style={{
-        width: '100%', maxWidth: 1120, padding: '24px 20px 12px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        width: '100%', maxWidth: 1120, padding: '28px 24px 14px',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+        gap: 24,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           {/* 罗德岛双层菱形标志 */}
           <div style={{ position: 'relative', width: 44, height: 44, flexShrink: 0 }}>
             {/* 外层菱形 — 青绿渐变边框 */}
@@ -50,7 +51,7 @@ function App() {
 
           {/* 标题区 */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 5 }}>
               <span style={{
                 fontSize: 24, fontWeight: 800, letterSpacing: 2,
                 background: 'linear-gradient(135deg, #2dd4bf, #0d9488)',
@@ -58,26 +59,26 @@ function App() {
               }}>AK</span>
               <span style={{ color: 'var(--border)', fontWeight: 300, fontSize: 22 }}>:</span>
               <span style={{
-                fontSize: 14, fontWeight: 500, letterSpacing: 3,
-                color: 'var(--text-secondary)',
+                fontSize: 15, fontWeight: 500, letterSpacing: 3,
+                color: 'var(--text-secondary)', lineHeight: 1.5,
               }}>CHALLENGE // BUILDER</span>
             </div>
             <div style={{
-              fontSize: 12, fontWeight: 500, letterSpacing: 1.5,
-              color: 'rgba(45,212,191,0.35)', marginTop: 3,
+              fontSize: 13, fontWeight: 500, letterSpacing: 1.5,
+              color: 'rgba(45,212,191,0.35)',
             }}>
               RHODES ISLAND · 自限规则器
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
           {/* 创作人 */}
           <div style={{
-            fontSize: 12, fontWeight: 500, letterSpacing: 0.5,
-            color: 'rgba(45,212,191,0.35)',
+            fontSize: 13, fontWeight: 500, letterSpacing: 0.5,
+            color: 'rgba(45,212,191,0.40)',
             borderRight: '1px solid rgba(48,54,80,0.4)',
-            paddingRight: 16, lineHeight: 1.6,
+            paddingRight: 20, lineHeight: 1.7,
           }}>
             <div>
               <span style={{ color: 'var(--text-muted)', marginRight: 4 }}>创作人</span>
