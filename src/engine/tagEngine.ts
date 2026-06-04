@@ -304,11 +304,27 @@ export function filterOperatorsByHardConstraints(
 ): OperatorData[] {
   const ops = Object.values(operators);
   return ops.filter((op) => {
+    // 指名干员约束（白名单/黑名单）
+    if (hard.allowedOperators !== null && !hard.allowedOperators.includes(op.name)) {
+      return false;
+    }
+    if (hard.bannedOperators.includes(op.name)) {
+      return false;
+    }
+
     // 职业约束
     if (hard.allowedProfessions !== null && !hard.allowedProfessions.includes(op.profession)) {
       return false;
     }
     if (hard.bannedProfessions.includes(op.profession)) {
+      return false;
+    }
+
+    // 子职业约束
+    if (hard.allowedSubProfessions !== null && !hard.allowedSubProfessions.includes(op.subProfession)) {
+      return false;
+    }
+    if (hard.bannedSubProfessions.includes(op.subProfession)) {
       return false;
     }
 
@@ -332,6 +348,11 @@ export function filterOperatorsByHardConstraints(
     if (hard.bannedRaces.includes(op.race || '')) {
       return false;
     }
+
+    // 稀有种族约束（rareRaceOnly：最多允许 N 种族的干员通过）
+    // 此处为个体过滤，rareRaceOnly 语义为"编队中最多出现N个种族"，
+    // 属于编队级约束，不在个体过滤中检查。
+    // 注：如果 rareRaceOnly 是标签级的"只允许稀有度≤N的种族"，语义模糊，暂不实现。
 
     // 阻挡数约束
     if (hard.blockTier !== null && op.block !== null) {

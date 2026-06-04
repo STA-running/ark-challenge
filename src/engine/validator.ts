@@ -2,7 +2,6 @@ import type { OperatorData, HardConstraints } from '../types';
 
 /**
  * 获取干员的部署费用（以精二为准）
- * 注意：operators.json 中当前无 cost 字段，返回 undefined
  */
 function getOpCost(op: OperatorData): number | undefined {
   return op.cost;
@@ -15,12 +14,28 @@ export function validateOperator(
 ): { valid: boolean; reasons: string[] } {
   const reasons: string[] = [];
 
+  // 指名干员约束（白名单/黑名单）
+  if (hard.allowedOperators !== null && !hard.allowedOperators.includes(op.name)) {
+    reasons.push(`"${op.name}"不在允许列表中`);
+  }
+  if (hard.bannedOperators.includes(op.name)) {
+    reasons.push(`"${op.name}"已被禁用`);
+  }
+
   // 职业约束
-  if (hard.allowedProfessions && !hard.allowedProfessions.includes(op.profession)) {
+  if (hard.allowedProfessions !== null && !hard.allowedProfessions.includes(op.profession)) {
     reasons.push(`职业"${op.profession}"不在允许列表中`);
   }
   if (hard.bannedProfessions.includes(op.profession)) {
     reasons.push(`职业"${op.profession}"已被禁用`);
+  }
+
+  // 子职业约束
+  if (hard.allowedSubProfessions !== null && !hard.allowedSubProfessions.includes(op.subProfession)) {
+    reasons.push(`子职业"${op.subProfession}"不在允许列表中`);
+  }
+  if (hard.bannedSubProfessions.includes(op.subProfession)) {
+    reasons.push(`子职业"${op.subProfession}"已被禁用`);
   }
 
   // 稀有度约束
@@ -32,12 +47,12 @@ export function validateOperator(
   }
 
   // 位置约束
-  if (hard.positionRestriction && !hard.positionRestriction.includes(op.position)) {
+  if (hard.positionRestriction !== null && !hard.positionRestriction.includes(op.position)) {
     reasons.push(`部署位置"${op.position}"不符合要求`);
   }
 
   // 国家/地区约束
-  if (hard.allowedNations && op.nation && !hard.allowedNations.includes(op.nation)) {
+  if (hard.allowedNations !== null && op.nation !== null && !hard.allowedNations.includes(op.nation)) {
     reasons.push(`国家/地区"${op.nation}"不在允许列表中`);
   }
   if (hard.bannedNations.includes(op.nation || '')) {
@@ -45,7 +60,7 @@ export function validateOperator(
   }
 
   // 组织约束
-  if (hard.allowedOrgs && op.org && !hard.allowedOrgs.includes(op.org)) {
+  if (hard.allowedOrgs !== null && op.org !== null && !hard.allowedOrgs.includes(op.org)) {
     reasons.push(`组织"${op.org}"不在允许列表中`);
   }
   if (hard.bannedOrgs.includes(op.org || '')) {
@@ -53,7 +68,7 @@ export function validateOperator(
   }
 
   // 种族约束
-  if (hard.allowedRaces && op.race && !hard.allowedRaces.includes(op.race)) {
+  if (hard.allowedRaces !== null && op.race !== null && !hard.allowedRaces.includes(op.race)) {
     reasons.push(`种族"${op.race}"不在允许列表中`);
   }
   if (hard.bannedRaces.includes(op.race || '')) {
@@ -150,6 +165,14 @@ export function validateSquad(
   if (hard.sameRaceOnly) {
     const races = [...new Set(squad.filter((o) => o.race).map((o) => o.race))];
     if (races.length > 1) violations.push(`编队含多个种族: ${races.join('、')}`);
+  }
+
+  // 稀有种族约束（编队中最多出现 N 个种族）
+  if (hard.rareRaceOnly !== null) {
+    const races = [...new Set(squad.filter((o) => o.race).map((o) => o.race))];
+    if (races.length > hard.rareRaceOnly) {
+      violations.push(`编队含${races.length}个种族，超出上限(${hard.rareRaceOnly}): ${races.join('、')}`);
+    }
   }
 
   // 同阻挡数上限

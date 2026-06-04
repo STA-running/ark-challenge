@@ -118,6 +118,18 @@ export default function SquadPage() {
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [planName, setPlanName] = useState('');
 
+  // 干员选择模式：手动 / 十连抽卡
+  const [selectionMode, setSelectionMode] = useState<'manual' | 'gacha'>('manual');
+  const [showGachaInfo, setShowGachaInfo] = useState(false);
+  const [gachaStage, setGachaStage] = useState<'trigger' | 'results' | 'done'>('trigger');
+  const [gachaBatch, setGachaBatch] = useState(0);
+  const [gachaRerolls, setGachaRerolls] = useState(10);
+  const [gachaLocked, setGachaLocked] = useState<OperatorData[]>([]);
+  const [gachaResults, setGachaResults] = useState<OperatorData[]>([]);
+  const [gachaPulling, setGachaPulling] = useState(false);
+  const gachaMaxBatches = 3;
+  const gachaMaxRerolls = 10;
+
   // 分享码
   const [shareCode, setShareCode] = useState<string | null>(null);
   const [importCodeInput, setImportCodeInput] = useState('');
@@ -132,6 +144,7 @@ export default function SquadPage() {
         .then((data) => store.setOperators(data.operators))
         .catch(console.error);
     }
+    store.loadGachaBlacklist();
     if (!tagsLoaded) {
       loadTags()
         .then((tags) => { setAllTags(tags); setTagsLoaded(true); })
@@ -322,6 +335,72 @@ export default function SquadPage() {
     setShowSaveDialog(false);
   }, [store, planName]);
 
+  // ====== 十连抽卡逻辑 ======
+  const gachaPool = useMemo(() => {
+    // 抽卡池仅受标签约束 + 已锁定排除 + 黑名单排除，不受手动筛选影响
+    let ops = allOps;
+    if (store.confirmedTags.length > 0) {
+      const validNames = new Set(
+        filterOperatorsByHardConstraints(store.operators, store.hardConstraints).map((o: OperatorData) => o.name)
+      );
+      ops = ops.filter(o => validNames.has(o.name));
+    }
+    // Remove locked ops + blacklisted ops
+    const lockedNames = new Set(gachaLocked.map(o => o.name));
+    const blNames = new Set(store.gachaBlacklist);
+    return ops.filter(o => !lockedNames.has(o.name) && !blNames.has(o.name));
+  }, [allOps, store.confirmedTags, store.hardConstraints, gachaLocked, store.gachaBlacklist]);
+
+  const handleGachaPull = useCallback(() => {
+    if (gachaPulling || gachaBatch >= gachaMaxBatches || gachaPool.length === 0) return;
+    setGachaPulling(true);
+    const pool = [...gachaPool];
+    const taken = new Set<string>();
+    const results: OperatorData[] = [];
+
+    const pull = (idx: number) => {
+      const usable = pool.filter(o => !taken.has(o.name));
+      if (usable.length === 0) return null;
+      const rates: Record<number, number> = { 6: 10, 5: 20, 4: 60, 3: 10 };
+      let rarity: number;
+      if (idx === 9 && usable.some(o => o.rarity === 6) && Math.random() < 0.50) {
+        rarity = 6;
+      } else {
+        const total = Object.values(rates).reduce((a, b) => a + b, 0);
+        let r = Math.random() * total;
+        rarity = 3;
+        for (const [rr, pp] of Object.entries(rates)) { r -= pp; if (r <= 0) { rarity = parseInt(rr); break; } }
+      }
+      const candidates = usable.filter(o => o.rarity === rarity);
+      const pick = candidates.length > 0 ? candidates[Math.floor(Math.random() * candidates.length)] : usable[Math.floor(Math.random() * usable.length)];
+      taken.add(pick.name);
+      return pick;
+    };
+
+    for (let i = 0; i < Math.min(10, gachaPool.length); i++) {
+      const op = pull(i); if (op) results.push(op);
+    }
+    setGachaResults(results);
+    setTimeout(() => { setGachaStage('results'); setGachaPulling(false); }, 500);
+  }, [gachaPulling, gachaBatch, gachaPool]);
+
+  const handleGachaReroll = useCallback(() => {
+    if (gachaRerolls <= 0) return;
+    setGachaRerolls(r => r - 1);
+    setGachaResults([]);
+    setGachaStage('trigger');
+  }, [gachaRerolls]);
+
+  const handleGachaLock = useCallback(() => {
+    if (gachaResults.length === 0) return;
+    setGachaLocked(prev => [...prev, ...gachaResults]);
+    const next = gachaBatch + 1;
+    setGachaBatch(next);
+    setGachaRerolls(gachaMaxRerolls);
+    setGachaResults([]);
+    setGachaStage(next >= gachaMaxBatches ? 'done' : 'trigger');
+  }, [gachaResults, gachaBatch]);
+
   // 手机模式 → 渲染移动端视图
   if (isMobileBrowser || forceMobile) {
     return <MobileView onSwitchToDesktop={() => setForceMobile(false)} />;
@@ -356,7 +435,7 @@ export default function SquadPage() {
                 ) : null;
               })()}
               <button
-                onClick={() => { store.confirmTags([]); store.confirmStage(null); }}
+                onClick={() => { store.confirmTags([]); store.confirmStage(null); setSelectedTagIds([]); setRandomTags([]); }}
                 className="btn-secondary"
                 style={{ marginLeft: 'auto' }}
               >
@@ -581,9 +660,28 @@ export default function SquadPage() {
           padding: '14px 16px',
           transition: 'opacity 0.2s',
         }}>
-          <div style={{ fontSize: 17, fontWeight: 600, marginBottom: 10 }}>
-            <span style={{ color: 'var(--text-accent)' }}>◆</span> 选择干员
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10, gap: 8 }}>
+            <span style={{ color: 'var(--text-accent)' }}>◆</span>
+            <span style={{ fontSize: 17, fontWeight: 600 }}>选择干员</span>
+            <div style={{ display: 'flex', marginLeft: 'auto', background: 'var(--bg-card)', borderRadius: 6, overflow: 'hidden', border: '1px solid var(--border)' }}>
+              <button onClick={() => setSelectionMode('manual')} style={{
+                padding: '5px 16px', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 500,
+                background: selectionMode === 'manual' ? 'linear-gradient(135deg, #0d9488, #2dd4bf)' : 'transparent',
+                color: selectionMode === 'manual' ? '#fff' : 'var(--text-muted)',
+              }}>✋ 手动</button>
+              <button onClick={() => setSelectionMode('gacha')} style={{
+                padding: '5px 16px', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 500,
+                background: selectionMode === 'gacha' ? 'linear-gradient(135deg, #0d9488, #2dd4bf)' : 'transparent',
+                color: selectionMode === 'gacha' ? '#fff' : 'var(--text-muted)',
+              }}>🎰 抽卡</button>
+              <button onClick={() => setShowGachaInfo(true)} title="抽卡说明" style={{
+                padding: '5px 10px', border: '1px solid var(--border)', cursor: 'pointer', fontSize: 13,
+                background: 'transparent', color: 'var(--text-muted)', borderRadius: 0, marginLeft: 2,
+              }}>ℹ</button>
+            </div>
           </div>
+
+          {selectionMode === 'manual' && (<>
 
           <div style={{ marginBottom: 8 }}>
             {/* 职业 */}
@@ -788,12 +886,202 @@ export default function SquadPage() {
           <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 8, textAlign: 'center' }}>
             显示 {filteredOps.length} / {allOps.length} 名干员 · 双击或点击「加入编队」
           </div>
+          </>)}
+
+          {/* ====== 抽卡模式 ====== */}
+          {selectionMode === 'gacha' && (<>
+            {gachaStage === 'trigger' && (
+              <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                <div onClick={handleGachaPull} style={{
+                  width: 100, height: 100, margin: '0 auto 16px', position: 'relative',
+                  cursor: gachaPulling ? 'wait' : 'pointer', transition: 'transform 0.3s',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = ''; }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%) rotate(45deg)', width: 88, height: 88, border: '1px solid rgba(45,212,191,0.12)', borderRadius: 10, animation: 'ringSpin 4s linear infinite' }}>
+                    <div style={{ position: 'absolute', inset: -6, border: '1px solid rgba(45,212,191,0.06)', borderRadius: 13, animation: 'ringSpin 6s linear infinite reverse' }} />
+                  </div>
+                  <img src="/prts-logo.png?v=4" alt="启动" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 70, height: 70, objectFit: 'contain', filter: 'drop-shadow(0 0 14px rgba(45,212,191,0.25))' }} />
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: 4, color: '#2dd4bf', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>DRIVE</div>
+                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)' }}>
+                  点击菱形启动协议 · 剩余 {gachaMaxBatches - gachaBatch} 轮
+                  <span style={{ marginLeft: 8, color: '#2dd4bf' }}>· 合法池 {gachaPool.length} 人</span>
+                </div>
+              </div>
+            )}
+
+            {gachaStage === 'results' && (<>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12, fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>
+                <span>第 <strong>{gachaBatch + 1}</strong>/{gachaMaxBatches} 轮</span>
+                <span style={{ marginLeft: 'auto' }}>放弃剩余 <strong>{gachaRerolls}</strong> 次</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginBottom: 16 }}>
+                {gachaResults.map((op, i) => {
+                  const bg = { 6: 'linear-gradient(180deg, #2a1520, #1a1025)', 5: 'linear-gradient(180deg, #1a1a10, #1a1810)', 4: 'linear-gradient(180deg, #0f1a22, #0d1620)', 3: 'linear-gradient(180deg, #141a20, #11161d)' }[op.rarity] || 'var(--bg-card)';
+                  const c = RARITY_COLORS[op.rarity];
+                  const b = { 6: '#ff6b4a', 5: '#e8c560', 4: '#7eb8da', 3: '#6b7c8e' }[op.rarity];
+                  return (
+                    <div key={op.name + i} style={{ position: 'relative', aspectRatio: '3/4', perspective: 800 }}>
+                      <div style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d', animation: `flipIn 0.6s ${0.1 + i * 0.15}s both cubic-bezier(0.22,0.61,0.36,1)` }}>
+                        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', borderRadius: 8, overflow: 'hidden', background: 'linear-gradient(180deg, #1c1c1d, #141415)', border: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <img src="/true-diamond.png" alt="" style={{ width: 84, height: 84, objectFit: 'contain', opacity: 1, filter: 'drop-shadow(0 0 8px rgba(255,100,80,0.25))' }} />
+                        </div>
+                        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', borderRadius: 8, overflow: 'hidden', transform: 'rotateY(180deg)', background: bg, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, padding: 6 }}>
+                          <div style={{ fontSize: 13, lineHeight: 1, letterSpacing: 1, color: c }}>{'★'.repeat(op.rarity)}</div>
+                          {op.avatar && <img src={op.avatar} alt={op.name} style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', background: '#0d1117', border: `2px solid ${b}`, boxShadow: op.rarity >= 6 ? `0 0 10px ${b}66` : op.rarity >= 5 ? `0 0 6px ${b}44` : 'none', flexShrink: 0 }} />}
+                          <div style={{ fontSize: 11, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%', color: op.rarity >= 4 ? c : '#a8cde8' }}>{op.name}</div>
+                        </div>
+                      </div>
+                      {i === 9 && <span style={{ position: 'absolute', top: -6, right: -4, zIndex: 2, fontSize: 9, fontWeight: 700, color: '#e8c560', background: 'rgba(0,0,0,0.6)', padding: '1px 4px', borderRadius: 3, border: '1px solid rgba(232,197,96,0.3)', fontFamily: 'var(--font-mono)' }}>10</span>}
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 12 }}>
+                <button onClick={handleGachaReroll} disabled={gachaRerolls <= 0}
+                  style={{ padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: gachaRerolls > 0 ? 'pointer' : 'not-allowed', opacity: gachaRerolls > 0 ? 1 : 0.3, background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.5)', fontFamily: 'inherit' }}>
+                  🔄 不要
+                </button>
+                <button onClick={handleGachaLock}
+                  style={{ padding: '10px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer', border: 'none', fontFamily: 'inherit', background: 'linear-gradient(135deg, #0d9488, #2dd4bf)', color: '#0a0e14' }}>
+                  ✅ 锁定这轮
+                </button>
+              </div>
+            </>)}
+
+            {gachaStage === 'done' && (
+              <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                <div style={{ fontSize: 18, marginBottom: 6, color: '#2dd4bf' }}>🎰 十连结束</div>
+                <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>已锁定 {gachaLocked.length} 名干员</div>
+              </div>
+            )}
+
+            {gachaLocked.length > 0 && (() => {
+              const tagsConfirmed = store.confirmedTags.length > 0;
+              const validNames = tagsConfirmed ? new Set(
+                filterOperatorsByHardConstraints(store.operators, store.hardConstraints).map(o => o.name)
+              ) : null;
+              return (
+              <div style={{ background: 'rgba(45,212,191,0.04)', border: '1px solid rgba(45,212,191,0.15)', borderRadius: 10, padding: 12, marginTop: 8 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(45,212,191,0.5)', marginBottom: 8 }}>📦 已锁定 · {gachaLocked.length} 人 · 双击加入编队</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                  {gachaLocked.map((op, i) => {
+                    const inSquad = store.squad.some((s) => s.name === op.name);
+                    const constrainedInvalid = tagsConfirmed && validNames && !validNames.has(op.name);
+                    return (
+                      <div key={op.name + i}
+                        onClick={() => setSelectedOp(selectedOp?.name === op.name ? null : op)}
+                        onDoubleClick={() => { if (!inSquad && !constrainedInvalid) handleAddToSquad(op); }}
+                        style={{
+                          width: 78, padding: '5px 4px', borderRadius: 8,
+                          background: selectedOp?.name === op.name ? 'rgba(45,212,191,0.12)' : 'transparent',
+                          border: `1px solid ${inSquad ? 'var(--accent)' : constrainedInvalid ? 'rgba(249,117,131,0.3)' : 'transparent'}`,
+                          cursor: inSquad || constrainedInvalid ? 'default' : 'pointer',
+                          opacity: inSquad ? 0.4 : constrainedInvalid ? 0.35 : 1,
+                          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+                        }}>
+                        {constrainedInvalid && <div style={{ position: 'absolute', top: 2, right: 2, fontSize: 10, color: '#f97583' }} title="不满足标签约束">⚠</div>}
+                        <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', background: '#0d1117', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.05)' }}>
+                          {op.avatar ? (
+                            <img src={op.avatar} alt={op.name} style={{ width: 36, height: 36, objectFit: 'cover' }}
+                              onError={(e) => { const img = e.target as HTMLImageElement; if (img.dataset.fallback) return; img.dataset.fallback = '1'; img.src = PROFESSION_ICONS[op.profession] || ''; }} />
+                          ) : (
+                            <img src={PROFESSION_ICONS[op.profession] || ''} alt={op.profession} style={{ width: 22, height: 22, opacity: 0.5 }} />
+                          )}
+                        </div>
+                        <div style={{ fontSize: 13, textAlign: 'center', lineHeight: 1.1, maxWidth: 72, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{op.name}</div>
+                        <div style={{ fontSize: 11, color: RARITY_COLORS[op.rarity], lineHeight: 1 }}>{'★'.repeat(op.rarity)}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );})()}
+          </>)}
         </div>
+
+        {/* 抽卡说明弹窗 */}
+        {showGachaInfo && (
+          <div onClick={() => setShowGachaInfo(false)} style={{
+            position: 'fixed', inset: 0, zIndex: 5000,
+            background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <div onClick={e => e.stopPropagation()} style={{
+              background: 'var(--bg-card)', border: '1px solid var(--border)',
+              borderRadius: 12, padding: '24px 28px', maxWidth: 420, width: '90%',
+              maxHeight: '80vh', overflowY: 'auto',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ fontSize: 18, fontWeight: 700, color: '#2dd4bf' }}>🎰 十连抽卡说明</div>
+                <button onClick={() => setShowGachaInfo(false)} style={{
+                  background: 'transparent', border: 'none', color: 'var(--text-muted)',
+                  fontSize: 20, cursor: 'pointer', lineHeight: 1,
+                }}>✕</button>
+              </div>
+
+              <div style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+                <div style={{ fontWeight: 600, color: 'var(--text-accent)', marginBottom: 8 }}>📋 概率表</div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16, fontSize: 13 }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                      <td style={{ padding: '6px 8px', color: 'var(--text-muted)' }}>星级</td>
+                      <td style={{ padding: '6px 8px', color: 'var(--text-muted)' }}>第1~9抽</td>
+                      <td style={{ padding: '6px 8px', color: '#e8c560' }}>第10抽</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <td style={{ padding: '6px 8px', color: '#ff6b4a', fontWeight: 600 }}>6★</td>
+                      <td style={{ padding: '6px 8px' }}>10%</td>
+                      <td style={{ padding: '6px 8px', color: '#e8c560', fontWeight: 600 }}>55%</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <td style={{ padding: '6px 8px', color: '#e8c560', fontWeight: 600 }}>5★</td>
+                      <td style={{ padding: '6px 8px' }}>20%</td>
+                      <td style={{ padding: '6px 8px' }}>10%</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <td style={{ padding: '6px 8px', color: '#7eb8da', fontWeight: 600 }}>4★</td>
+                      <td style={{ padding: '6px 8px' }}>60%</td>
+                      <td style={{ padding: '6px 8px' }}>30%</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '6px 8px', color: '#6b7c8e', fontWeight: 600 }}>3★</td>
+                      <td style={{ padding: '6px 8px' }}>10%</td>
+                      <td style={{ padding: '6px 8px' }}>5%</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div style={{ fontWeight: 600, color: 'var(--text-accent)', marginBottom: 8 }}>🎮 使用方式</div>
+                <ol style={{ paddingLeft: 20, margin: 0, fontSize: 13, lineHeight: 2 }}>
+                  <li>点击「<span style={{ color: '#2dd4bf' }}>🎰 抽卡</span>」切换到十连模式</li>
+                  <li>点击菱形 DRIVE 按钮启动一次十连</li>
+                  <li>每次十连可重抽 <span style={{ color: '#f97583' }}>10次</span>，满意后锁定</li>
+                  <li>最多锁定 <span style={{ color: '#e8c560' }}>3轮</span>（最高 30 名干员）</li>
+                  <li>锁定完成后，双击干员卡片加入编队</li>
+                </ol>
+
+                <div style={{ marginTop: 12, padding: '8px 12px', background: 'rgba(45,212,191,0.05)', borderRadius: 8, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                  💡 <strong style={{ color: '#2dd4bf' }}>提示</strong>：抽卡池受当前已确认的挑战标签约束，被标签排除的干员不会出现在卡池中。
+                </div>
+
+                <div style={{ marginTop: 4, padding: '6px 12px', background: 'rgba(249,117,131,0.06)', borderRadius: 8, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                  ⚠️ <strong style={{ color: '#f97583' }}>注意</strong>：第10抽55%的6★概率仅在卡池中存在6★干员时生效，若池中无6★则退化为普通10%。
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 版权声明 — 卡片下方 */}
         <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 4, letterSpacing: 0.5 }}>
           本程序所有素材版权归鹰角网络所有
         </div>
       </div>
+
 
       {/* ======== 右栏 ======== */}
       <div style={{ width: 350, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -1193,8 +1481,12 @@ export default function SquadPage() {
 }
 
 function getDisabledReason(op: OperatorData, hard: import('../types').HardConstraints): string {
+  if (hard.allowedOperators && !hard.allowedOperators.includes(op.name)) return `"${op.name}"不在允许列表`;
+  if (hard.bannedOperators.includes(op.name)) return `"${op.name}"已被禁用`;
   if (hard.allowedProfessions && !hard.allowedProfessions.includes(op.profession)) return `职业"${op.profession}"不在允许列表`;
   if (hard.bannedProfessions.includes(op.profession)) return `职业"${op.profession}"已被禁用`;
+  if (hard.allowedSubProfessions && !hard.allowedSubProfessions.includes(op.subProfession)) return `子职业"${op.subProfession}"不在允许列表`;
+  if (hard.bannedSubProfessions.includes(op.subProfession)) return `子职业"${op.subProfession}"已被禁用`;
   if (hard.maxRarity !== null && op.rarity > hard.maxRarity) return `稀有度过高(${op.rarity})`;
   if (hard.minRarity !== null && op.rarity < hard.minRarity) return `稀有度过低(${op.rarity})`;
   if (hard.positionRestriction && !hard.positionRestriction.includes(op.position)) return '部署位置不符合要求';
@@ -1202,6 +1494,8 @@ function getDisabledReason(op: OperatorData, hard: import('../types').HardConstr
   if (hard.bannedRaces.includes(op.race || '')) return `种族"${op.race}"已被禁用`;
   if (hard.allowedNations && op.nation && !hard.allowedNations.includes(op.nation)) return `国家"${op.nation}"不在允许列表`;
   if (hard.bannedNations.includes(op.nation || '')) return `国家"${op.nation}"已被禁用`;
+  if (hard.allowedOrgs && op.org && !hard.allowedOrgs.includes(op.org)) return `组织"${op.org}"不在允许列表`;
+  if (hard.bannedOrgs.includes(op.org || '')) return `组织"${op.org}"已被禁用`;
   if (hard.blockTier !== null) {
     if (op.block === null && hard.blockTierMode === 'exact') return `阻挡数未知`;
     if (op.block !== null && hard.blockTierMode === 'exact' && op.block !== hard.blockTier) return `阻挡数不匹配(${op.block}≠${hard.blockTier})`;

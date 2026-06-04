@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useAppStore } from '../stores/appStore';
 import { loadTags } from '../engine/tagEngine';
-import type { ChallengeTag, StageData } from '../types';
+import type { ChallengeTag, StageData, OperatorData } from '../types';
 
 const CATEGORY_LABELS: Record<string, string> = {
   squad: '编队', rarity: '稀有度', cost: '费用', position: '位置',
@@ -20,12 +20,26 @@ export default function SettingsPage() {
   const [devMode, setDevMode] = useState(false);
   const clickCount = [0];
 
+  // 卡池黑名单筛选
+  const [allOperators, setAllOperators] = useState<OperatorData[]>([]);
+  const [blProfessionFilter, setBlProfessionFilter] = useState<string | null>(null);
+  const [blRarityFilter, setBlRarityFilter] = useState<number | null>(null);
+
+  const PROFESSIONS = ['先锋', '近卫', '重装', '狙击', '术师', '医疗', '辅助', '特种'];
+  const RARITIES = [6, 5, 4, 3, 2, 1];
+  const RARITY_COLORS: Record<number, string> = { 6: '#ff6b4a', 5: '#e8c560', 4: '#7eb8da', 3: '#6b7c8e', 2: '#7eb8da', 1: '#6b7c8e' };
+
   useEffect(() => {
     loadTags().then(setAllTags).catch(console.error);
     fetch('/data/stages.json')
       .then((r) => r.json())
       .then(setAllStages)
       .catch(console.error);
+    fetch('/data/operators.json')
+      .then((r) => r.json())
+      .then((d) => setAllOperators(Object.values(d.operators) as OperatorData[]))
+      .catch(console.error);
+    store.loadGachaBlacklist();
   }, []);
 
   useEffect(() => {
@@ -73,6 +87,14 @@ export default function SettingsPage() {
     clickCount[0]++;
     if (clickCount[0] >= 3) { setDevMode(!devMode); clickCount[0] = 0; }
   };
+
+  const filterChipStyle = (active: boolean): React.CSSProperties => ({
+    padding: '3px 8px', borderRadius: 6, fontSize: 13, cursor: 'pointer',
+    background: active ? 'rgba(45,212,191,0.15)' : 'transparent',
+    border: `1px solid ${active ? 'var(--accent)' : 'var(--border)'}`,
+    color: active ? 'var(--text-accent)' : 'var(--text-muted)',
+    fontWeight: active ? 600 : 400,
+  });
 
   return (
     <div>
@@ -166,6 +188,99 @@ export default function SettingsPage() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* 🎰 卡池干员黑名单 */}
+      <div className="setting-section">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+          <h3>🎰 卡池干员黑名单</h3>
+          <button onClick={() => store.clearGachaBlacklist()} className="btn-secondary" style={{ fontSize: 13 }}>
+            全部恢复
+          </button>
+        </div>
+        <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 10 }}>
+          被拉黑的干员不会出现在十连抽卡池中（手动模式不受影响）。
+        </p>
+
+        {/* 已拉黑列表 */}
+        {store.gachaBlacklist.length > 0 && (
+          <div style={{
+            background: 'rgba(249,117,131,0.06)', border: '1px solid rgba(249,117,131,0.2)',
+            borderRadius: 8, padding: 10, marginBottom: 10,
+          }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#f97583', marginBottom: 6 }}>
+              🚫 已拉黑 · {store.gachaBlacklist.length} 名
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+              {store.gachaBlacklist.map((name) => {
+                const op = allOperators.find(o => o.name === name);
+                return (
+                  <span key={name} onClick={() => store.toggleGachaBlacklist(name)}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 3,
+                      padding: '3px 8px', borderRadius: 6, fontSize: 13,
+                      background: 'rgba(249,117,131,0.12)',
+                      border: '1px solid rgba(249,117,131,0.3)',
+                      color: '#f97583', cursor: 'pointer',
+                    }}>
+                    {op ? <span style={{ color: RARITY_COLORS[op.rarity] || '#8b949e', fontWeight: 600 }}>{op.rarity}★</span> : null}
+                    {name}
+                    <span style={{ fontSize: 11, marginLeft: 2 }}>✕</span>
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* 筛选栏 */}
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 6 }}>
+            <span style={{ fontSize: 13, color: 'var(--text-muted)', marginRight: 4 }}>职业：</span>
+            <span onClick={() => setBlProfessionFilter(null)}
+              style={filterChipStyle(!blProfessionFilter)}>全部</span>
+            {PROFESSIONS.map(p => (
+              <span key={p} onClick={() => setBlProfessionFilter(blProfessionFilter === p ? null : p)}
+                style={filterChipStyle(blProfessionFilter === p)}>{p}</span>
+            ))}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+            <span style={{ fontSize: 13, color: 'var(--text-muted)', marginRight: 4 }}>星级：</span>
+            <span onClick={() => setBlRarityFilter(null)}
+              style={filterChipStyle(!blRarityFilter)}>全部</span>
+            {RARITIES.map(r => (
+              <span key={r} onClick={() => setBlRarityFilter(blRarityFilter === r ? null : r)}
+                style={filterChipStyle(blRarityFilter === r)}>{r}★</span>
+            ))}
+          </div>
+        </div>
+
+        {/* 干员列表 */}
+        <div style={{ maxHeight: 300, overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+          {allOperators
+            .filter(o => !blProfessionFilter || o.profession === blProfessionFilter)
+            .filter(o => blRarityFilter === null || o.rarity === blRarityFilter)
+            .sort((a, b) => b.rarity - a.rarity)
+            .map(op => {
+              const isBlacklisted = store.gachaBlacklist.includes(op.name);
+              return (
+                <span key={op.name} onClick={() => store.toggleGachaBlacklist(op.name)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 2,
+                    padding: '3px 8px', borderRadius: 6, fontSize: 13,
+                    cursor: 'pointer',
+                    background: isBlacklisted ? 'rgba(249,117,131,0.1)' : 'transparent',
+                    border: `1px solid ${isBlacklisted ? '#f97583' : 'var(--border)'}`,
+                    color: isBlacklisted ? '#f97583' : 'var(--text-secondary)',
+                  }}>
+                  <span style={{ color: RARITY_COLORS[op.rarity] || '#8b949e', fontWeight: 600, marginRight: 2 }}>
+                    {op.rarity}★
+                  </span>
+                  {op.name}
+                </span>
+              );
+            })}
         </div>
       </div>
 

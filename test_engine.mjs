@@ -298,11 +298,23 @@ function mergeTagsToConstraints(tags) {
 function validateOperator(op, hard) {
   const reasons = [];
 
-  if (hard.allowedProfessions && !hard.allowedProfessions.includes(op.profession)) {
+  if (hard.allowedOperators !== null && !hard.allowedOperators.includes(op.name)) {
+    reasons.push(`"${op.name}"不在允许列表中`);
+  }
+  if (hard.bannedOperators.includes(op.name)) {
+    reasons.push(`"${op.name}"已被禁用`);
+  }
+  if (hard.allowedProfessions !== null && !hard.allowedProfessions.includes(op.profession)) {
     reasons.push(`职业"${op.profession}"不在允许列表中`);
   }
   if (hard.bannedProfessions.includes(op.profession)) {
     reasons.push(`职业"${op.profession}"已被禁用`);
+  }
+  if (hard.allowedSubProfessions !== null && !hard.allowedSubProfessions.includes(op.subProfession)) {
+    reasons.push(`子职业"${op.subProfession}"不在允许列表中`);
+  }
+  if (hard.bannedSubProfessions.includes(op.subProfession)) {
+    reasons.push(`子职业"${op.subProfession}"已被禁用`);
   }
   if (hard.maxRarity !== null && op.rarity > hard.maxRarity) {
     reasons.push(`稀有度${op.rarity}超出上限(${hard.maxRarity})`);
@@ -310,22 +322,22 @@ function validateOperator(op, hard) {
   if (hard.minRarity !== null && op.rarity < hard.minRarity) {
     reasons.push(`稀有度${op.rarity}低于下限(${hard.minRarity})`);
   }
-  if (hard.positionRestriction && !hard.positionRestriction.includes(op.position)) {
+  if (hard.positionRestriction !== null && !hard.positionRestriction.includes(op.position)) {
     reasons.push(`部署位置"${op.position}"不符合要求`);
   }
-  if (hard.allowedNations && op.nation && !hard.allowedNations.includes(op.nation)) {
+  if (hard.allowedNations !== null && op.nation !== null && !hard.allowedNations.includes(op.nation)) {
     reasons.push(`国家/地区"${op.nation}"不在允许列表中`);
   }
   if (hard.bannedNations.includes(op.nation || '')) {
     reasons.push(`国家/地区"${op.nation}"已被禁用`);
   }
-  if (hard.allowedOrgs && op.org && !hard.allowedOrgs.includes(op.org)) {
+  if (hard.allowedOrgs !== null && op.org !== null && !hard.allowedOrgs.includes(op.org)) {
     reasons.push(`组织"${op.org}"不在允许列表中`);
   }
   if (hard.bannedOrgs.includes(op.org || '')) {
     reasons.push(`组织"${op.org}"已被禁用`);
   }
-  if (hard.allowedRaces && op.race && !hard.allowedRaces.includes(op.race)) {
+  if (hard.allowedRaces !== null && op.race !== null && !hard.allowedRaces.includes(op.race)) {
     reasons.push(`种族"${op.race}"不在允许列表中`);
   }
   if (hard.bannedRaces.includes(op.race || '')) {
@@ -336,6 +348,15 @@ function validateOperator(op, hard) {
       reasons.push(`阻挡数${op.block}不匹配要求(${hard.blockTier})`);
     } else if (hard.blockTierMode === 'max' && op.block > hard.blockTier) {
       reasons.push(`阻挡数${op.block}超出上限(${hard.blockTier})`);
+    }
+  }
+  const cost = op.cost;
+  if (typeof cost === 'number') {
+    if (hard.maxSingleCost !== null && cost > hard.maxSingleCost) {
+      reasons.push(`部署费用(${cost})超出单干员上限(${hard.maxSingleCost})`);
+    }
+    if (hard.minSingleCost !== null && cost < hard.minSingleCost) {
+      reasons.push(`部署费用(${cost})低于单干员下限(${hard.minSingleCost})`);
     }
   }
 
@@ -353,9 +374,26 @@ function validateSquad(squad, hard) {
     const nations = [...new Set(squad.filter((o) => o.nation).map((o) => o.nation))];
     if (nations.length > 1) violations.push(`编队含多个国家/地区: ${nations.join('、')}`);
   }
+  if (hard.sameOrgOnly) {
+    const orgs = [...new Set(squad.filter((o) => o.org).map((o) => o.org))];
+    if (orgs.length > 1) violations.push(`编队含多个组织: ${orgs.join('、')}`);
+  }
   if (hard.sameRaceOnly) {
     const races = [...new Set(squad.filter((o) => o.race).map((o) => o.race))];
     if (races.length > 1) violations.push(`编队含多个种族: ${races.join('、')}`);
+  }
+  if (hard.rareRaceOnly !== null) {
+    const races = [...new Set(squad.filter((o) => o.race).map((o) => o.race))];
+    if (races.length > hard.rareRaceOnly) {
+      violations.push(`编队含${races.length}个种族，超出上限(${hard.rareRaceOnly})`);
+    }
+  }
+  // 逐个干员检查
+  for (const op of squad) {
+    const result = validateOperator(op, hard);
+    if (!result.valid) {
+      violations.push(`${op.name}: ${result.reasons.join('；')}`);
+    }
   }
 
   return { valid: violations.length === 0, violations };
@@ -364,8 +402,12 @@ function validateSquad(squad, hard) {
 // ---- 按硬约束过滤干员 ----
 function filterOperatorsByHardConstraints(ops, hard) {
   return Object.values(ops).filter((op) => {
+    if (hard.allowedOperators !== null && !hard.allowedOperators.includes(op.name)) return false;
+    if (hard.bannedOperators.includes(op.name)) return false;
     if (hard.allowedProfessions !== null && !hard.allowedProfessions.includes(op.profession)) return false;
     if (hard.bannedProfessions.includes(op.profession)) return false;
+    if (hard.allowedSubProfessions !== null && !hard.allowedSubProfessions.includes(op.subProfession)) return false;
+    if (hard.bannedSubProfessions.includes(op.subProfession)) return false;
     if (hard.maxRarity !== null && op.rarity > hard.maxRarity) return false;
     if (hard.minRarity !== null && op.rarity < hard.minRarity) return false;
     if (hard.positionRestriction !== null && !hard.positionRestriction.includes(op.position)) return false;
@@ -379,21 +421,30 @@ function filterOperatorsByHardConstraints(ops, hard) {
     if (hard.bannedNations.includes(op.nation || '')) return false;
     if (hard.allowedOrgs !== null && op.org !== null && !hard.allowedOrgs.includes(op.org)) return false;
     if (hard.bannedOrgs.includes(op.org || '')) return false;
+    const cost = op.cost;
+    if (typeof cost === 'number') {
+      if (hard.maxSingleCost !== null && cost > hard.maxSingleCost) return false;
+      if (hard.minSingleCost !== null && cost < hard.minSingleCost) return false;
+    }
     return true;
   });
 }
 
-// ---- 分享码编码 (新位布局) ----
-// 字节0: [版本:4bit] [标签0-3:4bit]
+// ---- 分享码编码 (v2 布局，支持40标签) ----
+// 字节0: [版本=2:4bit] [标签0-3:4bit]
 // 字节1: [标签4-11:8bit]
 // 字节2: [标签12-19:8bit]
 // 字节3: [标签20-27:8bit]
-// 字节4: [标签28:1bit] [预留:7bit]
-// 字节5: [软约束+覆盖标记:8bit] (OVERIDE_BIT=7)
-// 字节6-7: [关卡索引:16bit] (0xFFFF=无关卡)
+// 字节4: [标签28-35:8bit]
+// 字节5: [标签36-39:4bit] [预留:4bit]
+// 字节6: [软约束+覆盖标记:8bit] (OVERIDE_BIT=7)
+// 字节7-8: [关卡索引:16bit] (0xFFFF=无关卡)
+// 字节9: [预留]
 const NO_STAGE = 0xffff;
 const SOFT_BITS = { noSkill: 0, afkOnly: 1, noRetreat: 2, noRedeploy: 3, zeroLeak: 4 };
 const OVERRIDE_BIT = 7;
+const V1_MAX_TAGS = 29;
+const V2_MAX_TAGS = 40;
 
 function encode(tagIds, stageId, softConstraints, allTags, allStages) {
   const PREFIX = 'AKRL:';
@@ -401,16 +452,16 @@ function encode(tagIds, stageId, softConstraints, allTags, allStages) {
   const tagIndexMap = new Map();
   allTags.forEach((tag, idx) => tagIndexMap.set(tag.id, idx));
 
-  const buf = new ArrayBuffer(8);
+  const buf = new ArrayBuffer(10);
   const dv = new DataView(buf);
 
   // === 字节0: 版本号(4bit) + 标签0-3(4bit) ===
-  dv.setUint8(0, 1); // 版本号 = 1
+  dv.setUint8(0, 2); // 版本号 = 2
 
-  // === 字节1-4: 标签位掩码 29bit ===
+  // === 字节1-5: 标签位掩码 40bit ===
   for (const tagId of tagIds) {
     const bitIdx = tagIndexMap.get(tagId);
-    if (bitIdx === undefined) continue;
+    if (bitIdx === undefined || bitIdx >= V2_MAX_TAGS) continue;
     const globalBit = 4 + bitIdx;
     const byteIdx = Math.floor(globalBit / 8);
     const bitOffset = globalBit % 8;
@@ -418,7 +469,7 @@ function encode(tagIds, stageId, softConstraints, allTags, allStages) {
     dv.setUint8(byteIdx, current | (1 << bitOffset));
   }
 
-  // === 字节5: 软约束 + 覆盖标记 ===
+  // === 字节6: 软约束 + 覆盖标记 ===
   let softByte = 0;
   if (softConstraints) {
     for (const [key, bitPos] of Object.entries(SOFT_BITS)) {
@@ -428,13 +479,15 @@ function encode(tagIds, stageId, softConstraints, allTags, allStages) {
     }
     softByte |= (1 << OVERRIDE_BIT);
   }
-  dv.setUint8(5, softByte);
+  dv.setUint8(6, softByte);
 
-  // === 字节6-7: 关卡索引 (0xFFFF = 无关卡) ===
+  // === 字节7-8: 关卡索引 (0xFFFF = 无关卡) ===
   const stageIdx = stageId !== null
     ? allStages.findIndex((s) => s.id === stageId)
     : -1;
-  dv.setUint16(6, stageIdx >= 0 ? stageIdx : NO_STAGE);
+  dv.setUint16(7, stageIdx >= 0 ? stageIdx : NO_STAGE);
+
+  // 字节9: 预留
 
   // Base64URL
   const bytes = new Uint8Array(buf);
@@ -450,7 +503,7 @@ function encode(tagIds, stageId, softConstraints, allTags, allStages) {
   return PREFIX + base64;
 }
 
-// ---- 分享码解码 ----
+// ---- 分享码解码 (支持 v1+v2) ----
 function decode(code, allTags, allStages) {
   const PREFIX = 'AKRL:';
 
@@ -468,18 +521,61 @@ function decode(code, allTags, allStages) {
 
   if (binary.length < 8) return null;
 
-  const buf = new ArrayBuffer(8);
+  const buf = new ArrayBuffer(Math.max(binary.length, 10));
   const dv = new DataView(buf);
-  for (let i = 0; i < binary.length && i < 8; i++) {
+  for (let i = 0; i < binary.length; i++) {
     dv.setUint8(i, binary.charCodeAt(i));
   }
 
   const version = dv.getUint8(0) & 0x0f;
-  if (version !== 1) return null;
 
-  // 标签位掩码 29bit (bit 4-32)
+  // v2 解码
+  if (version === 2) {
+    if (binary.length < 10) return null;
+    return decodeV2(dv, allTags, allStages);
+  }
+
+  // v1 解码 (兼容)
+  if (version === 1) {
+    return decodeV1(dv, allTags, allStages);
+  }
+
+  return null;
+}
+
+function decodeV1(dv, allTags, allStages) {
   const tagIds = [];
-  for (let i = 0; i < 29; i++) {
+  for (let i = 0; i < V1_MAX_TAGS; i++) {
+    const globalBit = 4 + i;
+    const byteIdx = Math.floor(globalBit / 8);
+    const bitOffset = globalBit % 8;
+    const bit = (dv.getUint8(byteIdx) >> bitOffset) & 1;
+    if (bit === 1 && allTags[i]) {
+      tagIds.push(allTags[i].id);
+    }
+  }
+  const stageIdx = dv.getUint16(6);
+  const stageId = (stageIdx !== NO_STAGE && allStages[stageIdx])
+    ? allStages[stageIdx].id
+    : null;
+  const softByte = dv.getUint8(5);
+  const hasOverride = ((softByte >> OVERRIDE_BIT) & 1) === 1;
+  let softConstraints = null;
+  if (hasOverride) {
+    softConstraints = { noSkill: false, afkOnly: false, noRetreat: false, noRedeploy: false, zeroLeak: false, maxSteps: null, customRules: [] };
+    for (const [key, bitPos] of Object.entries(SOFT_BITS)) {
+      if ((softByte >> bitPos) & 1) {
+        softConstraints[key] = true;
+      }
+    }
+  }
+  return { tagIds, stageId, softConstraints };
+}
+
+function decodeV2(dv, allTags, allStages) {
+  // 标签位掩码 40bit (bit 4-43)
+  const tagIds = [];
+  for (let i = 0; i < V2_MAX_TAGS; i++) {
     const globalBit = 4 + i;
     const byteIdx = Math.floor(globalBit / 8);
     const bitOffset = globalBit % 8;
@@ -489,14 +585,14 @@ function decode(code, allTags, allStages) {
     }
   }
 
-  // 关卡索引 (字节6-7, 0xFFFF = 无关卡)
-  const stageIdx = dv.getUint16(6);
+  // 关卡索引 (字节7-8, 0xFFFF = 无关卡)
+  const stageIdx = dv.getUint16(7);
   const stageId = (stageIdx !== NO_STAGE && allStages[stageIdx])
     ? allStages[stageIdx].id
     : null;
 
-  // 软约束 + 覆盖标记 (字节5)
-  const softByte = dv.getUint8(5);
+  // 软约束 + 覆盖标记 (字节6)
+  const softByte = dv.getUint8(6);
   const hasOverride = ((softByte >> OVERRIDE_BIT) & 1) === 1;
 
   let softConstraints = null;
@@ -723,7 +819,7 @@ describe('  2.1 encode/decode roundtrip');
   const code4 = encode(allTagIds, 'main_08-20', softConstraints, tags, stages);
   const decoded4 = decode(code4, tags, stages);
   assert(decoded4 !== null, '全部标签编码解码应成功');
-  assert(decoded4.tagIds.length === 29, '全部标签解码后有29个');
+  assert(decoded4.tagIds.length === allTagIds.length, `全部标签解码后有${allTagIds.length}个`);
   assertDeepEqual(decoded4.tagIds.sort(), allTagIds.sort(), '全部标签编码解码后一致');
 
   // 测试5: 无效分享码
@@ -771,12 +867,12 @@ describe('  2.4 Bug #3/#4 regression: all 29 tags + stage + soft');
 {
   const allTagIds = tags.map(t => t.id);
   const soft = { noSkill: false, afkOnly: true, noRetreat: false, noRedeploy: true, zeroLeak: false, maxSteps: null, customRules: [] };
-  const code = encode(allTagIds, 'main_08-20', soft, tags, stages);
+  const code = encode(allTagIds, 'main_03-08', soft, tags, stages);
   const decoded = decode(code, tags, stages);
   assert(decoded !== null, '全部标签+关卡+软约束编码解码应成功');
-  assert(decoded.tagIds.length === 29, '全部标签解码后应有29个');
+  assert(decoded.tagIds.length === allTagIds.length, `全部标签解码后应有${allTagIds.length}个`);
   assertDeepEqual(decoded.tagIds.sort(), allTagIds.sort(), '全部标签编码解码后一致');
-  assert(decoded.stageId === 'main_08-20', '关卡应为 main_08-20');
+  assert(decoded.stageId === 'main_03-08', '关卡应为 main_03-08');
   assert(decoded.softConstraints.afkOnly === true, '软约束 afkOnly=true');
   assert(decoded.softConstraints.noRedeploy === true, '软约束 noRedeploy=true');
 }

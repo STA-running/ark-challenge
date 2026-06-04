@@ -383,3 +383,13 @@ body.mobile-mode header { padding: 14px 16px 8px !important; gap: 12px !importan
 body.mobile-mode header nav { display: none !important; }
 body.mobile-mode header + div { display: none !important; }  /* 分隔线 */
 body.mobile-mode main { padding: 0 !important; max-width: none !important; }
+
+/* ========== 十连抽卡动效 ========== */
+@keyframes flipIn {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(180deg); }
+}
+@keyframes ringSpin {
+  0%   { transform: translate(-50%, -50%) rotate(45deg); }
+  100% { transform: translate(-50%, -50%) rotate(405deg); }
+}

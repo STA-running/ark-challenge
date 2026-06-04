@@ -66,6 +66,9 @@ interface AppState {
   // 方案
   plans: ChallengePlan[];
 
+  // 卡池黑名单（仅影响十连抽卡，不影响手动选人）
+  gachaBlacklist: string[];
+
   // 编辑状态
   editingEnabled: boolean;
   currentPage: 'squad' | 'settings';
@@ -85,6 +88,10 @@ interface AppState {
   savePlan: (name: string) => void;
   deletePlan: (id: number) => void;
   toggleFav: (id: number) => void;
+  // 卡池黑名单操作
+  toggleGachaBlacklist: (name: string) => void;
+  clearGachaBlacklist: () => void;
+  loadGachaBlacklist: () => void;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -98,6 +105,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   tagMode: 'manual',
   confirmedStage: null,
   plans: [],
+  gachaBlacklist: [],
   editingEnabled: false,
   currentPage: 'squad',
 
@@ -158,4 +166,22 @@ export const useAppStore = create<AppState>((set, get) => ({
         p.id === id ? { ...p, fav: !p.fav } : p
       ),
     }),
+
+  // 卡池黑名单操作
+  toggleGachaBlacklist: (name: string) => {
+    const bl = get().gachaBlacklist;
+    const next = bl.includes(name) ? bl.filter(n => n !== name) : [...bl, name];
+    set({ gachaBlacklist: next });
+    localStorage.setItem('ark_gacha_blacklist', JSON.stringify(next));
+  },
+  clearGachaBlacklist: () => {
+    set({ gachaBlacklist: [] });
+    localStorage.removeItem('ark_gacha_blacklist');
+  },
+  loadGachaBlacklist: () => {
+    try {
+      const raw = localStorage.getItem('ark_gacha_blacklist');
+      if (raw) set({ gachaBlacklist: JSON.parse(raw) });
+    } catch {}
+  },
 }));

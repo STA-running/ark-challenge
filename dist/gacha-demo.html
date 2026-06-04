@@ -162,9 +162,11 @@
     border: 1px solid rgba(255,255,255,0.05);
     display: flex; align-items: center; justify-content: center;
   }
-  .card-front svg {
-    width: 28px; height: 42px;
-    opacity: 0.35;
+  .card-front img {
+    width: 68px; height: 68px;
+    object-fit: contain;
+    opacity: 1;
+    filter: brightness(1.3) drop-shadow(0 0 6px rgba(255,100,80,0.3));
   }
 
   .card-back {
@@ -492,10 +494,7 @@
       inner.className = 'card-inner';
       inner.innerHTML = `
         <div class="card-front">
-          <svg viewBox="0 0 30 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 43 L4 23 L15 3" stroke="rgba(140,122,105,0.55)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M15 43 L26 23 L15 3" stroke="rgba(140,122,105,0.55)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <img src="/true-diamond.png" alt="" loading="lazy"/>
         </div>
         <div class="card-back rarity-${op.rarity}">
           <div class="card-rarity-stars">${'★'.repeat(op.rarity)}</div>
