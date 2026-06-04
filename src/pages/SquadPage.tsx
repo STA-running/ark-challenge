@@ -18,15 +18,23 @@ const PROFESSION_COLORS: Record<string, string> = {
   '辅助': '#d19a66',
   '特种': '#be5046',
 };
+// 生成内联SVG职业图标（不依赖外部URL，永不过期）
+function makeProfIcon(color: string, label: string): string {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <rect x="2" y="2" width="36" height="36" rx="6" fill="none" stroke="${encodeURIComponent(color)}" stroke-width="2.5"/>
+    <text x="20" y="27" text-anchor="middle" font-size="16" font-weight="bold" fill="${encodeURIComponent(color)}" font-family="Arial, sans-serif">${label}</text>
+  </svg>`;
+  return `data:image/svg+xml,${svg}`;
+}
 const PROFESSION_ICONS: Record<string, string> = {
-  '先锋': 'https://media.prts.wiki/f/fc/%E5%85%88%E9%94%8B.png',
-  '近卫': 'https://media.prts.wiki/5/5e/%E8%BF%91%E5%8D%AB.png',
-  '重装': 'https://media.prts.wiki/e/e0/%E9%87%8D%E8%A3%85.png',
-  '狙击': 'https://media.prts.wiki/7/7d/%E7%8B%99%E5%87%BB.png',
-  '术师': 'https://media.prts.wiki/8/83/%E6%9C%AF%E5%B8%88.png',
-  '医疗': 'https://media.prts.wiki/7/78/%E5%8C%BB%E7%96%97.png',
-  '辅助': 'https://media.prts.wiki/1/1c/%E8%BE%85%E5%8A%A9.png',
-  '特种': 'https://media.prts.wiki/3/32/%E7%89%B9%E7%A7%8D.png',
+  '先锋': makeProfIcon('#f97583', '先'),
+  '近卫': makeProfIcon('#e5c07b', '近'),
+  '重装': makeProfIcon('#56b6c2', '重'),
+  '狙击': makeProfIcon('#98c379', '狙'),
+  '术师': makeProfIcon('#c678dd', '术'),
+  '医疗': makeProfIcon('#61afef', '医'),
+  '辅助': makeProfIcon('#d19a66', '辅'),
+  '特种': makeProfIcon('#be5046', '特'),
 };
 
 // 费用图标SVG（菱形币）
@@ -499,7 +507,7 @@ export default function SquadPage() {
                     {op.avatar ? (
                       <img src={op.avatar} alt={op.name}
                         style={{ width: 40, height: 40, objectFit: 'cover' }}
-                        onError={(e) => { (e.target as HTMLImageElement).src = PROFESSION_ICONS[op.profession] || ''; }}
+                        onError={(e) => { const img = e.target as HTMLImageElement; if (img.dataset.fallback) return; img.dataset.fallback = '1'; img.src = PROFESSION_ICONS[op.profession] || ''; }}
                       />
                     ) : (
                       <img src={PROFESSION_ICONS[op.profession] || ''} alt={op.profession}
@@ -703,7 +711,7 @@ export default function SquadPage() {
                     {op.avatar ? (
                       <img src={op.avatar} alt={op.name}
                         style={{ width: 36, height: 36, objectFit: 'cover' }}
-                        onError={(e) => { (e.target as HTMLImageElement).src = PROFESSION_ICONS[op.profession] || ''; }}
+                        onError={(e) => { const img = e.target as HTMLImageElement; if (img.dataset.fallback) return; img.dataset.fallback = '1'; img.src = PROFESSION_ICONS[op.profession] || ''; }}
                       />
                     ) : (
                       <img src={PROFESSION_ICONS[op.profession] || ''} alt={op.profession}
@@ -739,7 +747,7 @@ export default function SquadPage() {
                 {selectedOp.avatar ? (
                   <img src={selectedOp.avatar} alt={selectedOp.name}
                     style={{ width: 48, height: 48, objectFit: 'cover' }}
-                    onError={(e) => { (e.target as HTMLImageElement).src = PROFESSION_ICONS[selectedOp.profession] || ''; }}
+                    onError={(e) => { const img = e.target as HTMLImageElement; if (img.dataset.fallback) return; img.dataset.fallback = '1'; img.src = PROFESSION_ICONS[selectedOp.profession] || ''; }}
                   />
                 ) : null}
               </div>

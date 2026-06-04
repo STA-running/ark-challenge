@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK 十连抽卡 Demo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e14;
+    --surface: #11161d;
+    --gold: #e8c560;
+    --gold-glow: rgba(232, 197, 96, 0.5);
+    --six: #ff6b4a;
+    --five: #e8c560;
+    --four: #7eb8da;
+    --three: #6b7c8e;
+  }
+
+  body {
+    font-family: 'Noto Sans SC', system-ui, sans-serif;
+    background: var(--bg);
+    color: #c8d6e5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% 40%, rgba(20,28,40,0.9) 0%, transparent 70%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(48,54,80,0.08) 39px, rgba(48,54,80,0.08) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(48,54,80,0.08) 39px, rgba(48,54,80,0.08) 40px);
+    background-attachment: fixed;
+  }
+
+  /* ── Header ── */
+  .header {
+    width: 100%; max-width: 800px; padding: 24px 20px 12px;
+    display: flex; align-items: center; gap: 14;
+  }
+  .logo {
+    width: 40px; height: 40px; position: relative; flex-shrink: 0;
+  }
+  .logo-outer {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0d9488, #2dd4bf);
+    border-radius: 6px; transform: rotate(45deg);
+    box-shadow: 0 0 16px rgba(45,212,191,0.3);
+  }
+  .logo-inner {
+    position: absolute; inset: 3px; background: var(--bg);
+    border-radius: 5px; transform: rotate(45deg);
+  }
+  .logo-r {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', monospace; font-size: 20px; font-weight: 900;
+    color: #2dd4bf; text-shadow: 0 0 8px rgba(45,212,191,0.4);
+  }
+  .header-title { font-size: 20px; font-weight: 900; letter-spacing: 2px; }
+  .header-title span { color: #2dd4bf; }
+  .header-sub  { font-size: 11px; color: rgba(45,212,191,0.3); letter-spacing: 2px; margin-top: 2px; }
+
+  /* ── Main container ── */
+  .container { width: 100%; max-width: 800px; padding: 0 20px 40px; }
+
+  /* ── Mode selector ── */
+  .mode-bar {
+    display: flex; gap: 0; background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;
+    overflow: hidden; margin-bottom: 20px;
+  }
+  .mode-btn {
+    flex: 1; padding: 12px 0; border: none; cursor: pointer;
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    background: transparent; color: rgba(255,255,255,0.3);
+    transition: all 0.2s;
+  }
+  .mode-btn.active {
+    background: linear-gradient(135deg, #0d9488, #2dd4bf);
+    color: #0a0e14;
+  }
+
+  /* ── Pull trigger ── */
+  .pull-stage {
+    text-align: center; padding: 40px 0;
+  }
+  .pull-bag {
+    width: 120px; height: 120px; margin: 0 auto 24px; position: relative;
+    cursor: pointer; transition: transform 0.3s;
+  }
+  .pull-bag:hover { transform: scale(1.05); }
+  .pull-bag:active { transform: scale(0.96); }
+  .bag-body {
+    width: 100%; height: 100%; position: relative;
+  }
+  .bag-diamond {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 80px; height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 18px rgba(45,212,191,0.2));
+    animation: bagPulse 2s ease-in-out infinite;
+  }
+  .bag-rings {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(45deg);
+    width: 88px; height: 88px; border: 1px solid rgba(45,212,191,0.12); border-radius: 10px;
+    animation: ringSpin 4s linear infinite;
+  }
+  .bag-rings::after {
+    content: ''; position: absolute; inset: -6px;
+    border: 1px solid rgba(45,212,191,0.06); border-radius: 13px;
+    animation: ringSpin 6s linear infinite reverse;
+  }
+  @keyframes bagPulse {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(45,212,191,0.25)); }
+    50% { filter: drop-shadow(0 0 35px rgba(45,212,191,0.45)); }
+  }
+  @keyframes ringSpin {
+    from { transform: translate(-50%,-50%) rotate(45deg); }
+    to { transform: translate(-50%,-50%) rotate(405deg); }
+  }
+
+  .pull-label {
+    font-family: 'Orbitron', monospace; font-size: 28px; font-weight: 700;
+    letter-spacing: 6px; color: #2dd4bf; margin-bottom: 8px;
+  }
+  .pull-sub {
+    font-size: 13px; color: rgba(255,255,255,0.25);
+  }
+
+  /* ── Pull results grid ── */
+  .results-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    margin-bottom: 24px;
+    perspective: 600px;
+  }
+  @media (max-width: 500px) {
+    .results-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  }
+
+  .card-slot {
+    aspect-ratio: 3/4;
+    perspective: 800px;
+  }
+
+  .card-inner {
+    width: 100%; height: 100%; position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .card-inner.revealed { transform: rotateY(180deg); }
+
+  .card-front, .card-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: 10px; overflow: hidden;
+  }
+
+  .card-front {
+    background: linear-gradient(180deg, #1c1c1d, #141415);
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-front svg {
+    width: 28px; height: 42px;
+    opacity: 0.35;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; gap: 4px;
+    padding: 6px;
+  }
+  .card-rarity-stars { font-size: 14px; line-height: 1; letter-spacing: 1px; }
+  .card-avatar {
+    width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
+    background: #0d1117; border: 2px solid;
+    flex-shrink: 0;
+  }
+  .card-name {
+    font-size: 12px; font-weight: 700; line-height: 1.2;
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card-profession { font-size: 10px; opacity: 0.7; }
+
+  /* ── Rarity styles ── */
+  .rarity-6 .card-back { background: linear-gradient(180deg, #2a1520, #1a1025); }
+  .rarity-6 .card-avatar { border-color: #ff6b4a; box-shadow: 0 0 12px rgba(255,107,74,0.4); }
+  .rarity-6 .card-rarity-stars { color: #ff6b4a; }
+  .rarity-6 .card-name { color: #ff6b4a; }
+  .rarity-6 .card-back::after {
+    content: ''; position: absolute; inset: -2px; border-radius: 10px;
+    background: linear-gradient(135deg, #ff6b4a, #ff9e44, #ff6b4a);
+    opacity: 0; animation: sixStarGlow 0.8s ease-out;
+    z-index: -1;
+  }
+
+  .rarity-5 .card-back { background: linear-gradient(180deg, #1a1a10, #1a1810); }
+  .rarity-5 .card-avatar { border-color: #e8c560; box-shadow: 0 0 8px rgba(232,197,96,0.3); }
+  .rarity-5 .card-rarity-stars { color: #e8c560; }
+  .rarity-5 .card-name { color: #e8c560; }
+
+  .rarity-4 .card-back { background: linear-gradient(180deg, #0f1a22, #0d1620); }
+  .rarity-4 .card-avatar { border-color: #7eb8da; box-shadow: 0 0 4px rgba(126,184,218,0.15); }
+  .rarity-4 .card-rarity-stars { color: #7eb8da; }
+  .rarity-4 .card-name { color: #a8cde8; }
+
+  .rarity-3 .card-back { background: linear-gradient(180deg, #141a20, #11161d); }
+  .rarity-3 .card-avatar { border-color: #6b7c8e; }
+
+  @keyframes sixStarGlow {
+    0% { opacity: 1; inset: -6px; }
+    100% { opacity: 0; inset: -2px; }
+  }
+
+  /* ── 10th pull flash ── */
+  .tenth-slot { position: relative; }
+  .tenth-slot::before {
+    content: '10';
+    position: absolute; top: -6px; right: -4px; z-index: 2;
+    font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700;
+    color: var(--gold); background: rgba(0,0,0,0.6);
+    padding: 1px 4px; border-radius: 3px; border: 1px solid rgba(232,197,96,0.3);
+  }
+
+  /* ── Actions ── */
+  .actions {
+    display: flex; gap: 12px; justify-content: center; margin-bottom: 16px;
+  }
+  .btn {
+    padding: 12px 28px; border-radius: 8px; font-family: inherit; font-size: 15px;
+    font-weight: 600; cursor: pointer; transition: all 0.2s; border: none;
+  }
+  .btn-reroll {
+    background: transparent; border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
+  }
+  .btn-reroll:hover:not(:disabled) { border-color: rgba(249,117,131,0.5); color: #f97583; }
+  .btn-reroll:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-lock {
+    background: linear-gradient(135deg, #0d9488, #2dd4bf); color: #0a0e14;
+    box-shadow: 0 2px 12px rgba(45,212,191,0.3);
+  }
+  .btn-lock:hover { box-shadow: 0 4px 20px rgba(45,212,191,0.45); transform: translateY(-1px); }
+
+  .locked-pool {
+    background: rgba(45,212,191,0.04); border: 1px solid rgba(45,212,191,0.15);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .locked-pool h3 {
+    font-size: 14px; font-weight: 600; color: rgba(45,212,191,0.6);
+    margin-bottom: 10px;
+  }
+  .locked-ops {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .locked-op {
+    padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    border: 1px solid;
+  }
+  .locked-op.r6 { border-color: rgba(255,107,74,0.3); color: #ff6b4a; background: rgba(255,107,74,0.08); }
+  .locked-op.r5 { border-color: rgba(232,197,96,0.3); color: #e8c560; background: rgba(232,197,96,0.08); }
+  .locked-op.r4 { border-color: rgba(126,184,218,0.3); color: #7eb8da; background: rgba(126,184,218,0.08); }
+  .locked-op.r3 { border-color: rgba(107,124,142,0.3); color: #6b7c8e; background: rgba(107,124,142,0.08); }
+
+  /* ── Sparkle canvas ── */
+  #sparkleCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1000;
+  }
+
+  /* ── Pull streak indicator ── */
+  .streak-bar {
+    display: flex; gap: 4px; align-items: center; margin-bottom: 16px;
+    font-size: 13px; color: rgba(255,255,255,0.35);
+  }
+  .streak-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+  }
+  .streak-dot.filled { background: #2dd4bf; box-shadow: 0 0 6px rgba(45,212,191,0.4); }
+
+  /* ── Screen flash overlay ── */
+  .screen-flash {
+    position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    background: transparent; transition: background 0.1s;
+  }
+  .screen-flash.active { background: rgba(45,212,191,0.12); }
+  .screen-flash.gold { background: rgba(232,197,96,0.25); }
+
+  .hidden { display: none !important; }
+
+  /* ── Final squad stage ── */
+  .final-stage { text-align: center; padding: 20px 0; }
+  .final-stage h2 { font-size: 22px; margin-bottom: 8px; color: #2dd4bf; }
+  .final-stage p { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><div class="logo-outer"></div><div class="logo-inner"></div><div class="logo-r">R</div></div>
+  <div>
+    <div class="header-title"><span>AK</span> GACHA</div>
+    <div class="header-sub">RHODES ISLAND · 十连抽取</div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Mode selector -->
+  <div class="mode-bar" id="modeBar">
+    <button class="mode-btn active" data-mode="gacha">🎰 十连抽取</button>
+    <button class="mode-btn" data-mode="manual">✋ 手动选择</button>
+  </div>
+
+  <!-- Pull trigger stage -->
+  <div class="pull-stage" id="pullStage">
+    <div class="pull-bag" id="pullBag" onclick="triggerPull()">
+      <div class="bag-body">
+        <div class="bag-rings"></div>
+        <img class="bag-diamond" src="/prts-logo.png?v=4" alt="启动抽取"/>
+      </div>
+    </div>
+    <div class="pull-label">DRIVE</div>
+    <div class="pull-sub">点击菱形启动协议 · 剩余 <span id="batchRemaining">3</span> 轮</div>
+  </div>
+
+  <!-- Results area -->
+  <div id="resultsArea" class="hidden">
+    <div class="streak-bar">
+      <span>第 <strong id="currentBatch">1</strong>/3 轮</span>
+      <span style="margin-left:auto;">放弃剩余 <strong id="rerollsLeft">10</strong> 次</span>
+    </div>
+    <div class="results-grid" id="resultsGrid"></div>
+    <div class="actions">
+      <button class="btn btn-reroll" id="btnReroll" onclick="rerollBatch()">🔄 不要</button>
+      <button class="btn btn-lock" id="btnLock" onclick="lockBatch()">✅ 锁定这轮</button>
+    </div>
+    <div class="locked-pool" id="lockedPool">
+      <h3>📦 已锁定 · <span id="lockedCount">0</span> 人</h3>
+      <div class="locked-ops" id="lockedOps"></div>
+    </div>
+  </div>
+
+  <!-- Final stage -->
+  <div class="final-stage hidden" id="finalStage">
+    <h2>🎰 十连结束</h2>
+    <p>已锁定 <span id="finalCount">0</span> 名干员</p>
+  </div>
+</div>
+
+<canvas id="sparkleCanvas"></canvas>
+<div class="screen-flash" id="screenFlash"></div>
+
+<script>
+  // ── Mock operator pool ──
+  const MOCK_OPS = [
+    { name:'银灰', rarity:6, profession:'近卫', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">银</text></svg>') },
+    { name:'能天使', rarity:6, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">能</text></svg>') },
+    { name:'塞雷娅', rarity:6, profession:'重装', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">塞</text></svg>') },
+    { name:'史尔特尔', rarity:6, profession:'近卫', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">42</text></svg>') },
+    { name:'山', rarity:6, profession:'近卫', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">山</text></svg>') },
+    { name:'浊心斯卡蒂', rarity:6, profession:'辅助', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">浊</text></svg>') },
+    { name:'棘刺', rarity:6, profession:'近卫', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">棘</text></svg>') },
+    { name:'夜莺', rarity:6, profession:'医疗', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1025"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#ff6b4a">夜</text></svg>') },
+    { name:'鸿雪', rarity:5, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">鸿</text></svg>') },
+    { name:'蓝毒', rarity:5, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">蓝</text></svg>') },
+    { name:'白金', rarity:5, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">白</text></svg>') },
+    { name:'拉普兰德', rarity:5, profession:'近卫', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">拉</text></svg>') },
+    { name:'德克萨斯', rarity:5, profession:'先锋', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">德</text></svg>') },
+    { name:'凛冬', rarity:5, profession:'先锋', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">凛</text></svg>') },
+    { name:'赫默', rarity:5, profession:'医疗', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">赫</text></svg>') },
+    { name:'陨星', rarity:5, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#1a1810"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#e8c560">陨</text></svg>') },
+    { name:'调香师', rarity:4, profession:'医疗', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">调</text></svg>') },
+    { name:'蛇屠箱', rarity:4, profession:'重装', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">蛇</text></svg>') },
+    { name:'流星', rarity:4, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">流</text></svg>') },
+    { name:'远山', rarity:4, profession:'术师', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">远</text></svg>') },
+    { name:'深海色', rarity:4, profession:'辅助', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">深</text></svg>') },
+    { name:'白雪', rarity:4, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">白</text></svg>') },
+    { name:'讯使', rarity:4, profession:'先锋', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#0d1620"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#7eb8da">讯</text></svg>') },
+    { name:'玫兰莎', rarity:3, profession:'近卫', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#11161d"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#6b7c8e">玫</text></svg>') },
+    { name:'芬', rarity:3, profession:'先锋', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#11161d"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#6b7c8e">芬</text></svg>') },
+    { name:'翎羽', rarity:3, profession:'先锋', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#11161d"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#6b7c8e">翎</text></svg>') },
+    { name:'卡缇', rarity:3, profession:'重装', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#11161d"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#6b7c8e">卡</text></svg>') },
+    { name:'炎熔', rarity:3, profession:'术师', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#11161d"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#6b7c8e">炎</text></svg>') },
+    { name:'安德切尔', rarity:3, profession:'狙击', avatar:'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect width="48" height="48" fill="#11161d"/><text x="24" y="30" text-anchor="middle" font-size="14" fill="#6b7c8e">安</text></svg>') },
+  ];
+
+  // ── State ──
+  let currentBatch = 0;
+  const MAX_BATCHES = 3;
+  let rerollsLeft = 10;
+  let lockedPool = [];
+  let currentResults = [];
+  let isPulling = false;
+
+  // ── Sparkle system ──
+  const canvas = document.getElementById('sparkleCanvas');
+  const ctx = canvas.getContext('2d');
+  let sparkles = [];
+  let animId;
+
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function sparkle(x, y, count, color) {
+    for (let i = 0; i < count; i++) {
+      sparkles.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 8,
+        vy: (Math.random() - 0.5) * 8 - 4,
+        life: 1,
+        decay: 0.015 + Math.random() * 0.025,
+        size: 2 + Math.random() * 4,
+        color
+      });
+    }
+  }
+
+  function animateSparkles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sparkles = sparkles.filter(s => s.life > 0);
+    for (const s of sparkles) {
+      s.x += s.vx; s.y += s.vy;
+      s.vy += 0.1;
+      s.life -= s.decay;
+      ctx.save();
+      ctx.globalAlpha = s.life;
+      ctx.fillStyle = s.color;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    animId = requestAnimationFrame(animateSparkles);
+  }
+  animateSparkles();
+
+  // ── Screen flash ──
+  function flash(type = 'normal') {
+    const el = document.getElementById('screenFlash');
+    el.classList.add('active', type === 'gold' ? 'gold' : '');
+    setTimeout(() => { el.classList.remove('active', 'gold'); }, 150);
+  }
+
+  // ── Pull logic ──
+  function weightedRandom(rates) {
+    const total = Object.values(rates).reduce((a,b) => a + b, 0);
+    let r = Math.random() * total;
+    for (const [rarity, prob] of Object.entries(rates)) {
+      r -= prob;
+      if (r <= 0) return parseInt(rarity);
+    }
+    return 3;
+  }
+
+  function pullOne(pullIndex) {
+    let rarity;
+    if (pullIndex === 9) {
+      // 10th pull
+      const hasSix = MOCK_OPS.some(o => o.rarity === 6 && !currentResults.find(r => r.name === o.name));
+      if (hasSix && Math.random() < 0.50) {
+        rarity = 6;
+      } else {
+        rarity = weightedRandom({ 6: 10, 5: 20, 4: 60, 3: 10 });
+      }
+    } else {
+      rarity = weightedRandom({ 6: 10, 5: 20, 4: 60, 3: 10 });
+    }
+    const candidates = MOCK_OPS.filter(o => o.rarity === rarity && !currentResults.find(r => r.name === o.name));
+    if (candidates.length === 0) {
+      const anyRarity = MOCK_OPS.filter(o => !currentResults.find(r => r.name === o.name));
+      return anyRarity[Math.floor(Math.random() * anyRarity.length)] || MOCK_OPS[Math.floor(Math.random() * MOCK_OPS.length)];
+    }
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  }
+
+  // ── UI Rendering ──
+  function renderResults(results) {
+    const grid = document.getElementById('resultsGrid');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < results.length; i++) {
+      const op = results[i];
+      const isTenth = i === 9;
+      const slot = document.createElement('div');
+      slot.className = 'card-slot' + (isTenth ? ' tenth-slot' : '');
+
+      const inner = document.createElement('div');
+      inner.className = 'card-inner';
+      inner.innerHTML = `
+        <div class="card-front">
+          <svg viewBox="0 0 30 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 43 L4 23 L15 3" stroke="rgba(140,122,105,0.55)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 43 L26 23 L15 3" stroke="rgba(140,122,105,0.55)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-back rarity-${op.rarity}">
+          <div class="card-rarity-stars">${'★'.repeat(op.rarity)}</div>
+          <img class="card-avatar" src="${op.avatar}" alt="${op.name}" onerror="this.style.display='none'">
+          <div class="card-name">${op.name}</div>
+          <div class="card-profession">${op.profession}</div>
+        </div>
+      `;
+      slot.appendChild(inner);
+      grid.appendChild(slot);
+    }
+    document.getElementById('resultsArea').classList.remove('hidden');
+    document.getElementById('pullStage').classList.add('hidden');
+  }
+
+  function revealCards(results) {
+    const cards = document.querySelectorAll('.card-inner');
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add('revealed');
+        const op = results[i];
+        if (op.rarity >= 6) {
+          // Get card position for sparkle
+          const rect = card.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          sparkle(cx, cy, 30, '#ff6b4a');
+          if (i === 9) flash('gold');
+          else flash();
+        } else if (op.rarity === 5) {
+          const rect = card.getBoundingClientRect();
+          sparkle(rect.left + rect.width/2, rect.top + rect.height/2, 15, '#e8c560');
+        } else if (op.rarity === 4) {
+          const rect = card.getBoundingClientRect();
+          sparkle(rect.left + rect.width/2, rect.top + rect.height/2, 5, '#7eb8da');
+        }
+      }, 100 + i * 180); // Stagger reveals: 100ms, 280ms, 460ms, ...
+    });
+  }
+
+  async function triggerPull() {
+    if (isPulling) return;
+    if (currentBatch >= MAX_BATCHES) return;
+    isPulling = true;
+
+    // Pull animation on bag
+    const bag = document.getElementById('pullBag');
+    bag.style.transform = 'scale(1.1)';
+    setTimeout(() => { bag.style.transform = 'scale(0.88)'; }, 180);
+    setTimeout(() => { bag.style.transform = ''; }, 380);
+
+    // Pull 10
+    currentResults = [];
+    for (let i = 0; i < 10; i++) {
+      currentResults.push(pullOne(i));
+    }
+
+    // Show results + stagger reveal
+    await new Promise(r => setTimeout(r, 600));
+    renderResults(currentResults);
+    document.getElementById('currentBatch').textContent = currentBatch + 1;
+    document.getElementById('rerollsLeft').textContent = rerollsLeft;
+    document.getElementById('btnReroll').disabled = rerollsLeft <= 0;
+
+    await new Promise(r => setTimeout(r, 300));
+    revealCards(currentResults);
+
+    isPulling = false;
+  }
+
+  function rerollBatch() {
+    if (rerollsLeft <= 0) return;
+    rerollsLeft--;
+    document.getElementById('rerollsLeft').textContent = rerollsLeft;
+    document.getElementById('btnReroll').disabled = rerollsLeft <= 0;
+    document.getElementById('resultsArea').classList.add('hidden');
+    document.getElementById('pullStage').classList.remove('hidden');
+    currentResults = [];
+    document.getElementById('batchRemaining').textContent = MAX_BATCHES - currentBatch;
+  }
+
+  function lockBatch() {
+    if (currentResults.length === 0) return;
+    lockedPool.push(...currentResults);
+    currentBatch++;
+    rerollsLeft = 10;
+    currentResults = [];
+
+    updateLockedUI();
+    document.getElementById('resultsArea').classList.add('hidden');
+
+    if (currentBatch >= MAX_BATCHES) {
+      document.getElementById('pullStage').classList.add('hidden');
+      document.getElementById('finalStage').classList.remove('hidden');
+      document.getElementById('finalCount').textContent = lockedPool.length;
+    } else {
+      document.getElementById('pullStage').classList.remove('hidden');
+      document.getElementById('batchRemaining').textContent = MAX_BATCHES - currentBatch;
+    }
+  }
+
+  function updateLockedUI() {
+    document.getElementById('lockedCount').textContent = lockedPool.length;
+    const container = document.getElementById('lockedOps');
+    container.innerHTML = lockedPool.map(op => 
+      `<span class="locked-op r${op.rarity}">★${op.rarity} ${op.name}</span>`
+    ).join('');
+  }
+
+  // ── Mode selector ──
+  document.getElementById('modeBar').addEventListener('click', (e) => {
+    if (!e.target.classList.contains('mode-btn')) return;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+  });
+
+  // ── Init ──
+  document.getElementById('batchRemaining').textContent = MAX_BATCHES;
+</script>
+</body>
+</html>
